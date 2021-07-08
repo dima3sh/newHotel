@@ -6,26 +6,27 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "GUEST", schema = "public")
+@Table(name = "guest", schema = "public")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Guest extends Person {
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name= "increment", strategy= "increment")
-    @Column(name = "Guest_id")
+    @Column(name = "guest_id")
     private Long guest_id;
 
-    @Column(name = "Room_id")
+    @Column(name = "room_id")
     private Long room_id;
 
-    @Column(name = "Departure_Time", insertable = false, updatable = false)
+
+    @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
-    @Column(name = "Arrival_Time")
+    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
-    @Column(name = "Invoice")
+    @Column(name = "invoice")
     private Integer invoice;
 
 

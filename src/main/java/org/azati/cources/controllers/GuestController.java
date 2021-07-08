@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class GuestController {
@@ -38,10 +40,28 @@ public class GuestController {
         guest.setRoom_id(1L);
         guest.setPhoneNumber("123456");
         guest.setEmailAddress("friend@gmail.com");
-        guest.setArrivalTime(date);
-        guest.setDepartureTime(date);
+        guest.setArrivalTime(LocalDateTime.now());
+        guest.setDepartureTime(LocalDateTime.now());
         guest.setInvoice(0);
         guestService.addGuest(guest);
         return date.toString();
+    }
+
+    @ResponseBody
+    @RequestMapping("/getguest/{guest_id}")
+    public Optional<Guest> getGuest(@PathVariable Long guest_id) {
+        return guestService.getGuest(guest_id);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getguests/{name}")
+    public List<Guest> getGuests(@PathVariable String name) {
+        return guestService.getGuests(name);
+    }
+
+    @ResponseBody
+    @RequestMapping("/deleteguest/{phone}")
+    public Integer getGuest(@PathVariable String phone) {
+        return guestService.removeGuest(phone);
     }
 }
