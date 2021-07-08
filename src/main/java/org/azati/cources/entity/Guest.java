@@ -1,24 +1,35 @@
 package org.azati.cources.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "GUEST", schema = "public")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Guest extends Person {
-    private Integer room_id;
+
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name= "increment", strategy= "increment")
+    @Column(name = "Guest_id")
+    private Long guest_id;
+
+    @Column(name = "Room_id")
+    private Long room_id;
+
+    @Column(name = "Departure_Time", insertable = false, updatable = false)
     private LocalDateTime departureTime;
+
+    @Column(name = "Arrival_Time")
     private LocalDateTime arrivalTime;
-    private Integer invoice = 0;
 
-    public Guest(){}
+    @Column(name = "Invoice")
+    private Integer invoice;
 
-    public Guest(String name, String phoneNumber, String emailAddress, Integer room_id,
-                 LocalDateTime departureTime, LocalDateTime arrivalTime) {
-        super(name, phoneNumber, emailAddress);
-        this.room_id = room_id;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-    }
 
-    public Integer getRoom_id() {
+    public Long getRoom_id() {
         return room_id;
     }
 
@@ -34,7 +45,7 @@ public class Guest extends Person {
         return invoice;
     }
 
-    public void setRoom_id(Integer room_id) {
+    public void setRoom_id(Long room_id) {
         this.room_id = room_id;
     }
 
@@ -48,6 +59,14 @@ public class Guest extends Person {
 
     public void setInvoice(Integer invoice) {
         this.invoice = invoice;
+    }
+
+    public Long getGuest_id() {
+        return guest_id;
+    }
+
+    public void setGuest_id(Long guest_id) {
+        this.guest_id = guest_id;
     }
 
     @Override
@@ -71,7 +90,7 @@ public class Guest extends Person {
 
     @Override
     public int hashCode() {
-        int result = Integer.hashCode(room_id);
+        int result = Long.hashCode(room_id);
         result = 31 * result + arrivalTime.hashCode();
         result = 31 * result + departureTime.hashCode();
         result = 31 * result + Integer.hashCode(invoice);

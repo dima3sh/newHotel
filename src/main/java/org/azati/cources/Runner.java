@@ -1,14 +1,12 @@
 package org.azati.cources;
 
-import org.azati.cources.oldfile.configurataion.AppConfig;
-import org.azati.cources.services.GuestService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-public class Runner {
+@SpringBootApplication
+public class Runner extends SpringBootServletInitializer {
     public static void main(String[] args) {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
-        GuestService service = (GuestService) applicationContext.getBean("guestService");
-        service.remove(0);
+    SpringApplication.run(Runner.class, args);
     }
 }

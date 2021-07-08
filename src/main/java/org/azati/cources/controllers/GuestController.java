@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -32,10 +31,17 @@ public class GuestController {
 
     @ResponseBody
     @RequestMapping("/newguest/{name}")
-    public Guest newGuest(@PathVariable String name) {
+    public String newGuest(@PathVariable String name) {
         LocalDateTime date = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
-        Guest guest = new Guest(name, "123234", "dd@gmail", 2, date, date);
-        guestService.add(guest);
-        return guest;
+        Guest guest = new Guest();
+        guest.setName(name);
+        guest.setRoom_id(1L);
+        guest.setPhoneNumber("123456");
+        guest.setEmailAddress("friend@gmail.com");
+        guest.setArrivalTime(date);
+        guest.setDepartureTime(date);
+        guest.setInvoice(0);
+        guestService.addGuest(guest);
+        return date.toString();
     }
 }

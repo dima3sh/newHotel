@@ -1,8 +1,18 @@
 package org.azati.cources.entity;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class Person {
+
+    @Column(name = "Name_Guest")
     protected String name;
+
+    @Column(name = "Phone_Number")
     protected String phoneNumber;
+
+    @Column(name = "Email_Address")
     protected String emailAddress;
 
     public Person(){}
