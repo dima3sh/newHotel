@@ -1,5 +1,6 @@
 package org.azati.cources.services;
 
+import org.aspectj.apache.bcel.generic.InvokeInstruction;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,14 @@ public class GuestService {
         return guestRepository.findGuestsByName(name);
     }
 
-    public Integer removeGuest(String phoneNumber){
+    public Integer removeGuest(String phoneNumber) {
         return guestRepository.deleteGuestByPhoneNumber(phoneNumber);
+    }
+
+    public List<Guest> updateInvoice(Integer oldInvoice, Integer newInvoice) {
+        List<Guest> guests = guestRepository.findGuestByInvoice(oldInvoice);
+        guests.forEach(guest -> guest.setInvoice(newInvoice));
+        guestRepository.saveAll(guests);
+        return guests;
     }
 }

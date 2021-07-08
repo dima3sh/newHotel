@@ -12,4 +12,6 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
 
     @Transactional
     public Integer deleteGuestByPhoneNumber(String phone);
+
+    public List<Guest> findGuestByInvoice (Integer invoice);
 }

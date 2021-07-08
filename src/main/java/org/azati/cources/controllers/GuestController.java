@@ -4,9 +4,7 @@ import org.azati.cources.entity.Guest;
 import org.azati.cources.services.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -61,7 +59,15 @@ public class GuestController {
 
     @ResponseBody
     @RequestMapping("/deleteguest/{phone}")
-    public Integer getGuest(@PathVariable String phone) {
-        return guestService.removeGuest(phone);
+    public Boolean getGuest(@PathVariable String phone) {
+        return guestService.removeGuest(phone) == 1;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/updateguestinvoice/{oldInvoice}", params = {"invoice"})
+    public List<Guest> updateGuestName(@PathVariable Integer oldInvoice,
+                                       @RequestParam(value = "invoice") Integer invoice){
+        return guestService.updateInvoice(oldInvoice, invoice);
+    }
+
 }
