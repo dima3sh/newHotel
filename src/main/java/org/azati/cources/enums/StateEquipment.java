@@ -1,11 +1,11 @@
 package org.azati.cources.enums;
 
 public enum StateEquipment {
-    NEW(0),
-    SMALLDEFECT(1),
-    BROKEN(2),
-    HUGEDEFECT(3),
-    NEEDSREPLACE(4);
+    isnew(0),
+    smalldefect(1),
+    broken(2),
+    hugedefect(3),
+    needsreplace(4);
 
     private Integer index;
 

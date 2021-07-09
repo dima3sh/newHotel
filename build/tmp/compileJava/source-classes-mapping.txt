@@ -10,16 +10,22 @@ org/azati/cources/services/GuestService.java
  org.azati.cources.services.GuestService
 org/azati/cources/repository/GuestRepository.java
  org.azati.cources.repository.GuestRepository
+org/azati/cources/repository/RoomRepository.java
+ org.azati.cources.repository.RoomRepository
 org/azati/cources/entity/Guest.java
  org.azati.cources.entity.Guest
 org/azati/cources/entity/Person.java
  org.azati.cources.entity.Person
 org/azati/cources/entity/Request.java
  org.azati.cources.entity.Request
-org/azati/cources/entity/Thing.java
- org.azati.cources.entity.Thing
 org/azati/cources/services/RoomService.java
  org.azati.cources.services.RoomService
+org/azati/cources/entity/Thing.java
+ org.azati.cources.entity.Thing
+org/azati/cources/services/EquipmentService.java
+ org.azati.cources.services.EquipmentService
+org/azati/cources/controllers/RoomController.java
+ org.azati.cources.controllers.RoomController
 org/azati/cources/entity/Payroll.java
  org.azati.cources.entity.Payroll
 org/azati/cources/controllers/GuestController.java
@@ -30,6 +36,8 @@ org/azati/cources/entity/Food.java
  org.azati.cources.entity.Food
 org/azati/cources/enums/StatusRoom.java
  org.azati.cources.enums.StatusRoom
+org/azati/cources/repository/EquipmentRepository.java
+ org.azati.cources.repository.EquipmentRepository
 org/azati/cources/entity/Employee.java
  org.azati.cources.entity.Employee
 org/azati/cources/Runner.java

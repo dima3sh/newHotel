@@ -1,8 +1,19 @@
 package org.azati.cources.entity;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
+
 public class Thing {
+
+    @Column(name = "name_equipment")
     protected String name;
+
+    @Column(name = "weight")
     protected Double weight;
+
+    @Column(name = "cost_per_object")
     protected Integer costPerObject;
 
     public Thing(){}

@@ -1,7 +1,9 @@
 package org.azati.cources.controllers;
 
 import org.azati.cources.entity.Guest;
+import org.azati.cources.entity.Room;
 import org.azati.cources.services.GuestService;
+import org.azati.cources.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,9 @@ public class GuestController {
 
     @Autowired
     GuestService guestService;
+
+    @Autowired
+    RoomService roomService;
 
     @ResponseBody
     @RequestMapping("/")
@@ -35,7 +40,7 @@ public class GuestController {
         LocalDateTime date = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
         Guest guest = new Guest();
         guest.setName(name);
-        guest.setRoom_id(1L);
+        guest.setRoom_id(roomService.getRoom(1L));
         guest.setPhoneNumber("123456");
         guest.setEmailAddress("friend@gmail.com");
         guest.setArrivalTime(LocalDateTime.now());

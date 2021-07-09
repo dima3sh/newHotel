@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 public interface GuestRepository extends CrudRepository<Guest, Long> {
 
     public List<Guest> findGuestsByName(String name);

@@ -1,9 +1,9 @@
 package org.azati.cources.enums;
 
 public enum StatusRoom {
-    CLEAN(0),
-    NEEDSCLEANING(1),
-    DIRTY(2);
+    clean(0),
+    needscleaning(1),
+    dirty(2);
 
     private Integer index;
 

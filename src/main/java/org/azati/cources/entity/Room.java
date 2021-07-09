@@ -1,35 +1,48 @@
 package org.azati.cources.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import org.azati.cources.enums.StatusRoom;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
+
+@Entity
+@Table(name = "room")
 public class Room {
-    private Integer room_id;
+
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name= "increment", strategy= "increment")
+    @Column(name = "room_id")
+    private Long room_id;
+
+    @Column(name = "is_free_room")
     private Boolean isFreeRoom;
+
+    @Column(name = "number_of_beds")
     private Integer numberOfBeds;
+
+    @Column(name = "cost_per_hour")
     private Integer costPerHour;
+
+    @Enumerated(EnumType.STRING)
     private StatusRoom statusRoom;
+
+
+    @OneToMany(mappedBy = "equipment_room_id", fetch = FetchType.LAZY)
     private List<Equipment> equipments;
 
-    public Room(){}
+    @JsonIgnore
+    @OneToMany(mappedBy = "guest_room_id", fetch = FetchType.LAZY)
+    private List<Guest> guests;
 
-    public Room(Integer room_id, Boolean isFreeRoom, Integer numberOfBeds, Integer costPerHour,
-                StatusRoom statusRoom, List<Equipment> equipments) {
-        this.room_id = room_id;
-        this.isFreeRoom = isFreeRoom;
-        this.numberOfBeds = numberOfBeds;
-        this.costPerHour = costPerHour;
-        this.statusRoom = statusRoom;
-        this.equipments = equipments;
-    }
-
-    public Integer getRoom_id() {
+    public Long getRoom_id() {
         return room_id;
     }
 
-    public void setRoom_id(Integer idRoom) {
+    public void setRoom_id(Long idRoom) {
         this.room_id = idRoom;
     }
 
@@ -73,6 +86,14 @@ public class Room {
         this.equipments = equipments;
     }
 
+    public List<Guest> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(List<Guest> guests) {
+        this.guests = guests;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -82,6 +103,7 @@ public class Room {
                 ", costPerHour=" + costPerHour +
                 ", statusRoom=" + statusRoom +
                 ", equipments=" + equipments +
+                ", guest=" + guests +
                 '}';
     }
 
@@ -91,13 +113,13 @@ public class Room {
         if (!(o instanceof Room)) return false;
         Room room = (Room) o;
         return room_id.equals(room.room_id) && isFreeRoom.equals(room.isFreeRoom)
-               && numberOfBeds.equals(room.numberOfBeds) && costPerHour.equals(room.costPerHour)
-               && statusRoom.equals(room.statusRoom) && equipments.equals(room.equipments);
+                && numberOfBeds.equals(room.numberOfBeds) && costPerHour.equals(room.costPerHour)
+                && statusRoom.equals(room.statusRoom) && equipments.equals(room.equipments);
     }
 
     @Override
     public int hashCode() {
-        int result = Integer.hashCode(room_id);
+        int result = Long.hashCode(room_id);
         result = 31 * result + isFreeRoom.hashCode();
         result = 31 * result + Integer.hashCode(numberOfBeds);
         result = 31 * result + Integer.hashCode(costPerHour);
