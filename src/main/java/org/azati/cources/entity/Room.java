@@ -3,6 +3,8 @@ package org.azati.cources.entity;
 import com.fasterxml.jackson.annotation.*;
 import org.azati.cources.enums.StatusRoom;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,12 +32,12 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private StatusRoom statusRoom;
 
-
-    @OneToMany(mappedBy = "equipment_room_id", fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "equipment_room_id")
     private List<Equipment> equipments;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "guest_room_id", fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "guest_room_id")
     private List<Guest> guests;
 
     public Long getRoom_id() {

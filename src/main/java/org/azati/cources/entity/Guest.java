@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
 @Table(name = "guest", schema = "public")
 public class Guest extends Person {
@@ -16,7 +15,6 @@ public class Guest extends Person {
     @GenericGenerator(name= "increment", strategy= "increment")
     @Column(name = "guest_id")
     private Long guest_id;
-
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "guest_room_id", nullable=false)

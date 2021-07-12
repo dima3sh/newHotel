@@ -1,12 +1,13 @@
 package org.azati.cources.controllers;
 
-import org.azati.cources.entity.Room;
+import org.azati.cources.dto.RoomDTO;
 import org.azati.cources.services.RoomService;
+import org.azati.cources.utils.UtilsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Controller
 public class RoomController {
@@ -14,15 +15,12 @@ public class RoomController {
     @Autowired
     RoomService roomService;
 
-    @ResponseBody
-    @RequestMapping("/getroom/{id}")
-    public Room getRoom(@PathVariable Long id) {
-        return roomService.getRoom(id);
+    @RequestMapping(value = "/getroom", params = {"id"}, method = RequestMethod.GET)
+    public String getRoom(Model model, @RequestParam(value = "id") Long room_id) {
+        RoomDTO roomDTO = new RoomDTO();
+        roomDTO = UtilsDTO.creteRoomDTO(roomService.getRoom(room_id));
+        model.addAttribute("room", roomDTO);
+        return "getroom";
     }
 
-    /*@ResponseBody
-    @RequestMapping("/addRoom/{number_of_beds}")
-    public Optional<Room> addRoom(@PathVariable Integer number_of_beds) {
-        Room room = new Room();
-    }*/
 }
