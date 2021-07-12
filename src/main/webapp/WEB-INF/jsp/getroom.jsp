@@ -9,22 +9,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
-  <head>
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>$Title$</title>
     <link href="<c:url value="/css/common.css"/>" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  <table>
+</head>
+<body>
+<table>
     <thead>
     <tr>
-      <th>Room_id</th>
-      <th>isFreeRoom</th>
-      <th>numberOfBeds</th>
-      <th>costPerHour</th>
-      <th>statusRoom</th>
-      <th>equipments</th>
-      <th>guests</th>
+        <th>Room_id</th>
+        <th>isFreeRoom</th>
+        <th>numberOfBeds</th>
+        <th>costPerHour</th>
+        <th>statusRoom</th>
+        <th>equipments</th>
+        <th>guests</th>
     </tr>
     </thead>
     <tbody>
@@ -34,17 +34,17 @@
     <tr>${room.costPerHour}</tr>
     <tr>${room.statusRoom}</tr>
     <tr>
-      <c:forEach items="${room.equipments}" var="equipment">
-        <td>${equipment.toString()}</td>
-      </c:forEach>
+        <c:forEach items="${room.equipments}" var="equipment">
+            <td>${equipment.toString()}</td>
+        </c:forEach>
     </tr>
     <tr>
-      <c:forEach items="${room.equipments}" var="equipment">
-        <td>${equipment.toString()}</td>
-      </c:forEach>
+        <c:forEach items="${room.equipments}" var="equipment">
+            <td>${equipment.toString()}</td>
+        </c:forEach>
     </tr>
     </tbody>
-  </table>
-  $END$
-  </body>
+</table>
+$END$
+</body>
 </html>

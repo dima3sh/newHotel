@@ -5,12 +5,14 @@ import org.azati.cources.entity.Room;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -22,10 +24,13 @@ public class GuestController {
     @Autowired
     RoomService roomService;
 
-    @ResponseBody
+    @Value("${welcome.message:test}")
+    private String message = "Hello World";
+
     @RequestMapping("/")
-    public String welcome() {
-        return guestService.getClass().getSimpleName();
+    public String welcome(Map<String, Object> model) {
+        model.put("message", this.message);
+        return "welcome";
     }
 
     @ResponseBody

@@ -2,6 +2,9 @@
 Thumbs.db
 #Ignore files built by Visual Studio
 *target
+*.gradle
+out
+build
 *.obj
 *.exe
 *.pdb
