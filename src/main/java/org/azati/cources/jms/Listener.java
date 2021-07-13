@@ -2,11 +2,11 @@ package org.azati.cources.jms;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import org.azati.cources.entity.Room;
+import org.azati.cources.services.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,8 @@ import java.util.List;
 public class Listener {
 
     public static Logger log = LoggerFactory.getLogger(Listener.class);
+    @Autowired
+    RoomService roomService;
 
     @JmsListener(destination = "queue.out")
     public String receiveMessage(final Message jsonMessage) throws JMSException {
@@ -36,10 +37,9 @@ public class Listener {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
 
-            Type foo = new TypeToken<List<Room>>(){}.getType();
-            list = gson.fromJson(messageData, foo);
-            Room room = list.get(0);
-            System.out.println();
+            room
+            list =  gson.fromJson(messageData, List.class);
+            roomService.addRooms(list);
         }
         return response;
     }

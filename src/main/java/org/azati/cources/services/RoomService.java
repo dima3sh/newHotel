@@ -31,7 +31,10 @@ public class RoomService {
     }
 
     public List<Room> addRooms(List<Room> rooms) {
-        rooms.forEach(this::addRoom);
+        for (int i = 0; i < rooms.size(); i++) {
+            addRoom((Room)rooms.get(i));
+        }
+        //rooms.forEach(this::addRoom);
         return rooms;
     }
 }
