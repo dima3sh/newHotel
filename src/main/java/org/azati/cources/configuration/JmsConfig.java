@@ -10,11 +10,11 @@ import org.springframework.jms.core.JmsTemplate;
 public class JmsConfig {
 
     public static String BROKER_URL = "tcp://localhost:61616";
-    String BROKER_USERNAME = "admin";
-    String BROKER_PASSWORD = "admin";
+    public static String BROKER_USERNAME = "admin";
+    public static String BROKER_PASSWORD = "admin";
 
     @Bean
-    public ActiveMQConnectionFactory connectionFactory(){
+    public ActiveMQConnectionFactory connectionFactory() {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
         connectionFactory.setBrokerURL(BROKER_URL);
         connectionFactory.setPassword(BROKER_USERNAME);
@@ -23,7 +23,7 @@ public class JmsConfig {
     }
 
     @Bean
-    public JmsTemplate jmsTemplate(){
+    public JmsTemplate jmsTemplate() {
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(connectionFactory());
         return template;
@@ -36,5 +36,4 @@ public class JmsConfig {
         factory.setConcurrency("1-1");
         return factory;
     }
-
 }

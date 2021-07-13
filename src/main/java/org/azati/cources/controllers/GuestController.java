@@ -2,8 +2,12 @@ package org.azati.cources.controllers;
 
 import org.azati.cources.entity.Guest;
 import org.azati.cources.entity.Room;
+import org.azati.cources.jms.Sender;
+import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,8 @@ import java.util.Optional;
 @Controller
 public class GuestController {
 
+    public static Logger log = LoggerFactory.getLogger(GuestRepository.class);
+
     @Autowired
     GuestService guestService;
 
@@ -33,6 +39,7 @@ public class GuestController {
 
     @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
     public String index(Model model) {
+        log.info("method : index; path : '/'; message : " + message);
         model.addAttribute("message", message);
         return "welcome";
     }

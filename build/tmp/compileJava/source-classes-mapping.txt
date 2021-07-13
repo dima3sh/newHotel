@@ -18,8 +18,6 @@ org/azati/cources/dto/GuestDTO.java
  org.azati.cources.dto.GuestDTO
 org/azati/cources/entity/Dish.java
  org.azati.cources.entity.Dish
-org/azati/cources/jms/Producer.java
- org.azati.cources.jms.Producer
 org/azati/cources/dto/RoomDTO.java
  org.azati.cources.dto.RoomDTO
 org/azati/cources/entity/Employee.java
@@ -36,6 +34,8 @@ org/azati/cources/enums/StateEquipment.java
  org.azati.cources.enums.StateEquipment
 org/azati/cources/repository/GuestRepository.java
  org.azati.cources.repository.GuestRepository
+org/azati/cources/jms/Sender.java
+ org.azati.cources.jms.Sender
 org/azati/cources/entity/Guest.java
  org.azati.cources.entity.Guest
 org/azati/cources/entity/Person.java
