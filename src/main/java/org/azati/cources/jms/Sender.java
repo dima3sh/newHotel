@@ -13,7 +13,7 @@ import javax.jms.TextMessage;
 import java.util.Map;
 
 @Component
-public class Producer {
+public class Sender {
 
     @Autowired
     JmsTemplate jmsTemplate;
