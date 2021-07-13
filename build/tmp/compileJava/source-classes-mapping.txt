@@ -46,6 +46,7 @@ org/azati/cources/services/EquipmentService.java
  org.azati.cources.services.EquipmentService
 org/azati/cources/jms/Listener.java
  org.azati.cources.jms.Listener
+ org.azati.cources.jms.Listener$1
 org/azati/cources/controllers/GuestController.java
  org.azati.cources.controllers.GuestController
 org/azati/cources/entity/Food.java
