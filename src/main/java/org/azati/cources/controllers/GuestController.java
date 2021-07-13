@@ -7,6 +7,7 @@ import org.azati.cources.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -24,12 +25,15 @@ public class GuestController {
     @Autowired
     RoomService roomService;
 
-    @Value("${welcome.message:test}")
-    private String message = "Hello World";
+    @Value("${welcome.message}")
+    private String message;
 
-    @RequestMapping("/")
-    public String welcome(Map<String, Object> model) {
-        model.put("message", this.message);
+    @Value("${error.message}")
+    private String errorMessage;
+
+    @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
+    public String index(Model model) {
+        model.addAttribute("message", message);
         return "welcome";
     }
 
@@ -45,7 +49,7 @@ public class GuestController {
         LocalDateTime date = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
         Guest guest = new Guest();
         guest.setName(name);
-        guest.setRoom_id(roomService.getRoom(1L));
+        guest.setGuestRoomId(roomService.getRoom(1L));
         guest.setPhoneNumber("123456");
         guest.setEmailAddress("friend@gmail.com");
         guest.setArrivalTime(LocalDateTime.now());

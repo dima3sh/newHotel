@@ -9,7 +9,7 @@ public class DTOUtil {
 
     public static RoomDTO creteRoomDTO(Room room) {
         RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setRoom_id(room.getRoom_id());
+        roomDTO.setRoomId(room.getRoomId());
         roomDTO.setFreeRoom(room.getFreeRoom());
         roomDTO.setStatusRoom(room.getStatusRoom());
         roomDTO.setEquipments(room.getEquipments());
@@ -21,11 +21,11 @@ public class DTOUtil {
 
     public static GuestDTO createGuestDTO(Guest guest) {
         GuestDTO guestDTo = new GuestDTO();
-        guestDTo.setGuest_id(guest.getGuest_id());
+        guestDTo.setGuestId(guest.getGuestId());
         guestDTo.setArrivalTime(guest.getArrivalTime());
         guestDTo.setInvoice(guest.getInvoice());
         guestDTo.setDepartureTime(guest.getDepartureTime());
-        guestDTo.setRoom_id(guest.getRoom_id());
+        guestDTo.setRoomId(guest.getGuestRoomId());
         return guestDTo;
     }
 }

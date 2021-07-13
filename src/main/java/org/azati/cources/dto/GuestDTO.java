@@ -6,15 +6,15 @@ import java.time.LocalDateTime;
 
 public class GuestDTO {
 
-    private Long guest_id;
-    private Room guest_room_id;
+    private Long guestId;
+    private Room guestRoomId;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private Integer invoice;
 
 
     public Room getRoom_id() {
-        return guest_room_id;
+        return guestRoomId;
     }
 
     public LocalDateTime getDepartureTime() {
@@ -29,8 +29,8 @@ public class GuestDTO {
         return invoice;
     }
 
-    public void setRoom_id(Room room_id) {
-        this.guest_room_id = room_id;
+    public void setRoomId(Room roomId) {
+        this.guestRoomId = roomId;
     }
 
     public void setDepartureTime(LocalDateTime departureTime) {
@@ -45,12 +45,12 @@ public class GuestDTO {
         this.invoice = invoice;
     }
 
-    public Long getGuest_id() {
-        return guest_id;
+    public Long getGuestId() {
+        return guestId;
     }
 
-    public void setGuest_id(Long guest_id) {
-        this.guest_id = guest_id;
+    public void setGuestId(Long guestId) {
+        this.guestId = guestId;
     }
 
 }

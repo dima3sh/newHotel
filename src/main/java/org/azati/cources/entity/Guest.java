@@ -1,6 +1,5 @@
 package org.azati.cources.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ public class Guest extends Person {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name= "increment", strategy= "increment")
     @Column(name = "guest_id")
-    private Long guest_id;
+    private Long guestId;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "guest_room_id", nullable=false)
@@ -30,7 +29,7 @@ public class Guest extends Person {
     private Integer invoice;
 
 
-    public Room getRoom_id() {
+    public Room getGuestRoomId() {
         return guest_room_id;
     }
 
@@ -46,8 +45,8 @@ public class Guest extends Person {
         return invoice;
     }
 
-    public void setRoom_id(Room room_id) {
-        this.guest_room_id = room_id;
+    public void setGuestRoomId(Room roomId) {
+        this.guest_room_id = roomId;
     }
 
     public void setDepartureTime(LocalDateTime departureTime) {
@@ -62,18 +61,18 @@ public class Guest extends Person {
         this.invoice = invoice;
     }
 
-    public Long getGuest_id() {
-        return guest_id;
+    public Long getGuestId() {
+        return guestId;
     }
 
-    public void setGuest_id(Long guest_id) {
-        this.guest_id = guest_id;
+    public void setGuestId(Long guestId) {
+        this.guestId = guestId;
     }
 
     @Override
     public String toString() {
         return "Guest{" +
-                "room_id=" + guest_room_id.getRoom_id() +
+                "room_id=" + guest_room_id.getRoomId() +
                 ", departureTime='" + departureTime + '\'' +
                 ", arrivalTime='" + arrivalTime + '\'' +
                 ", invoice=" + invoice +

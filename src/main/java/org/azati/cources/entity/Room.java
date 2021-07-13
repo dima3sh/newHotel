@@ -1,6 +1,5 @@
 package org.azati.cources.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import org.azati.cources.enums.StatusRoom;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
@@ -18,7 +17,7 @@ public class Room {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name= "increment", strategy= "increment")
     @Column(name = "room_id")
-    private Long room_id;
+    private Long roomId;
 
     @Column(name = "is_free_room")
     private Boolean isFreeRoom;
@@ -40,12 +39,12 @@ public class Room {
     @OneToMany(mappedBy = "guest_room_id")
     private List<Guest> guests;
 
-    public Long getRoom_id() {
-        return room_id;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoom_id(Long idRoom) {
-        this.room_id = idRoom;
+    public void setRoomId(Long idRoom) {
+        this.roomId = idRoom;
     }
 
     public Boolean getFreeRoom() {
@@ -99,7 +98,7 @@ public class Room {
     @Override
     public String toString() {
         return "Room{" +
-                "idRoom=" + room_id +
+                "idRoom=" + roomId +
                 ", isFreeRoom=" + isFreeRoom +
                 ", numberOfBeds=" + numberOfBeds +
                 ", costPerHour=" + costPerHour +
@@ -114,14 +113,14 @@ public class Room {
         if (this == o) return true;
         if (!(o instanceof Room)) return false;
         Room room = (Room) o;
-        return room_id.equals(room.room_id) && isFreeRoom.equals(room.isFreeRoom)
+        return roomId.equals(room.roomId) && isFreeRoom.equals(room.isFreeRoom)
                 && numberOfBeds.equals(room.numberOfBeds) && costPerHour.equals(room.costPerHour)
                 && statusRoom.equals(room.statusRoom) && equipments.equals(room.equipments);
     }
 
     @Override
     public int hashCode() {
-        int result = Long.hashCode(room_id);
+        int result = Long.hashCode(roomId);
         result = 31 * result + isFreeRoom.hashCode();
         result = 31 * result + Integer.hashCode(numberOfBeds);
         result = 31 * result + Integer.hashCode(costPerHour);

@@ -16,8 +16,7 @@ public class RoomController {
 
     @RequestMapping(value = "/getroom", params = {"id"}, method = RequestMethod.GET)
     public String getRoom(Model model, @RequestParam(value = "id") Long room_id) {
-        RoomDTO roomDTO = new RoomDTO();
-        roomDTO = DTOUtil.creteRoomDTO(roomService.getRoom(room_id));
+        RoomDTO roomDTO = DTOUtil.creteRoomDTO(roomService.getRoom(room_id));
         model.addAttribute("room", roomDTO);
         return "getroom";
     }

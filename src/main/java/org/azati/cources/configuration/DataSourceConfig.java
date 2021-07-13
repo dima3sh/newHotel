@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 
-@EnableWebMvc
 @Configuration
 public class DataSourceConfig {
     @Bean

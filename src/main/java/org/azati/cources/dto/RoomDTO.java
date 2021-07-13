@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RoomDTO {
 
-    private Long room_id;
+    private Long roomId;
     private Boolean isFreeRoom;
     private Integer numberOfBeds;
     private Integer costPerHour;
@@ -16,15 +16,15 @@ public class RoomDTO {
     private List<Equipment> equipments;
     private List<Guest> guests;
 
-    public Long getRoom_id() {
-        return room_id;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoom_id(Long idRoom) {
-        this.room_id = idRoom;
+    public void setRoomId(Long idRoom) {
+        this.roomId = idRoom;
     }
 
-    public Boolean isFreeRoom() {
+    public Boolean getIsFreeRoom() {
         return isFreeRoom;
     }
 

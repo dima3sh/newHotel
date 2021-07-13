@@ -20,7 +20,6 @@ org/azati/cources/entity/Dish.java
  org.azati.cources.entity.Dish
 org/azati/cources/jms/Producer.java
  org.azati.cources.jms.Producer
- org.azati.cources.jms.Producer$1
 org/azati/cources/dto/RoomDTO.java
  org.azati.cources.dto.RoomDTO
 org/azati/cources/entity/Employee.java
