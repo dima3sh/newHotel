@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoomService {
 
@@ -26,5 +28,10 @@ public class RoomService {
         }
         log.debug("");
         throw new RuntimeException("not found room");
+    }
+
+    public List<Room> addRooms(List<Room> rooms) {
+        rooms.forEach(this::addRoom);
+        return rooms;
     }
 }
