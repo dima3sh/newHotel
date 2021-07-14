@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
@@ -27,9 +26,8 @@ public class Listener {
     RoomService roomService;
 
     @JmsListener(destination = "queue.out")
-    public String receiveMessage(final Message jsonMessage) throws JMSException {
+    public void receiveMessage(final Message jsonMessage) throws JMSException {
         String messageData = null;
-        String response = null;
         List<Room> list = new ArrayList<>();
         if (jsonMessage instanceof TextMessage) {
             TextMessage textMessage = (TextMessage) jsonMessage;
@@ -39,11 +37,11 @@ public class Listener {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
 
-            Type foo = new TypeToken<List<Room>>(){}.getType();
-            list =  gson.fromJson(messageData, foo);
+            Type foo = new TypeToken<List<Room>>() {
+            }.getType();
+            list = gson.fromJson(messageData, foo);
             roomService.addRooms(list);
         }
-        return response;
     }
 
 }

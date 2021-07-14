@@ -6,7 +6,8 @@ public class Employee extends Person {
     private Integer employee_id;
     private EmployeeRoles employeeRoles;
 
-    public Employee(){}
+    public Employee() {
+    }
 
     public Employee(String name, String phoneNumber, String emailAddress, Integer employee_id, EmployeeRoles employeeRoles) {
         super(name, phoneNumber, emailAddress);
@@ -47,7 +48,7 @@ public class Employee extends Person {
     }
 
     @Override
-    public  int hashCode() {
+    public int hashCode() {
         int result = Integer.hashCode(employee_id);
         result = 31 * result + employeeRoles.hashCode();
         result = 31 * result + super.hashCode();

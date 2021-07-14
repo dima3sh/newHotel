@@ -3,12 +3,13 @@ package org.azati.cources.entity;
 
 import java.util.List;
 
-public class Dish extends Thing{
+public class Dish extends Thing {
     private Integer caloric;
     private Integer dish_id;
     private List<Food> foods;
 
-    public Dish(){}
+    public Dish() {
+    }
 
     public Dish(String name, Double weight, Integer costPerObject, Integer caloric, Integer dish_id, List<Food> foods) {
         super(name, weight, costPerObject);

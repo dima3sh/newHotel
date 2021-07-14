@@ -1,6 +1,5 @@
 package org.azati.cources.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.azati.cources.enums.StateEquipment;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,7 +11,7 @@ public class Equipment extends Thing {
 
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name= "increment", strategy= "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "equipment_id")
     private Integer equipment_id;
 
@@ -23,7 +22,8 @@ public class Equipment extends Thing {
     @JoinColumn(name = "equipment_room_id")
     private Room equipment_room_id;
 
-    public Equipment(){}
+    public Equipment() {
+    }
 
     public Integer getEquipment_id() {
         return equipment_id;

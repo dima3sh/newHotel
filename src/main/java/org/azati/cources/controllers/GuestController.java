@@ -1,11 +1,13 @@
 package org.azati.cources.controllers;
 
+import org.azati.cources.dto.RoomDTO;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.entity.Room;
 import org.azati.cources.jms.Sender;
 import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
+import org.azati.cources.utils.DTOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -68,7 +71,7 @@ public class GuestController {
 
     @ResponseBody
     @RequestMapping("/getguest/{guest_id}")
-    public Optional<Guest> getGuest(@PathVariable Long guest_id) {
+    public Guest getGuest(@PathVariable Long guest_id) {
         return guestService.getGuest(guest_id);
     }
 
@@ -90,5 +93,14 @@ public class GuestController {
                                        @RequestParam(value = "invoice") Integer invoice){
         return guestService.updateInvoice(oldInvoice, invoice);
     }
+
+    @RequestMapping(value = "/guest", params = {"id"} , method = RequestMethod.GET)
+    public String getRooms(Model model, @RequestParam(value = "id") Long guestId) {
+        log.info("path : /guest ; print information about guest");
+
+        model.addAttribute("guest", guestService.getGuest(guestId));
+        return "guest";
+    }
+
 
 }

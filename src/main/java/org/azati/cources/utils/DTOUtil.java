@@ -11,8 +11,8 @@ public class DTOUtil {
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setRoomId(room.getRoomId());
         roomDTO.setFreeRoom(room.getFreeRoom());
-        roomDTO.setStatusRoom(room.getStatusRoom());
         roomDTO.setEquipments(room.getEquipments());
+        roomDTO.setStatusRoom(room.getDirectoryStatus().getStatusRoom());
         roomDTO.setGuests(room.getGuests());
         roomDTO.setCostPerHour(room.getCostPerHour());
         roomDTO.setNumberOfBeds(room.getNumberOfBeds());

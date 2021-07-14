@@ -15,7 +15,8 @@ public class Person {
     @Column(name = "Email_Address")
     protected String emailAddress;
 
-    public Person(){}
+    public Person() {
+    }
 
     public Person(String name, String phoneNumber, String emailAddress) {
         this.name = name;
@@ -55,6 +56,7 @@ public class Person {
                 ", emailAddress='" + emailAddress + '\'' +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,7 +66,7 @@ public class Person {
     }
 
     @Override
-    public  int hashCode(){
+    public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + phoneNumber.hashCode();
         result = 31 * result + emailAddress.hashCode();

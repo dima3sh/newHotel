@@ -2,6 +2,8 @@ org/azati/cources/services/GuestService.java
  org.azati.cources.services.GuestService
 org/azati/cources/configuration/JmsConfig.java
  org.azati.cources.configuration.JmsConfig
+org/azati/cources/entity/DirectoryStatus.java
+ org.azati.cources.entity.DirectoryStatus
 org/azati/cources/repository/RoomRepository.java
  org.azati.cources.repository.RoomRepository
 org/azati/cources/entity/Request.java
@@ -36,6 +38,7 @@ org/azati/cources/repository/GuestRepository.java
  org.azati.cources.repository.GuestRepository
 org/azati/cources/jms/Sender.java
  org.azati.cources.jms.Sender
+ org.azati.cources.jms.Sender$1
 org/azati/cources/entity/Guest.java
  org.azati.cources.entity.Guest
 org/azati/cources/entity/Person.java

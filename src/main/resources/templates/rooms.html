@@ -19,13 +19,33 @@
     <tr/>
     <tr th:each="room : ${rooms}">
         <form method="GET">
-            <td th:utext="${room.getRoomId()}"></td>
+            <td th:utext="${room.roomId}"></td>
             <td th:utext="${room.getIsFreeRoom()}"></td>
             <td th:utext="${room.getNumberOfBeds()}"></td>
             <td th:utext="${room.getCostPerHour()}"></td>
             <td th:utext="${room.getStatusRoom()}"></td>
-            <td th:utext="${room.getEquipments()}"></td>
-            <td th:utext="${room.getGuests()}"></td>
+            <td th:if="${room.getEquipments().size() > 0}">
+                <ul th:each="equipment : ${room.getEquipments()}">
+                    <li th:utext="${equipment.getName()}"></li>
+                    <li th:utext="${equipment.getCostPerObject()}"></li>
+                    <li th:utext="${equipment.getStateEquipment()}"></li>
+                    <li th:utext="${equipment.getWeight()}"></li>
+                </ul>
+            </td>
+            <td th:unless="${room.getEquipments().size() > 0}">
+                NONE
+            </td>
+            <td th:if="${room.getGuests().size() > 0}">
+                <ul th:each="guest : ${room.getGuests()}">
+                   <li ><a hreaf = "" th:utext="${guest.getName()}"></a></li>
+                    <li th:utext="${guest.getArrivalTime()}"></li>
+                    <li th:utext="${guest.getDepartureTime()}"></li>
+                    <li th:utext="${guest.getInvoice()}"></li>
+                </ul>
+            </td>
+            <td th:unless="${room.getGuests().size() > 0}">
+                NONE
+            </td>
             <td>
                 <input type="hidden" th:value="${room.getRoomId()}" name="room_id">
                 <input type="submit" th:value="delete">

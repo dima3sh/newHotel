@@ -16,7 +16,8 @@ public class Thing {
     @Column(name = "cost_per_object")
     protected Integer costPerObject;
 
-    public Thing(){}
+    public Thing() {
+    }
 
     public Thing(String name, Double weight, Integer costPerObject) {
         this.name = name;

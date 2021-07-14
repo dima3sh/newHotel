@@ -11,12 +11,12 @@ public class Guest extends Person {
 
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name= "increment", strategy= "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "guest_id")
     private Long guestId;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "guest_room_id", nullable=false)
+    @JoinColumn(name = "guest_room_id", nullable = false)
     private Room guest_room_id;
 
     @Column(name = "departure_time")

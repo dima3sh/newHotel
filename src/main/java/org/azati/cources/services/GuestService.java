@@ -19,8 +19,8 @@ public class GuestService {
         return guest;
     }
 
-    public Optional<Guest> getGuest(Long guest_id) {
-        return guestRepository.findById(guest_id);
+    public Guest getGuest(Long guest_id) {
+        return guestRepository.findById(guest_id).get();
     }
 
     public List<Guest> getGuests(String name) {

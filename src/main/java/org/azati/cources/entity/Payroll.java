@@ -5,7 +5,8 @@ public class Payroll {
     private Integer salary;
     private String bankAccount;
 
-    public Payroll(){}
+    public Payroll() {
+    }
 
     public Payroll(Integer salary, String bankAccount, Integer payroll_id) {
         this.salary = salary;

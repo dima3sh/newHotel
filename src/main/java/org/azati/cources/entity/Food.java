@@ -4,7 +4,8 @@ public class Food extends Thing {
     private Integer dish_id;
     private Integer caloric;
 
-    public Food(){}
+    public Food() {
+    }
 
     public Food(String name, Double weight, Integer costPerObject, Integer dish_id, Integer caloric) {
         super(name, weight, costPerObject);

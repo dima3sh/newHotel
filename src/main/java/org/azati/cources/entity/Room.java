@@ -1,6 +1,5 @@
 package org.azati.cources.entity;
 
-import org.azati.cources.enums.StatusRoom;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -15,7 +14,7 @@ public class Room {
 
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name= "increment", strategy= "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "room_id")
     private Long roomId;
 
@@ -28,9 +27,9 @@ public class Room {
     @Column(name = "cost_per_hour")
     private Integer costPerHour;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status_room")
-    private StatusRoom statusRoom;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "status_room_id", nullable = false)
+    private DirectoryStatus directoryStatus;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "equipment_room_id")
@@ -39,6 +38,7 @@ public class Room {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "guest_room_id")
     private List<Guest> guests;
+
 
     public Long getRoomId() {
         return roomId;
@@ -72,14 +72,6 @@ public class Room {
         this.costPerHour = costPerHour;
     }
 
-    public StatusRoom getStatusRoom() {
-        return statusRoom;
-    }
-
-    public void setStatusRoom(StatusRoom statusRoom) {
-        this.statusRoom = statusRoom;
-    }
-
     public List<Equipment> getEquipments() {
         return equipments;
     }
@@ -96,6 +88,14 @@ public class Room {
         this.guests = guests;
     }
 
+    public DirectoryStatus getDirectoryStatus() {
+        return directoryStatus;
+    }
+
+    public void setDirectoryStatus(DirectoryStatus directoryStatus) {
+        this.directoryStatus = directoryStatus;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -103,7 +103,6 @@ public class Room {
                 ", isFreeRoom=" + isFreeRoom +
                 ", numberOfBeds=" + numberOfBeds +
                 ", costPerHour=" + costPerHour +
-                ", statusRoom=" + statusRoom +
                 ", equipments=" + equipments +
                 ", guest=" + guests +
                 '}';
@@ -116,7 +115,7 @@ public class Room {
         Room room = (Room) o;
         return roomId.equals(room.roomId) && isFreeRoom.equals(room.isFreeRoom)
                 && numberOfBeds.equals(room.numberOfBeds) && costPerHour.equals(room.costPerHour)
-                && statusRoom.equals(room.statusRoom) && equipments.equals(room.equipments);
+                && equipments.equals(room.equipments);
     }
 
     @Override

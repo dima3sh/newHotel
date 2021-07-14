@@ -1,7 +1,5 @@
 package org.azati.cources.entity;
 
-import java.util.Objects;
-
 public class Request {
     private Integer request_id;
     private String text;
@@ -9,7 +7,8 @@ public class Request {
     private Employee stuff;
     private Thing thing;
 
-    public Request(){}
+    public Request() {
+    }
 
     public Request(Integer request_id, String text, Boolean isReady, Employee stuff, Thing thing) {
         this.request_id = request_id;

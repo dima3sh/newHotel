@@ -1,7 +1,6 @@
 package org.azati.cources.services;
 
 import org.azati.cources.entity.Room;
-import org.azati.cources.enums.StatusRoom;
 import org.azati.cources.repository.RoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,28 +18,32 @@ public class RoomService {
     RoomRepository roomRepository;
 
     public Room addRoom(Room room) {
-        roomRepository.save(room);
+        log.info("add room : " + room.toString());
+        roomRepository.addRoom(room.getRoomId(), room.getFreeRoom(), room.getNumberOfBeds(),
+                room.getCostPerHour(), room.getDirectoryStatus().getLinkId());
         return room;
     }
 
     public Room getRoom(Long room_id) {
         if (roomRepository.findById(room_id).isPresent()) {
+            Room room;
             return roomRepository.findById(room_id).get();
         }
-        log.debug("");
+        log.debug("throw RuntimeException");
         throw new RuntimeException("not found room");
     }
 
     public List<Room> addRooms(List<Room> rooms) {
+        log.info("add several rooms");
         rooms.forEach(this::addRoom);
         return rooms;
     }
 
     public List<Room> getRooms() {
-        return (List<Room>)roomRepository.findAll();
+        return (List<Room>) roomRepository.findAll();
     }
 
-    public void removeRoom (Long roomId) {
+    public void removeRoom(Long roomId) {
         roomRepository.deleteById(roomId);
     }
 }
