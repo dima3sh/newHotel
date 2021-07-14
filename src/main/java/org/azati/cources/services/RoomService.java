@@ -1,6 +1,7 @@
 package org.azati.cources.services;
 
 import org.azati.cources.entity.Room;
+import org.azati.cources.enums.StatusRoom;
 import org.azati.cources.repository.RoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,15 @@ public class RoomService {
     }
 
     public List<Room> addRooms(List<Room> rooms) {
-        for (int i = 0; i < rooms.size(); i++) {
-            addRoom((Room)rooms.get(i));
-        }
-        //rooms.forEach(this::addRoom);
+        rooms.forEach(this::addRoom);
         return rooms;
+    }
+
+    public List<Room> getRooms() {
+        return (List<Room>)roomRepository.findAll();
+    }
+
+    public void removeRoom (Long roomId) {
+        roomRepository.deleteById(roomId);
     }
 }

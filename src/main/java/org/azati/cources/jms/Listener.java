@@ -2,6 +2,7 @@ package org.azati.cources.jms;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.azati.cources.entity.Room;
 import org.azati.cources.services.RoomService;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +39,8 @@ public class Listener {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
 
-            room
-            list =  gson.fromJson(messageData, List.class);
+            Type foo = new TypeToken<List<Room>>(){}.getType();
+            list =  gson.fromJson(messageData, foo);
             roomService.addRooms(list);
         }
         return response;

@@ -29,6 +29,7 @@ public class Room {
     private Integer costPerHour;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status_room")
     private StatusRoom statusRoom;
 
     @LazyCollection(LazyCollectionOption.FALSE)

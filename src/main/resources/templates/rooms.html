@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table style="border:1px; align-content:center">
+    <tr>
+        <th>Room id</th>
+        <th>isFreeRoom</th>
+        <th>numberOfBeds</th>
+        <th>costPerHour</th>
+        <th>statusRoom</th>
+        <th>equipments</th>
+        <th>guests</th>
+        <th>delete room</th>
+    <tr/>
+    <tr th:each="room : ${rooms}">
+        <form method="GET">
+            <td th:utext="${room.getRoomId()}"></td>
+            <td th:utext="${room.getIsFreeRoom()}"></td>
+            <td th:utext="${room.getNumberOfBeds()}"></td>
+            <td th:utext="${room.getCostPerHour()}"></td>
+            <td th:utext="${room.getStatusRoom()}"></td>
+            <td th:utext="${room.getEquipments()}"></td>
+            <td th:utext="${room.getGuests()}"></td>
+            <td>
+                <input type="hidden" th:value="${room.getRoomId()}" name="room_id">
+                <input type="submit" th:value="delete">
+            </td>
+
+        </form>
+    </tr>
+</table>
+
+</body>
+</html>
