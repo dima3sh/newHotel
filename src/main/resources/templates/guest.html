@@ -3,8 +3,80 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>$Title$</title>
+    <style>
+        body {
+            font-size:130%;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+        }
+
+        H1 {
+            padding-left: 100px;
+            padding-top: 30px;
+            padding-bottom: 70px;
+            font-size: 250%;
+            width: 50%;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: #333366;
+        }
+
+        img {
+            height: 100px;
+        }
+
+        #image {
+            width: 150px;
+            height: 150px;
+            border: #333366 1px solid;
+            margin-right: 20%;
+            position: absolute;
+            top: 10px; /* прикрепить к верху родителя */
+            right: 200px;
+        }
+
+        .field {
+            width: 50%;
+            float: left;
+            height: 50px;
+        }
+
+        #invoice {
+            float:right;
+            margin-right: 100px;
+        }
+
+    </style>
 </head>
 <body>
-<h2 th:utext="${guest.getName()}"></h2>
+<h1 th:utext="${guest.getName()}"></h1>
+<div id="image">
+    <img>
+</div>
+<hr/>
+<div>
+    <div class="field">
+        id : <span th:utext="${guest.getGuestId()}"></span>
+    </div>
+    <div class="field">
+        room id: <span th:utext="${guest.getGuestRoomId().getRoomId()}"></span>
+    </div>
+    <div class="field">
+        phone : <span th:utext="${guest.getPhoneNumber()}"></span>
+    </div>
+    <div class="field">
+        departure time : <span th:utext="${guest.getDepartureTime()}"></span>
+    </div>
+    <div class="field">
+        email : <span th:utext="${guest.getEmailAddress()}"></span>
+    </div>
+    <div class="field">
+        arrive time : <span th:utext="${guest.getArrivalTime()}"></span>
+    </div>
+</div>
+<form action = "/report/guest">
+    <input type="submit" value="edit">
+    <input type="hidden" th:value="${guest.getGuestId()}" name="id">
+    <input type="submit" value="free">
+</form>
+<div id="invoice">Invoice : <span th:utext="${guest.getInvoice()}"></span> $</div>
 </body>
 </html>

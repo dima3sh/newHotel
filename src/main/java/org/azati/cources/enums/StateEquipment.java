@@ -1,7 +1,7 @@
 package org.azati.cources.enums;
 
 public enum StateEquipment {
-    isnew(0),
+    novel(0),
     smalldefect(1),
     broken(2),
     hugedefect(3),

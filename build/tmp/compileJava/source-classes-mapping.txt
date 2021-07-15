@@ -2,12 +2,12 @@ org/azati/cources/services/GuestService.java
  org.azati.cources.services.GuestService
 org/azati/cources/configuration/JmsConfig.java
  org.azati.cources.configuration.JmsConfig
-org/azati/cources/entity/DirectoryStatus.java
- org.azati.cources.entity.DirectoryStatus
 org/azati/cources/repository/RoomRepository.java
  org.azati.cources.repository.RoomRepository
 org/azati/cources/entity/Request.java
  org.azati.cources.entity.Request
+org/azati/cources/utils/ReportUtil.java
+ org.azati.cources.utils.ReportUtil
 org/azati/cources/services/RoomService.java
  org.azati.cources.services.RoomService
 org/azati/cources/configuration/DataSourceConfig.java
@@ -20,6 +20,8 @@ org/azati/cources/dto/GuestDTO.java
  org.azati.cources.dto.GuestDTO
 org/azati/cources/entity/Dish.java
  org.azati.cources.entity.Dish
+org/azati/cources/controllers/EquipmentController.java
+ org.azati.cources.controllers.EquipmentController
 org/azati/cources/dto/RoomDTO.java
  org.azati.cources.dto.RoomDTO
 org/azati/cources/entity/Employee.java
@@ -32,6 +34,8 @@ org/azati/cources/enums/EmployeeRoles.java
  org.azati.cources.enums.EmployeeRoles
 org/azati/cources/entity/Equipment.java
  org.azati.cources.entity.Equipment
+org/azati/cources/dto/EquipmentDTO.java
+ org.azati.cources.dto.EquipmentDTO
 org/azati/cources/enums/StateEquipment.java
  org.azati.cources.enums.StateEquipment
 org/azati/cources/repository/GuestRepository.java
@@ -43,17 +47,21 @@ org/azati/cources/entity/Guest.java
  org.azati.cources.entity.Guest
 org/azati/cources/entity/Person.java
  org.azati.cources.entity.Person
-org/azati/cources/entity/Thing.java
- org.azati.cources.entity.Thing
 org/azati/cources/services/EquipmentService.java
  org.azati.cources.services.EquipmentService
+org/azati/cources/entity/Thing.java
+ org.azati.cources.entity.Thing
 org/azati/cources/jms/Listener.java
  org.azati.cources.jms.Listener
  org.azati.cources.jms.Listener$1
+org/azati/cources/dictionaries/DirectoryStatus.java
+ org.azati.cources.dictionaries.DirectoryStatus
 org/azati/cources/controllers/GuestController.java
  org.azati.cources.controllers.GuestController
 org/azati/cources/entity/Food.java
  org.azati.cources.entity.Food
+org/azati/cources/dictionaries/EquipmentStateDictionary.java
+ org.azati.cources.dictionaries.EquipmentStateDictionary
 org/azati/cources/enums/StatusRoom.java
  org.azati.cources.enums.StatusRoom
 org/azati/cources/repository/EquipmentRepository.java

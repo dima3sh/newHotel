@@ -1,13 +1,14 @@
 package org.azati.cources.controllers;
 
-import org.azati.cources.dto.RoomDTO;
+
+import net.sf.jasperreports.engine.JRException;
 import org.azati.cources.entity.Guest;
-import org.azati.cources.entity.Room;
-import org.azati.cources.jms.Sender;
+
 import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
 import org.azati.cources.utils.DTOUtil;
+import org.azati.cources.utils.ReportUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 
 @Controller
 public class GuestController {
@@ -102,5 +101,16 @@ public class GuestController {
         return "guest";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/report/guest", params = {"id"} , method = RequestMethod.GET)
+    public String getReportGuest(@RequestParam(value = "id") Long guestId) {
+        log.info("path : /guest ; print information about guest");
+        try {
+            ReportUtil.createPDFReport(guestService.getGuest(guestId), "hello");
+        }catch (JRException e) {
+            log.info("JRException with stackTrace: " + e.getStackTrace());
+        }
+        return "report create";
+    }
 
 }

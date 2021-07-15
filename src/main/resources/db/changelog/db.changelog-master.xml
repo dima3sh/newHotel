@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-table-new-linked_equipment_state" author="root">
+        <createTable tableName="linked_equipment_state">
+            <column name="link_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="varchar_equipment_state" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="equipment_state" type="state">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-foreign-key-equipment-linked_equipment_state" author="root">
+        <addForeignKeyConstraint baseColumnNames="equipment_state_id"
+                                 baseTableName="equipment"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_equipment_state_is"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 referencedColumnNames="link_id"
+                                 referencedTableName="linked_equipment_state"
+                                 referencedTableSchemaName="public"
+        />
+    </changeSet>
+
+
+</databaseChangeLog>

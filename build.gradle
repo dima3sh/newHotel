@@ -24,6 +24,8 @@ apply plugin: 'org.springframework.boot'
 
 repositories {
     mavenCentral()
+    maven{url "http://jasperreports.sourceforge.net/maven2/"}
+    maven{url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"}
 }
 
 dependencies {
@@ -51,5 +53,9 @@ dependencies {
     implementation group: 'org.webjars', name: 'bootstrap', version: '5.0.1'
     compileOnly group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: '2.3.12.RELEASE', ext: 'pom'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.12.RELEASE'
+    implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.4.0'
+    implementation group: 'org.webjars', name: 'bootstrap', version: '5.0.1'
+    implementation 'net.sf.jasperreports:jasperreports:6.16.0'
+    implementation group: 'com.lowagie', name: 'itext', version: '2.1.7'
 
 }

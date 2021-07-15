@@ -1,6 +1,5 @@
 package org.azati.cources.dto;
 
-import org.azati.cources.entity.DirectoryStatus;
 import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.enums.StatusRoom;

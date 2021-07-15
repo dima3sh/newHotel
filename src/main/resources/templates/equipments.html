@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table style="border:1px; align-content:center">
+    <tr>
+        <th>Equipment id</th>
+        <th>name</th>
+        <th>room id</th>
+        <th>weight</th>
+        <th>state</th>
+        <th>cost</th>
+        <th>delete equipment</th>
+    <tr/>
+    <tr th:each="equipment : ${equipments}">
+        <form method="GET">
+            <td th:utext="${equipment.getEquipmentId()}"></td>
+            <td th:utext="${equipment.getName()}"></td>
+            <td th:utext="${equipment.getEquipmentRoomId()}"></td>
+            <td th:utext="${equipment.getWeight()}"></td>
+            <td th:utext="${equipment.getStateEquipment()}"></td>
+            <td th:utext="${equipment.getCostPerObject()}"></td>
+            <td>
+                <input type="hidden" th:value="${equipment.getEquipmentId()}" name="equipment_id">
+                <input type="submit" th:value="delete">
+            </td>
+
+        </form>
+    </tr>
+</table>
+
+</body>
+</html>

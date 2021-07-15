@@ -1,8 +1,7 @@
 package org.azati.cources.controllers;
 
-import org.azati.cources.Runner;
 import org.azati.cources.dto.RoomDTO;
-import org.azati.cources.entity.DirectoryStatus;
+import org.azati.cources.dictionaries.DirectoryStatus;
 import org.azati.cources.entity.Room;
 import org.azati.cources.jms.Sender;
 import org.azati.cources.services.RoomService;

@@ -1,5 +1,6 @@
 package org.azati.cources.services;
 
+import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Room;
 import org.azati.cources.repository.RoomRepository;
 import org.slf4j.Logger;
@@ -45,5 +46,9 @@ public class RoomService {
 
     public void removeRoom(Long roomId) {
         roomRepository.deleteById(roomId);
+    }
+
+    public List<Equipment> getEquipmentByRoomID (Long roomId) {
+        return getRoom(roomId).getEquipments();
     }
 }

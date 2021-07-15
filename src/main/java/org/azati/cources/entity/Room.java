@@ -1,5 +1,6 @@
 package org.azati.cources.entity;
 
+import org.azati.cources.dictionaries.DirectoryStatus;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;

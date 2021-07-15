@@ -25,22 +25,14 @@
             <td th:utext="${room.getCostPerHour()}"></td>
             <td th:utext="${room.getStatusRoom()}"></td>
             <td th:if="${room.getEquipments().size() > 0}">
-                <ul th:each="equipment : ${room.getEquipments()}">
-                    <li th:utext="${equipment.getName()}"></li>
-                    <li th:utext="${equipment.getCostPerObject()}"></li>
-                    <li th:utext="${equipment.getStateEquipment()}"></li>
-                    <li th:utext="${equipment.getWeight()}"></li>
-                </ul>
+                <a th:href="@{/equipments(room_id = ${room.getRoomId()})}">View all equipments room</a>
             </td>
             <td th:unless="${room.getEquipments().size() > 0}">
                 NONE
             </td>
             <td th:if="${room.getGuests().size() > 0}">
                 <ul th:each="guest : ${room.getGuests()}">
-                   <li ><a hreaf = "" th:utext="${guest.getName()}"></a></li>
-                    <li th:utext="${guest.getArrivalTime()}"></li>
-                    <li th:utext="${guest.getDepartureTime()}"></li>
-                    <li th:utext="${guest.getInvoice()}"></li>
+                   <li ><a th:href="@{/guest(id = ${guest.getGuestId()})}" th:utext="${guest.getName()}"></a></li>
                 </ul>
             </td>
             <td th:unless="${room.getGuests().size() > 0}">

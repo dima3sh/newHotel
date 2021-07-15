@@ -1,7 +1,9 @@
 package org.azati.cources.utils;
 
+import org.azati.cources.dto.EquipmentDTO;
 import org.azati.cources.dto.GuestDTO;
 import org.azati.cources.dto.RoomDTO;
+import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.entity.Room;
 
@@ -17,6 +19,17 @@ public class DTOUtil {
         roomDTO.setCostPerHour(room.getCostPerHour());
         roomDTO.setNumberOfBeds(room.getNumberOfBeds());
         return roomDTO;
+    }
+
+    public static EquipmentDTO createEquipmentDTO(Equipment equipment) {
+        EquipmentDTO equipmentDTO = new EquipmentDTO();
+        equipmentDTO.setEquipmentId(equipment.getEquipment_id());
+        equipmentDTO.setEquipmentRoomId(equipment.getRoom().getRoomId());
+        equipmentDTO.setStateEquipment(equipment.getEquipmentStateDictionary().getStateEquipment());
+        equipmentDTO.setName(equipment.getName());
+        equipmentDTO.setWeight(equipment.getWeight());
+        equipmentDTO.setCostPerObject(equipment.getCostPerObject());
+        return equipmentDTO;
     }
 
     public static GuestDTO createGuestDTO(Guest guest) {
