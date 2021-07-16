@@ -2,8 +2,11 @@ package org.azati.cources.controllers;
 
 
 import net.sf.jasperreports.engine.JRException;
+import org.azati.cources.dto.GuestDTO;
+import org.azati.cources.dto.RoomDTO;
 import org.azati.cources.entity.Guest;
 
+import org.azati.cources.entity.Room;
 import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
@@ -13,12 +16,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,33 +45,18 @@ public class GuestController {
     @Value("${error.message}")
     private String errorMessage;
 
-    @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
-    public String index(Model model) {
-        log.info("method : index; path : '/'; message : " + message);
-        model.addAttribute("message", message);
-        return "welcome";
-    }
-
     @ResponseBody
     @RequestMapping("/hello/{name}")
     public String hello(@PathVariable String name) {
         return "hello " + name;
     }
 
-    @ResponseBody
-    @RequestMapping("/newguest/{name}")
-    public String newGuest(@PathVariable String name) {
-        LocalDateTime date = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
-        Guest guest = new Guest();
-        guest.setName(name);
-        guest.setGuestRoomId(roomService.getRoom(1L));
-        guest.setPhoneNumber("123456");
-        guest.setEmailAddress("friend@gmail.com");
-        guest.setArrivalTime(LocalDateTime.now());
-        guest.setDepartureTime(LocalDateTime.now());
-        guest.setInvoice(0);
-        guestService.addGuest(guest);
-        return date.toString();
+    @RequestMapping("/newguest")
+    public String newGuest(Model model) {
+        List<RoomDTO> roomsDTO = new ArrayList<>();
+        roomService.getAllFreeRoom().forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
+        model.addAttribute("rooms", roomsDTO);
+        return "newguest";
     }
 
     @ResponseBody
@@ -78,6 +69,52 @@ public class GuestController {
     @RequestMapping("/getguests/{name}")
     public List<Guest> getGuests(@PathVariable String name) {
         return guestService.getGuests(name);
+    }
+
+    @RequestMapping(value = "/guests")
+    public String guests(Model model) {
+        log.info("path : /guests ; print information guests");
+        List<GuestDTO> guestsDTO = new ArrayList<>();
+        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        model.addAttribute("guests", guestsDTO);
+        return "guests";
+    }
+
+    @RequestMapping(value = "/guests", params = {"guest_id"}, method = RequestMethod.GET)
+    public String guests(Model model, @RequestParam(value = "guest_id") Long guestId) {
+        log.info("path : /guests ; print information guests");
+        List<GuestDTO> guestsDTO = new ArrayList<>();
+        roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(),true);
+        guestService.removeGuest(guestId);
+        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        model.addAttribute("guests", guestsDTO);
+        return "guests";
+    }
+
+    @RequestMapping(value = "/newguest", params = {"name", "phone", "email", "room_id", "time_in", "time_out"},
+            method = RequestMethod.GET )
+    public String addGuest(Model model, @RequestParam(value = "name") String name,
+                           @RequestParam(value = "phone") String phone, @RequestParam(value = "email") String email,
+                           @RequestParam(value = "room_id") Long roomId,
+                           @RequestParam ("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
+                           @RequestParam ("time_out") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeOut) {
+        log.info("path : /guests ; print information guests");
+        Guest newGuest = new Guest();
+        newGuest.setName(name);
+        newGuest.setEmailAddress(email);
+        newGuest.setPhoneNumber(phone);
+        Room room = new Room();
+        room.setRoomId(roomId);
+        newGuest.setGuestRoomId(room);
+        newGuest.setDepartureTime(timeOut);
+        newGuest.setArrivalTime(timeIn);
+        newGuest.setInvoice(new Integer(0));
+        guestService.addGuest(newGuest);
+        roomService.updateFreeRoomStatus(roomId, false);
+        List<GuestDTO> guestsDTO = new ArrayList<>();
+        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        model.addAttribute("guests", guestsDTO);
+        return "guests";
     }
 
     @ResponseBody

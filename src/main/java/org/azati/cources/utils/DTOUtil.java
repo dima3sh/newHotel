@@ -34,11 +34,14 @@ public class DTOUtil {
 
     public static GuestDTO createGuestDTO(Guest guest) {
         GuestDTO guestDTo = new GuestDTO();
+        guestDTo.setName(guest.getName());
+        guestDTo.setPhoneNumber(guest.getPhoneNumber());
+        guestDTo.setEmailAddress(guest.getEmailAddress());
         guestDTo.setGuestId(guest.getGuestId());
         guestDTo.setArrivalTime(guest.getArrivalTime());
         guestDTo.setInvoice(guest.getInvoice());
         guestDTo.setDepartureTime(guest.getDepartureTime());
-        guestDTo.setRoomId(guest.getGuestRoomId());
+        guestDTo.setRoomId(guest.getGuestRoomId().getRoomId());
         return guestDTo;
     }
 }

@@ -22,16 +22,16 @@
                     <![CDATA[$F{name}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="0" width="100" height="20"/>
-                <textElement/>
-                <textFieldExpression class="java.lang.String">
-                    <![CDATA[$F{invoice}]]></textFieldExpression>
-            </textField>
-            <textField>
                 <reportElement x="200" y="0" width="100" height="20"/>
                 <textElement/>
                 <textFieldExpression class="java.lang.String">
                     <![CDATA[$F{phoneNumber}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="0" width="100" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{invoice}]]></textFieldExpression>
             </textField>
 
         </band>

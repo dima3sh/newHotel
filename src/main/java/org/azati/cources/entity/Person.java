@@ -2,10 +2,12 @@ package org.azati.cources.entity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public class Person {
 
+    @NotNull(message = "First Name cannot be null")
     @Column(name = "Name_Guest")
     protected String name;
 

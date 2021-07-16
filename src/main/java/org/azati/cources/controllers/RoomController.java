@@ -63,7 +63,7 @@ public class RoomController {
         return "addrooms";
     }
 
-    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
+    @RequestMapping(value = "/rooms")
     public String getRooms(Model model) {
         log.info("path : /rooms ; print all rooms");
 

@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface RoomRepository extends CrudRepository<Room, Long> {
 
     @Modifying
@@ -17,4 +19,5 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
                         @Param("numberOfBeds") Integer numberOfBeds, @Param("costPerHour") Integer costPerHour,
                         @Param("statusId") Integer statusId);
 
+    public List<Room> findAllByIsFreeRoom (Boolean flag);
 }

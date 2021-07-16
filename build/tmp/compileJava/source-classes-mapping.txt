@@ -24,6 +24,8 @@ org/azati/cources/controllers/EquipmentController.java
  org.azati.cources.controllers.EquipmentController
 org/azati/cources/dto/RoomDTO.java
  org.azati.cources.dto.RoomDTO
+org/azati/cources/configuration/SpringFoxConfig.java
+ org.azati.cources.configuration.SpringFoxConfig
 org/azati/cources/entity/Employee.java
  org.azati.cources.entity.Employee
 org/azati/cources/Runner.java
@@ -36,10 +38,14 @@ org/azati/cources/entity/Equipment.java
  org.azati.cources.entity.Equipment
 org/azati/cources/dto/EquipmentDTO.java
  org.azati.cources.dto.EquipmentDTO
+org/azati/cources/configuration/WebConfig.java
+ org.azati.cources.configuration.WebConfig
 org/azati/cources/enums/StateEquipment.java
  org.azati.cources.enums.StateEquipment
 org/azati/cources/repository/GuestRepository.java
  org.azati.cources.repository.GuestRepository
+org/azati/cources/controllers/MainController.java
+ org.azati.cources.controllers.MainController
 org/azati/cources/jms/Sender.java
  org.azati.cources.jms.Sender
  org.azati.cources.jms.Sender$1

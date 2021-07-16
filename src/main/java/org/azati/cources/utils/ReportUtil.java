@@ -29,7 +29,7 @@ public class ReportUtil {
 
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
         exporter.setExporterOutput(
-                new SimpleOutputStreamExporterOutput("employeeReport.pdf"));
+                new SimpleOutputStreamExporterOutput("guestReport.pdf"));
 
         SimplePdfReportConfiguration reportConfig
                 = new SimplePdfReportConfiguration();

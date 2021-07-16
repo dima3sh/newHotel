@@ -25,6 +25,13 @@ public class RoomService {
         return room;
     }
 
+    public Room updateFreeRoomStatus(Long roomId, Boolean status) {
+        Room room = roomRepository.findById(roomId).get();
+        room.setFreeRoom(status);
+        room = roomRepository.save(room);
+        return room;
+    }
+
     public Room getRoom(Long room_id) {
         if (roomRepository.findById(room_id).isPresent()) {
             Room room;
@@ -48,7 +55,11 @@ public class RoomService {
         roomRepository.deleteById(roomId);
     }
 
-    public List<Equipment> getEquipmentByRoomID (Long roomId) {
+    public List<Equipment> getEquipmentByRoomID(Long roomId) {
         return getRoom(roomId).getEquipments();
+    }
+
+    public List<Room> getAllFreeRoom() {
+        return roomRepository.findAllByIsFreeRoom(true);
     }
 }

@@ -5,6 +5,7 @@ import org.azati.cources.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,8 @@ public class GuestService {
     GuestRepository guestRepository;
 
     public Guest addGuest(Guest guest) {
-        guestRepository.save(guest);
+        guestRepository.addGuest(guest.getGuestRoomId().getRoomId(), guest.getName(), guest.getPhoneNumber(),
+                guest.getEmailAddress(), guest.getInvoice(), guest.getDepartureTime(), guest.getArrivalTime());
         return guest;
     }
 
@@ -36,5 +38,13 @@ public class GuestService {
         guests.forEach(guest -> guest.setInvoice(newInvoice));
         guestRepository.saveAll(guests);
         return guests;
+    }
+
+    public List<Guest> getGuests() {
+        return (ArrayList<Guest>) guestRepository.findAll();
+    }
+
+    public void removeGuest(Long guestId) {
+        guestRepository.deleteById(guestId);
     }
 }

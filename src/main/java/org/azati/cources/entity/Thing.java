@@ -2,6 +2,8 @@ package org.azati.cources.entity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @MappedSuperclass
 
@@ -13,6 +15,8 @@ public class Thing {
     @Column(name = "weight")
     protected Double weight;
 
+    @Min(value = 1, message = "weight should not be less than 1")
+    @Max(value = 65, message = "weight should not be greater than 65")
     @Column(name = "cost_per_object")
     protected Integer costPerObject;
 
