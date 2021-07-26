@@ -1,9 +1,7 @@
 package org.azati.cources.entity;
 
 import org.azati.cources.dictionaries.EquipmentStateDictionary;
-import org.azati.cources.enums.StateEquipment;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -24,6 +22,25 @@ public class Equipment extends Thing {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "equipment_room_id", nullable = true)
     private Room equipment_room_id;
+
+    @Column(name = "producer")
+    private String producer;
+
+    public Room getEquipment_room_id() {
+        return equipment_room_id;
+    }
+
+    public void setEquipment_room_id(Room equipment_room_id) {
+        this.equipment_room_id = equipment_room_id;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
 
     public Equipment() {
     }
@@ -56,8 +73,9 @@ public class Equipment extends Thing {
     public String toString() {
         return "Equipment{" +
                 "equipment_id=" + equipment_id +
-                ", stateEquipment=" + equipmentStateDictionary +
-                ", room_id=" + equipment_room_id +
+                ", equipmentStateDictionary=" + equipmentStateDictionary +
+                ", equipment_room_id=" + equipment_room_id +
+                ", producer='" + producer + '\'' +
                 "} " + super.toString();
     }
 

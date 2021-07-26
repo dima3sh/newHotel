@@ -1,7 +1,8 @@
 package org.azati.cources.services;
 
+import org.azati.cources.dictionaries.EquipmentStateDictionary;
 import org.azati.cources.entity.Equipment;
-import org.azati.cources.entity.Room;
+import org.azati.cources.enums.StateEquipment;
 import org.azati.cources.repository.EquipmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,9 @@ public class EquipmentService {
 
 
     public Equipment addEquipment(Equipment equipment) {
-        //log.info("add room : " + equipment.toString());
         equipmentRepository.addEquipment(equipment.getRoom().getRoomId(), equipment.getName(),
-                equipment.getWeight(), equipment.getCostPerObject(), equipment.getEquipmentStateDictionary().getLinkId());
+                equipment.getWeight(), equipment.getCostPerObject(), equipment.getEquipmentStateDictionary().getLinkId(),
+                equipment.getProducer());
         return equipment;
     }
 
@@ -32,7 +33,7 @@ public class EquipmentService {
     }
 
     public List<Equipment> getAllEquipments() {
-        return (ArrayList<Equipment>)equipmentRepository.findAll();
+        return (ArrayList<Equipment>) equipmentRepository.findAll();
     }
 
     public void removeEquipment(Long equipmentId) {
@@ -48,6 +49,19 @@ public class EquipmentService {
         upEquipment.setRoom(equipment.getRoom());
         upEquipment.setEquipment_id(equipment.getEquipment_id());
         equipmentRepository.save(upEquipment);
+    }
+
+    public Equipment equipmentFactory(String name, Double weight, String producer, StateEquipment stateEquipment, Integer cost) {
+        Equipment equipment = new Equipment();
+        equipment.setName(name);
+        equipment.setWeight(weight);
+        equipment.setProducer(producer);
+        EquipmentStateDictionary equipmentStateDictionary = new EquipmentStateDictionary();
+        equipmentStateDictionary.setLinkId(stateEquipment.getIndex());
+        equipmentStateDictionary.setStateEquipment(stateEquipment);
+        equipment.setEquipmentStateDictionary(equipmentStateDictionary);
+        equipment.setCostPerObject(cost);
+        return equipment;
     }
 
 

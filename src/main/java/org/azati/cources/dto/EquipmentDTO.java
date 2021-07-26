@@ -1,10 +1,6 @@
 package org.azati.cources.dto;
 
-import org.azati.cources.dictionaries.EquipmentStateDictionary;
-import org.azati.cources.entity.Room;
 import org.azati.cources.enums.StateEquipment;
-
-import javax.persistence.Column;
 
 public class EquipmentDTO {
 
@@ -15,6 +11,15 @@ public class EquipmentDTO {
     protected String name;
     protected Double weight;
     protected Integer costPerObject;
+    private String producer;
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
 
     public String getName() {
         return name;

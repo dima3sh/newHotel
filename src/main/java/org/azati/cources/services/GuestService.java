@@ -1,6 +1,7 @@
 package org.azati.cources.services;
 
 import org.azati.cources.entity.Guest;
+import org.azati.cources.entity.Room;
 import org.azati.cources.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,5 +75,20 @@ public class GuestService {
 
     public void removeGuest(Long guestId) {
         guestRepository.deleteById(guestId);
+    }
+
+    public Guest guestFactory(String name, String email, String phone, Long roomId, LocalDateTime timeOut
+            , LocalDateTime timeIn, Integer invoice) {
+        Guest newGuest = new Guest();
+        newGuest.setName(name);
+        newGuest.setEmailAddress(email);
+        newGuest.setPhoneNumber(phone);
+        Room room = new Room();
+        room.setRoomId(roomId);
+        newGuest.setGuestRoomId(room);
+        newGuest.setDepartureTime(timeOut);
+        newGuest.setArrivalTime(timeIn);
+        newGuest.setInvoice(new Integer(0));
+        return newGuest;
     }
 }

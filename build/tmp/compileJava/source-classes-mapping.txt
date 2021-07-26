@@ -1,5 +1,9 @@
+org/azati/cources/configuration/AOPConfig.java
+ org.azati.cources.configuration.AOPConfig
 org/azati/cources/services/GuestService.java
  org.azati.cources.services.GuestService
+org/azati/cources/aspects/AspectForAllMethods.java
+ org.azati.cources.aspects.AspectForAllMethods
 org/azati/cources/configuration/JmsConfig.java
  org.azati.cources.configuration.JmsConfig
 org/azati/cources/repository/RoomRepository.java

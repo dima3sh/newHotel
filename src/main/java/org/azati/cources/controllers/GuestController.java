@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,12 +36,6 @@ public class GuestController {
 
     @Autowired
     RoomService roomService;
-
-    @Value("${welcome.message}")
-    private String message;
-
-    @Value("${error.message}")
-    private String errorMessage;
 
     @ResponseBody
     @RequestMapping("/hello/{name}")
@@ -109,17 +104,8 @@ public class GuestController {
                             @RequestParam("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
                             @RequestParam("time_out") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeOut,
                             @RequestParam("guest_id") Long guestId) {
-        Guest newGuest = new Guest();
-        newGuest.setName(name);
-        newGuest.setEmailAddress(email);
-        newGuest.setPhoneNumber(phone);
-        Room room = new Room();
-        room.setRoomId(roomId);
-        newGuest.setGuestRoomId(room);
-        newGuest.setDepartureTime(timeOut);
+        Guest newGuest = guestService.guestFactory(name, email, phone, roomId, timeOut, timeIn, 0);
         newGuest.setGuestId(guestId);
-        newGuest.setArrivalTime(timeIn);
-        newGuest.setInvoice(new Integer(0));
         guestService.updateGuest(newGuest);
         roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
         roomService.updateFreeRoomStatus(roomId, false);
@@ -136,17 +122,7 @@ public class GuestController {
                            @RequestParam(value = "room_id") Long roomId,
                            @RequestParam("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
                            @RequestParam("time_out") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeOut) {
-        log.info("path : /guests ; print information guests");
-        Guest newGuest = new Guest();
-        newGuest.setName(name);
-        newGuest.setEmailAddress(email);
-        newGuest.setPhoneNumber(phone);
-        Room room = new Room();
-        room.setRoomId(roomId);
-        newGuest.setGuestRoomId(room);
-        newGuest.setDepartureTime(timeOut);
-        newGuest.setArrivalTime(timeIn);
-        newGuest.setInvoice(new Integer(0));
+        Guest newGuest = guestService.guestFactory(name, email, phone, roomId, timeOut, timeIn, 0);
         guestService.addGuest(newGuest);
         roomService.updateFreeRoomStatus(roomId, false);
         List<GuestDTO> guestsDTO = new ArrayList<>();
@@ -176,7 +152,7 @@ public class GuestController {
         try {
             ReportUtil.createPDFReport(guestService.getGuest(guestId), "hello");
         } catch (JRException e) {
-            log.info("JRException with stackTrace: " + e.getStackTrace());
+            log.info("JRException with stackTrace: " + Arrays.toString(e.getStackTrace()));
         }
         return "report create";
     }

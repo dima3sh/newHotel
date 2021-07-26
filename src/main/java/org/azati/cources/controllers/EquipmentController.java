@@ -1,6 +1,5 @@
 package org.azati.cources.controllers;
 
-import org.azati.cources.dictionaries.EquipmentStateDictionary;
 import org.azati.cources.dto.EquipmentDTO;
 import org.azati.cources.dto.RoomDTO;
 import org.azati.cources.entity.Equipment;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -32,31 +32,33 @@ public class EquipmentController {
     @Autowired
     RoomService roomService;
 
+
     @RequestMapping(value = "/add/equipment")
     public String addEquipment(Model model) {
+
         model.addAttribute("isEdit", false);
         List<RoomDTO> roomsDTO = new ArrayList<>();
         roomService.getAllFreeRoom().forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
         model.addAttribute("rooms", roomsDTO);
-        model.addAttribute("warehouse", roomService.getRoom(20L));
+        try {
+            model.addAttribute("warehouse", roomService.getRoom(20L));
+        } catch (RuntimeException ex) {
+
+        }
         model.addAttribute("statesEquipment", StateEquipment.values());
         return "newequipment";
     }
 
-    @RequestMapping(value = "/add/equipment", params = {"name", "weight", "state_equipment", "cost", "room_id", "equipment_id"}
+    @RequestMapping(value = "/add/equipment", params = {"name", "weight", "producer", "state_equipment", "cost", "room_id", "equipment_id"}
             , method = RequestMethod.GET)
     public String editEquipment(Model model, @RequestParam("name") String name, @RequestParam("weight") Double weight
-            , @RequestParam("state_equipment") Integer stateEquipment, @RequestParam("cost") Integer cost,
+            ,@RequestParam("producer") String producer,  @RequestParam("state_equipment") Integer stateEquipment,
+                                @RequestParam("cost") Integer cost,
                                 @RequestParam("room_id") Long room_id, @RequestParam("equipment_id") Long equipmentId) {
+
         model.addAttribute("isEdit", false);
-        Equipment equipment = new Equipment();
-        equipment.setName(name);
-        equipment.setWeight(weight);
-        EquipmentStateDictionary equipmentStateDictionary = new EquipmentStateDictionary();
-        equipmentStateDictionary.setLinkId(stateEquipment);
-        equipmentStateDictionary.setStateEquipment(StateEquipment.values()[stateEquipment - 1]);
-        equipment.setEquipmentStateDictionary(equipmentStateDictionary);
-        equipment.setEquipment_id(equipmentId);
+        Equipment equipment = equipmentService.equipmentFactory(name, weight, producer,
+                StateEquipment.values()[stateEquipment - 1], cost);
         if (room_id != null) {
             equipment.setRoom(roomService.getRoom(room_id));
         } else {
@@ -72,17 +74,13 @@ public class EquipmentController {
         return "equipments";
     }
 
-    @RequestMapping(value = "/add/equipment", params = {"name", "weight", "cost", "room_id"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/add/equipment", params = {"name", "weight", "producer", "cost", "room_id"}, method = RequestMethod.GET)
     public String addEquipment(Model model, @RequestParam("name") String name, @RequestParam("weight") Double weight,
+                               @RequestParam("producer") String producer,
                                @RequestParam("cost") Integer cost, @RequestParam("room_id") Long room_id) {
+
         model.addAttribute("isEdit", false);
-        Equipment equipment = new Equipment();
-        equipment.setName(name);
-        equipment.setWeight(weight);
-        EquipmentStateDictionary equipmentStateDictionary = new EquipmentStateDictionary();
-        equipmentStateDictionary.setLinkId(StateEquipment.novel.getIndex());
-        equipmentStateDictionary.setStateEquipment(StateEquipment.novel);
-        equipment.setEquipmentStateDictionary(equipmentStateDictionary);
+        Equipment equipment = equipmentService.equipmentFactory(name, weight, producer, StateEquipment.novel, cost);
         if (room_id != null) {
             equipment.setRoom(roomService.getRoom(room_id));
         } else {
@@ -90,7 +88,6 @@ public class EquipmentController {
             room.setRoomId(0L);
             equipment.setRoom(new Room());
         }
-        equipment.setCostPerObject(cost);
         equipmentService.addEquipment(equipment);
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getAllEquipments().forEach(e -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(e)));
@@ -101,6 +98,7 @@ public class EquipmentController {
 
     @RequestMapping(value = "/edit/equipment", params = {"id"}, method = RequestMethod.GET)
     public String addEquipment(Model model, @RequestParam("id") Long equipmentId) {
+
         model.addAttribute("isEdit", true);
         EquipmentDTO equipmentDTO = DTOUtil.createEquipmentDTO(equipmentService.getEquipment(equipmentId));
         model.addAttribute("equipment", equipmentDTO);
@@ -114,7 +112,6 @@ public class EquipmentController {
 
     @RequestMapping(value = "/equipments", params = {"room_id"})
     public String getEquipments(Model model, @RequestParam(value = "room_id") Long roomId) {
-        log.info("path : /equipments ; print all equipments");
 
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         roomService.getEquipmentByRoomID(roomId).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
@@ -123,9 +120,9 @@ public class EquipmentController {
     }
 
     @RequestMapping(value = "/equipments", params = {"id"})
-    public String removeEquipmnet(Model model, @RequestParam(value = "id") Long equipmentId) {
-        log.info("path : /equipments ; print all equipments");
-        equipmentService.removeEquipment(equipmentId);
+    public String removeEquipment(Model model, @RequestParam(value = "id") Long equipmentId) {
+
+        roomService.moveEquipments(roomService.getRoom(20L), Collections.singletonList(equipmentId));
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getAllEquipments().forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
         model.addAttribute("equipments", equipmentsDTO);
@@ -135,7 +132,6 @@ public class EquipmentController {
 
     @RequestMapping(value = "/equipments")
     public String getEquipments(Model model) {
-        log.info("path : /equipments ; print all equipments");
 
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getAllEquipments().forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
@@ -146,6 +142,7 @@ public class EquipmentController {
     @RequestMapping(value = "/equipments", params = {"equipment_id", "room_id"}, method = RequestMethod.GET)
     public String getRooms(Model model, @RequestParam(value = "equipment_id") Long equipmentId,
                            @RequestParam(value = "room_id") Long roomId) {
+
         equipmentService.removeEquipment(equipmentId);
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         roomService.getEquipmentByRoomID(roomId).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));

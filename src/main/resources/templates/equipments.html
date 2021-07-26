@@ -22,7 +22,7 @@
     <a class="nav-item nav-link" href="/rooms" >Rooms</a>
     <a class="nav-item nav-link active" href="/equipments" >Equipments</a>
     <a class="nav-item nav-link" href="/guests">Guests</a>
-    <a class="nav-item nav-link disabled" href="#">Something</a>
+    <a class="nav-item nav-link" href="/storage">Storage</a>
 </nav>
 <hr/>
 <table class="table table-striped table-hover">
@@ -34,8 +34,9 @@
         <th scope="col">Weight</th>
         <th scope="col">State</th>
         <th scope="col">Cost</th>
+        <th scope="col">Producer</th>
         <th scope="col">Edit</th>
-        <th scope="col">Delete Equipment</th>
+        <th scope="col">Remove Equipment</th>
     </tr>
     </thead>
     <tbody>
@@ -49,6 +50,7 @@
                 <td th:utext="${equipment.getWeight()}"></td>
                 <td th:utext="${equipment.getStateEquipment().getMessageText()}"></td>
                 <td th:utext="${equipment.getCostPerObject()}"></td>
+                <td th:utext="${equipment.getProducer()}"></td>
                 <td>
                     <a th:href="@{/edit/equipment(id=${equipment.getEquipmentId()})}">
                         <button type="button" class="btn btn-primary">Edit</button>
@@ -56,7 +58,7 @@
                 </td>
                 <td>
                     <a th:href="@{/equipments(id=${equipment.getEquipmentId()})}">
-                        <button type="button" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-primary">Remove</button>
                     </a>
                 </td>
 

@@ -31,7 +31,7 @@
     <a class="nav-item nav-link" href="/rooms" >Rooms</a>
     <a class="nav-item nav-link active" href="/equipments" >Equipments</a>
     <a class="nav-item nav-link" href="/guests">Guests</a>
-    <a class="nav-item nav-link disabled" href="#">Something</a>
+    <a class="nav-item nav-link" href="/storage">Storage</a>
 </nav>
 <hr/>
 <form action="/add/equipment" method="get">
@@ -52,6 +52,16 @@
                    aria-label="Username"
                    aria-describedby="basic-addon1" th:value="${equipment.getWeight()}">
             <input th:unless="${isEdit == true}" name="weight" type="text" class="form-control" placeholder="Weight"
+                   aria-label="Username"
+                   aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3" style="margin-bottom: 10px">
+            <span class="input-group-text" id="basic-addon12">Producer</span>
+            <input th:if="${isEdit == true}" name="producer" type="text" class="form-control" placeholder="Producer"
+                   aria-label="Username"
+                   aria-describedby="basic-addon1" th:value="${equipment.getProducer()}">
+            <input th:unless="${isEdit == true}" name="producer" type="text" class="form-control" placeholder="Producer"
                    aria-label="Username"
                    aria-describedby="basic-addon1">
         </div>

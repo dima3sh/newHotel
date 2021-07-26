@@ -42,14 +42,6 @@ public class DirectoryStatus {
         this.linkId = linkId;
     }
 
-    public String getVarcharRoomStatus() {
-        return varcharRoomStatus;
-    }
-
-    public void setVarcharRoomStatus(String varcharRoomStatus) {
-        this.varcharRoomStatus = varcharRoomStatus;
-    }
-
     public StatusRoom getStatusRoom() {
         return statusRoom;
     }

@@ -1,7 +1,5 @@
 package org.azati.cources.dto;
 
-import org.azati.cources.entity.Room;
-
 import java.time.LocalDateTime;
 
 public class GuestDTO {
