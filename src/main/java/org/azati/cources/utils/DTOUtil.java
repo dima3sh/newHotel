@@ -24,7 +24,7 @@ public class DTOUtil {
     public static EquipmentDTO createEquipmentDTO(Equipment equipment) {
         EquipmentDTO equipmentDTO = new EquipmentDTO();
         equipmentDTO.setEquipmentId(equipment.getEquipment_id());
-        equipmentDTO.setEquipmentRoomId(equipment.getRoom().getRoomId());
+        equipmentDTO.setEquipmentRoomId(equipment.getRoom() == null ? null : equipment.getRoom().getRoomId());
         equipmentDTO.setStateEquipment(equipment.getEquipmentStateDictionary().getStateEquipment());
         equipmentDTO.setName(equipment.getName());
         equipmentDTO.setWeight(equipment.getWeight());

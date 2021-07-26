@@ -12,10 +12,10 @@ import java.util.List;
 public interface RoomRepository extends CrudRepository<Room, Long> {
 
     @Modifying
-    @Query(value = "INSERT INTO room (room_id, is_free_room, number_of_beds, cost_per_hour, status_room_id) VALUES" +
-            " (:roomId, :isFreeRoom, :numberOfBeds, :costPerHour, :statusId)", nativeQuery = true)
+    @Query(value = "INSERT INTO room ( is_free_room, number_of_beds, cost_per_hour, status_room_id) VALUES" +
+            " (:isFreeRoom, :numberOfBeds, :costPerHour, :statusId)", nativeQuery = true)
     @Transactional
-    public void addRoom(@Param("roomId") Long roomId, @Param("isFreeRoom") Boolean isFreeRoom,
+    public void addRoom( @Param("isFreeRoom") Boolean isFreeRoom,
                         @Param("numberOfBeds") Integer numberOfBeds, @Param("costPerHour") Integer costPerHour,
                         @Param("statusId") Integer statusId);
 

@@ -1,17 +1,17 @@
 package org.azati.cources.enums;
 
 public enum StatusRoom {
-    clean("clean"),
-    needscleanig("needscleaning"),
-    dirty("dirty");
+    clean(1),
+    needscleaning(2),
+    dirty(3);
 
-    private String code;
+    private Integer index;
 
-    private StatusRoom(String code) {
-        this.code = code;
+    StatusRoom(Integer index) {
+        this.index = index;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getIndex() {
+        return index;
     }
 }

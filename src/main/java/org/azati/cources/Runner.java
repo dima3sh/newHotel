@@ -1,5 +1,8 @@
 package org.azati.cources;
 
+import org.azati.cources.services.ChronoService;
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +20,7 @@ public class Runner extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         log.info("Start application");
+
         SpringApplication.run(Runner.class, args);
     }
 

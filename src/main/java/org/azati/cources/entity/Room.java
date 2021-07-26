@@ -97,6 +97,10 @@ public class Room {
         this.directoryStatus = directoryStatus;
     }
 
+    public void addEquipment(Equipment equipment) {
+        equipments.add(equipment);
+    }
+
     @Override
     public String toString() {
         return "Room{" +

@@ -20,7 +20,7 @@ public class RoomService {
 
     public Room addRoom(Room room) {
         log.info("add room : " + room.toString());
-        roomRepository.addRoom(room.getRoomId(), room.getFreeRoom(), room.getNumberOfBeds(),
+        roomRepository.addRoom(room.getFreeRoom(), room.getNumberOfBeds(),
                 room.getCostPerHour(), room.getDirectoryStatus().getLinkId());
         return room;
     }
@@ -34,7 +34,6 @@ public class RoomService {
 
     public Room getRoom(Long room_id) {
         if (roomRepository.findById(room_id).isPresent()) {
-            Room room;
             return roomRepository.findById(room_id).get();
         }
         log.debug("throw RuntimeException");
@@ -61,5 +60,15 @@ public class RoomService {
 
     public List<Room> getAllFreeRoom() {
         return roomRepository.findAllByIsFreeRoom(true);
+    }
+
+    public Room updateRoom(Room room) {
+        Room upRoom = roomRepository.findById(room.getRoomId()).get();
+        upRoom.setDirectoryStatus(room.getDirectoryStatus());
+        upRoom.setNumberOfBeds(room.getNumberOfBeds());
+        upRoom.setFreeRoom(room.getFreeRoom());
+        upRoom.setCostPerHour(room.getCostPerHour());
+        roomRepository.save(upRoom);
+        return room;
     }
 }

@@ -5,9 +5,12 @@ import org.azati.cources.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service
 public class GuestService {
@@ -33,11 +36,37 @@ public class GuestService {
         return guestRepository.deleteGuestByPhoneNumber(phoneNumber);
     }
 
-    public List<Guest> updateInvoice(Integer oldInvoice, Integer newInvoice) {
-        List<Guest> guests = guestRepository.findGuestByInvoice(oldInvoice);
-        guests.forEach(guest -> guest.setInvoice(newInvoice));
+    public void updateInvoice() {
+        List<Guest> guests = (ArrayList<Guest>) guestRepository.findAll();
+        guests = guests.stream()
+                .peek(guest -> guest.setInvoice(guest.getInvoice() + guest.getGuestRoomId().getCostPerHour()))
+                .collect(Collectors.toList());
         guestRepository.saveAll(guests);
+    }
+
+    public List<Guest> getGuestNeedFree(Integer hoursMax, Integer hoursMin) {
+        List<Guest> guests;
+        Duration duration1 = Duration.ofHours(hoursMax);
+        Duration duration2 = Duration.ofHours(hoursMin);
+
+        guests = ((ArrayList<Guest>) guestRepository.findAll()).stream().filter(guest ->
+        {
+            Duration duration3 = Duration.between(LocalDateTime.now(), guest.getArrivalTime());
+            return (duration3.getSeconds() < 0 || (duration1.compareTo(duration3) > 0 && duration3.compareTo(duration2) > 0));
+        }).collect(Collectors.toList());
         return guests;
+    }
+
+    public Guest updateGuest(Guest guest) {
+        Guest upGuest = guestRepository.findById(guest.getGuestId()).get();
+        upGuest.setGuestRoomId(guest.getGuestRoomId());
+        upGuest.setArrivalTime(guest.getArrivalTime());
+        upGuest.setDepartureTime(guest.getDepartureTime());
+        upGuest.setEmailAddress(guest.getEmailAddress());
+        upGuest.setPhoneNumber(guest.getPhoneNumber());
+        upGuest.setName(guest.getName());
+        guestRepository.save(upGuest);
+        return guest;
     }
 
     public List<Guest> getGuests() {

@@ -5,7 +5,6 @@ import net.sf.jasperreports.engine.JRException;
 import org.azati.cources.dto.GuestDTO;
 import org.azati.cources.dto.RoomDTO;
 import org.azati.cources.entity.Guest;
-
 import org.azati.cources.entity.Room;
 import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
@@ -16,14 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +53,19 @@ public class GuestController {
         List<RoomDTO> roomsDTO = new ArrayList<>();
         roomService.getAllFreeRoom().forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
         model.addAttribute("rooms", roomsDTO);
+        model.addAttribute("isEdit", false);
+        return "newguest";
+    }
+
+    @RequestMapping(value = "/edit/guest", params = {"id"}, method = RequestMethod.GET)
+    public String editGuest(Model model, @RequestParam(value = "id") Long guestId) {
+        log.info("path : /guests ; print information guests");
+        GuestDTO guestDTO = DTOUtil.createGuestDTO(guestService.getGuest(guestId));
+        List<RoomDTO> roomsDTO = new ArrayList<>();
+        roomService.getAllFreeRoom().forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
+        model.addAttribute("rooms", roomsDTO);
+        model.addAttribute("guest", guestDTO);
+        model.addAttribute("isEdit", true);
         return "newguest";
     }
 
@@ -84,20 +94,48 @@ public class GuestController {
     public String guests(Model model, @RequestParam(value = "guest_id") Long guestId) {
         log.info("path : /guests ; print information guests");
         List<GuestDTO> guestsDTO = new ArrayList<>();
-        roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(),true);
+        roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
         guestService.removeGuest(guestId);
         guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
         model.addAttribute("guests", guestsDTO);
         return "guests";
     }
 
+    @RequestMapping(value = "/newguest", params = {"name", "phone", "email", "room_id", "time_in", "time_out", "guest_id"},
+            method = RequestMethod.GET)
+    public String editGuest(Model model, @RequestParam(value = "name") String name,
+                            @RequestParam(value = "phone") String phone, @RequestParam(value = "email") String email,
+                            @RequestParam(value = "room_id") Long roomId,
+                            @RequestParam("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
+                            @RequestParam("time_out") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeOut,
+                            @RequestParam("guest_id") Long guestId) {
+        Guest newGuest = new Guest();
+        newGuest.setName(name);
+        newGuest.setEmailAddress(email);
+        newGuest.setPhoneNumber(phone);
+        Room room = new Room();
+        room.setRoomId(roomId);
+        newGuest.setGuestRoomId(room);
+        newGuest.setDepartureTime(timeOut);
+        newGuest.setGuestId(guestId);
+        newGuest.setArrivalTime(timeIn);
+        newGuest.setInvoice(new Integer(0));
+        guestService.updateGuest(newGuest);
+        roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
+        roomService.updateFreeRoomStatus(roomId, false);
+        List<GuestDTO> guestsDTO = new ArrayList<>();
+        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        model.addAttribute("guests", guestsDTO);
+        return "guests";
+    }
+
     @RequestMapping(value = "/newguest", params = {"name", "phone", "email", "room_id", "time_in", "time_out"},
-            method = RequestMethod.GET )
+            method = RequestMethod.GET)
     public String addGuest(Model model, @RequestParam(value = "name") String name,
                            @RequestParam(value = "phone") String phone, @RequestParam(value = "email") String email,
                            @RequestParam(value = "room_id") Long roomId,
-                           @RequestParam ("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
-                           @RequestParam ("time_out") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeOut) {
+                           @RequestParam("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
+                           @RequestParam("time_out") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeOut) {
         log.info("path : /guests ; print information guests");
         Guest newGuest = new Guest();
         newGuest.setName(name);
@@ -123,14 +161,7 @@ public class GuestController {
         return guestService.removeGuest(phone) == 1;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/updateguestinvoice/{oldInvoice}", params = {"invoice"})
-    public List<Guest> updateGuestName(@PathVariable Integer oldInvoice,
-                                       @RequestParam(value = "invoice") Integer invoice){
-        return guestService.updateInvoice(oldInvoice, invoice);
-    }
-
-    @RequestMapping(value = "/guest", params = {"id"} , method = RequestMethod.GET)
+    @RequestMapping(value = "/guest", params = {"id"}, method = RequestMethod.GET)
     public String getRooms(Model model, @RequestParam(value = "id") Long guestId) {
         log.info("path : /guest ; print information about guest");
 
@@ -139,12 +170,12 @@ public class GuestController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/report/guest", params = {"id"} , method = RequestMethod.GET)
+    @RequestMapping(value = "/report/guest", params = {"id"}, method = RequestMethod.GET)
     public String getReportGuest(@RequestParam(value = "id") Long guestId) {
         log.info("path : /guest ; print information about guest");
         try {
             ReportUtil.createPDFReport(guestService.getGuest(guestId), "hello");
-        }catch (JRException e) {
+        } catch (JRException e) {
             log.info("JRException with stackTrace: " + e.getStackTrace());
         }
         return "report create";

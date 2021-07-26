@@ -21,10 +21,14 @@ public class EquipmentService {
 
 
     public Equipment addEquipment(Equipment equipment) {
-        log.info("add room : " + equipment.toString());
+        //log.info("add room : " + equipment.toString());
         equipmentRepository.addEquipment(equipment.getRoom().getRoomId(), equipment.getName(),
                 equipment.getWeight(), equipment.getCostPerObject(), equipment.getEquipmentStateDictionary().getLinkId());
         return equipment;
+    }
+
+    public Equipment getEquipment(Long equipmentId) {
+        return equipmentRepository.findById(equipmentId).get();
     }
 
     public List<Equipment> getAllEquipments() {
@@ -33,6 +37,17 @@ public class EquipmentService {
 
     public void removeEquipment(Long equipmentId) {
         equipmentRepository.deleteById(equipmentId);
+    }
+
+    public void updateEquipment(Equipment equipment) {
+        Equipment upEquipment = equipmentRepository.findById(equipment.getEquipment_id()).get();
+        upEquipment.setCostPerObject(equipment.getCostPerObject());
+        upEquipment.setName(equipment.getName());
+        upEquipment.setEquipmentStateDictionary(equipment.getEquipmentStateDictionary());
+        upEquipment.setWeight(equipment.getWeight());
+        upEquipment.setRoom(equipment.getRoom());
+        upEquipment.setEquipment_id(equipment.getEquipment_id());
+        equipmentRepository.save(upEquipment);
     }
 
 

@@ -38,14 +38,18 @@ org/azati/cources/entity/Equipment.java
  org.azati.cources.entity.Equipment
 org/azati/cources/dto/EquipmentDTO.java
  org.azati.cources.dto.EquipmentDTO
-org/azati/cources/configuration/WebConfig.java
- org.azati.cources.configuration.WebConfig
 org/azati/cources/enums/StateEquipment.java
  org.azati.cources.enums.StateEquipment
+org/azati/cources/configuration/WebConfig.java
+ org.azati.cources.configuration.WebConfig
 org/azati/cources/repository/GuestRepository.java
  org.azati.cources.repository.GuestRepository
+org/azati/cources/configuration/ScheduledConfiguration.java
+ org.azati.cources.configuration.ScheduledConfiguration
 org/azati/cources/controllers/MainController.java
  org.azati.cources.controllers.MainController
+org/azati/cources/services/ChronoService.java
+ org.azati.cources.services.ChronoService
 org/azati/cources/jms/Sender.java
  org.azati.cources.jms.Sender
  org.azati.cources.jms.Sender$1
@@ -53,10 +57,10 @@ org/azati/cources/entity/Guest.java
  org.azati.cources.entity.Guest
 org/azati/cources/entity/Person.java
  org.azati.cources.entity.Person
-org/azati/cources/services/EquipmentService.java
- org.azati.cources.services.EquipmentService
 org/azati/cources/entity/Thing.java
  org.azati.cources.entity.Thing
+org/azati/cources/services/EquipmentService.java
+ org.azati.cources.services.EquipmentService
 org/azati/cources/jms/Listener.java
  org.azati.cources.jms.Listener
  org.azati.cources.jms.Listener$1

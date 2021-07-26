@@ -14,13 +14,13 @@
 
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="/">
-        <img src="src/main/resources/images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
         Hotel "MIAMI"
     </a>
 </nav>
 <nav class="nav nav-pills nav-fill">
-    <a class="nav-item nav-link" href="/rooms">Rooms</a>
-    <a class="nav-item nav-link" href="#">Equipments</a>
+    <a class="nav-item nav-link" href="/rooms" >Rooms</a>
+    <a class="nav-item nav-link" href="/equipments" >Equipments</a>
     <a class="nav-item nav-link active" href="/guests">Guests</a>
     <a class="nav-item nav-link disabled" href="#">Something</a>
 </nav>
@@ -36,12 +36,13 @@
         <th scope="col">Departure Time</th>
         <th scope="col">Arrival Time</th>
         <th scope="col">Invoice</th>
-        <th scope="col">Delete guest</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Free</th>
     </tr>
     </thead>
     <tbody>
     <form action="/guests" method="get">
-        <tr th:each="guest : ${guests}">
+        <tr th:selected="${guest.getGuestId()}" th:each="guest : ${guests}">
             <form method="GET">
                 <td th:utext="${guest.getGuestId()}"></td>
                 <td th:utext="${guest.getName()}"></td>
@@ -52,15 +53,20 @@
                 <td th:utext="${guest.getArrivalTime()}"></td>
                 <td th:utext="${guest.getInvoice()}"></td>
                 <td>
-                    <input type="hidden" th:value="${guest.getGuestId()}" name="guest_id">
-                    <input type="submit" class="btn btn-primary" th:value="Delete">
+                    <a th:href="@{/edit/guest(id=${guest.getGuestId()})}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/guests(guest_id=${guest.getGuestId()})}">
+                        <button type="button" class="btn btn-primary">Free</button>
+                    </a>
                 </td>
             </form>
         </tr>
     </form>
     </tbody>
 </table>
-<button type="button" class="btn btn-primary">Edit</button>
 <a href="/newguest">
     <button type="button" class="btn btn-primary">New</button>
 </a>

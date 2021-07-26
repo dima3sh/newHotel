@@ -3,6 +3,7 @@ package org.azati.cources.entity;
 import org.azati.cources.dictionaries.EquipmentStateDictionary;
 import org.azati.cources.enums.StateEquipment;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -21,7 +22,7 @@ public class Equipment extends Thing {
     private EquipmentStateDictionary equipmentStateDictionary;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "equipment_room_id")
+    @JoinColumn(name = "equipment_room_id", nullable = true)
     private Room equipment_room_id;
 
     public Equipment() {
