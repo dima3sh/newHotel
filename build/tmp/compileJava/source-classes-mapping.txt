@@ -14,6 +14,8 @@ org/azati/cources/utils/ReportUtil.java
  org.azati.cources.utils.ReportUtil
 org/azati/cources/services/RoomService.java
  org.azati.cources.services.RoomService
+org/azati/cources/controllers/StorageController.java
+ org.azati.cources.controllers.StorageController
 org/azati/cources/configuration/DataSourceConfig.java
  org.azati.cources.configuration.DataSourceConfig
 org/azati/cources/controllers/RoomController.java

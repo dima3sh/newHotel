@@ -9,6 +9,10 @@ import org.azati.cources.repository.RoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -119,5 +123,11 @@ public class RoomService {
         room.setDirectoryStatus(directoryStatus);
         room.setRoomId(roomId);
         return room;
+    }
+
+    public List<Room> getRooms(Integer numberPage, Integer countRecord, String sortBy) {
+        Pageable elements = PageRequest.of(numberPage, countRecord, Sort.by(sortBy));
+        Page<Room> allRooms = roomRepository.findAll(elements);
+        return allRooms.getContent();
     }
 }

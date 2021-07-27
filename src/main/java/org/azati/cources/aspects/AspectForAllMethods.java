@@ -16,12 +16,19 @@ public class AspectForAllMethods {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Pointcut("within(org.azati.cources..*)")
-    public void callAtMethods() { }
+    public void callAtMethods() {
+    }
 
     @Before("callAtMethods()")
     public void beforeCallAtMethod1(JoinPoint jp) {
         String args = Arrays.stream(jp.getArgs())
-                .map(a -> a.toString())
+                .map(a -> {
+                    if (a != null) {
+                        return a.toString();
+                    } else {
+                        return null;
+                    }
+                })
                 .collect(Collectors.joining(","));
         logger.info("before " + jp.toString() + ", args=[" + args + "]");
     }
@@ -32,7 +39,7 @@ public class AspectForAllMethods {
     }
 
     @AfterThrowing(value = "callAtMethods()", throwing = "exception")
-    public void logAfterThrowing( Exception exception) {
+    public void logAfterThrowing(Exception exception) {
         logger.error("Target Method resulted into exception, message {}", exception.getMessage());
     }
 }

@@ -29,6 +29,7 @@ public class DTOUtil {
         equipmentDTO.setName(equipment.getName());
         equipmentDTO.setWeight(equipment.getWeight());
         equipmentDTO.setCostPerObject(equipment.getCostPerObject());
+        equipmentDTO.setProducer(equipment.getProducer());
         return equipmentDTO;
     }
 

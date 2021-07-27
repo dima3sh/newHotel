@@ -7,6 +7,10 @@ import org.azati.cources.repository.EquipmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,6 +66,12 @@ public class EquipmentService {
         equipment.setEquipmentStateDictionary(equipmentStateDictionary);
         equipment.setCostPerObject(cost);
         return equipment;
+    }
+
+    public List<Equipment> getEquipments(Integer numberPage, Integer countRecord, String sortBy) {
+        Pageable elements = PageRequest.of(numberPage, countRecord, Sort.by(sortBy));
+        Page<Equipment> allEquipments = equipmentRepository.findAll(elements);
+        return allEquipments.getContent();
     }
 
 

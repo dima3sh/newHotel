@@ -64,10 +64,10 @@
         <div th:if="${isEdit == true}" class="input-group mb-3" style="margin-bottom: 10px">
             <span class="input-group-text" id="basic-addon2">Status Room</span>
             <select name="status_room" class="form-select" aria-label="Default select example">
-                <option selected th:if="${isEdit == true}" th:utext="${room.getStatusRoom()}"
+                <option selected th:if="${isEdit == true}" th:utext="${room.getStatusRoom().getMessage()}"
                         th:value="${room.getStatusRoom().getIndex()}"></option>
                 <option th:each="roomStatus : ${roomStatuses}" th:value="${roomStatus.getIndex()}">
-                    <span th:utext="${roomStatus}"></span>
+                    <span th:utext="${roomStatus.getMessage()}"></span>
                 </option>
             </select>
         </div>

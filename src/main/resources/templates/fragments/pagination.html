@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rooms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<div th:fragment="pagination (page, size, sort, location)">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center" style="margin: 30px auto">
+            <li class="page-item">
+                <a class="page-link" th:href="${location}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{${location}(page=${result}, size = ${size}, sort = ${sort})}"
+                                     th:if="${page != 1}"
+                                     th:value="${result}"
+                                     th:with="result = ${page - 1}"
+                                     th:utext="${result}"></a></li>
+            <li class="page-item active"><a class="page-link"
+                                            th:href="@{${location}(page=${result}, size = ${size}, sort = ${sort})}"
+                                            th:value="${result}"
+                                            th:with="result = ${page}"
+                                            th:utext="${result}"></a></li>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{${location}(page=${result}, size = ${size}, sort = ${sort})}"
+                                     th:value="${result}"
+                                     th:with="result = ${page + 1}"
+                                     th:utext="${result}"></a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div th:fragment="pageSize">
+    <div class="mb-3">
+        <label class="form-label">number of records per page</label>
+        <select name = "size" class="form-select" aria-label="Default select example">
+            <option selected value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+</html>

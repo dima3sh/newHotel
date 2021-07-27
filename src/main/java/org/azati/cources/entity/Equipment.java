@@ -13,7 +13,7 @@ public class Equipment extends Thing {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "equipment_id")
-    private Long equipment_id;
+    private Long equipmentId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "equipment_state_id", nullable = false)
@@ -46,7 +46,7 @@ public class Equipment extends Thing {
     }
 
     public Long getEquipment_id() {
-        return equipment_id;
+        return equipmentId;
     }
 
     public EquipmentStateDictionary getEquipmentStateDictionary() {
@@ -58,7 +58,7 @@ public class Equipment extends Thing {
     }
 
     public void setEquipment_id(Long equipment_id) {
-        this.equipment_id = equipment_id;
+        this.equipmentId = equipment_id;
     }
 
     public void setEquipmentStateDictionary(EquipmentStateDictionary equipmentStateDictionary) {
@@ -72,9 +72,9 @@ public class Equipment extends Thing {
     @Override
     public String toString() {
         return "Equipment{" +
-                "equipment_id=" + equipment_id +
+                "equipment_id=" + equipmentId +
                 ", equipmentStateDictionary=" + equipmentStateDictionary +
-                ", equipment_room_id=" + equipment_room_id +
+                ", equipment_room_id=" + equipment_room_id.getRoomId() +
                 ", producer='" + producer + '\'' +
                 "} " + super.toString();
     }
@@ -84,13 +84,13 @@ public class Equipment extends Thing {
         if (this == o) return true;
         if (!(o instanceof Equipment)) return false;
         Equipment equipment = (Equipment) o;
-        return equipment_id.equals(equipment.equipment_id) && equipmentStateDictionary.equals(equipment.equipmentStateDictionary)
+        return equipmentId.equals(equipment.equipmentId) && equipmentStateDictionary.equals(equipment.equipmentStateDictionary)
                 && equipment_room_id.equals(equipment.equipment_room_id) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        int result = Long.hashCode(equipment_id);
+        int result = Long.hashCode(equipmentId);
         result = 31 * result + equipmentStateDictionary.hashCode();
         result = 31 * result + equipment_room_id.hashCode();
         result = 31 * result + super.hashCode();

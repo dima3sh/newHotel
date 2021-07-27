@@ -45,8 +45,8 @@
             <form method="GET">
                 <td th:utext="${equipment.getEquipmentId()}"></td>
                 <td th:utext="${equipment.getName()}"></td>
-                <td th:if="${equipment.getEquipmentRoomId() != 20}" th:utext="${equipment.getEquipmentRoomId()}"></td>
-                <td th:unless="${equipment.getEquipmentRoomId() != 20}" th:utext="warehouse"></td>
+                <td th:if="${equipment.getEquipmentRoomId() != warehouseId}" th:utext="${equipment.getEquipmentRoomId()}"></td>
+                <td th:unless="${equipment.getEquipmentRoomId() != warehouseId}" th:utext="warehouse"></td>
                 <td th:utext="${equipment.getWeight()}"></td>
                 <td th:utext="${equipment.getStateEquipment().getMessageText()}"></td>
                 <td th:utext="${equipment.getCostPerObject()}"></td>
@@ -70,6 +70,24 @@
 <a href="/add/equipment">
     <button type="button" class="btn btn-primary">New</button>
 </a>
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${location})}"></div>
+<form th:action="${location}" method="GET">
+    <div class="mb-3">
+        <label class="form-label">Sort by</label>
+        <select name = "sort" class="form-select" aria-label="Default select example">
+            <option selected value="equipmentId">id</option>
+            <option value="name">name</option>
+            <option value="weight">weight</option>
+            <option value="equipment_room_id">number room</option>
+            <option value="equipmentStateDictionary">state</option>
+            <option value="costPerObject">cost</option>
+            <option value="producer">producer</option>
+        </select>
+    </div>
+
+    <div th:replace="~{fragments/pagination :: pageSize}"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

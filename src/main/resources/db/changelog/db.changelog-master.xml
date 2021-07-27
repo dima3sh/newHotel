@@ -31,5 +31,14 @@
         />
     </changeSet>
 
+    <changeSet author="root" id="addColumn-table-equipment-column-producer">
+        <addColumn catalogName="hotel"
+                   schemaName= "public"
+                   tableName="equipment" >
+            <column name="producer"
+                    type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
 
 </databaseChangeLog>

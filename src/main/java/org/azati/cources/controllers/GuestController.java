@@ -5,7 +5,6 @@ import net.sf.jasperreports.engine.JRException;
 import org.azati.cources.dto.GuestDTO;
 import org.azati.cources.dto.RoomDTO;
 import org.azati.cources.entity.Guest;
-import org.azati.cources.entity.Room;
 import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
@@ -14,7 +13,6 @@ import org.azati.cources.utils.ReportUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,28 +75,45 @@ public class GuestController {
     }
 
     @RequestMapping(value = "/guests")
-    public String guests(Model model) {
+    public String guests(Model model
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy) {
         log.info("path : /guests ; print information guests");
         List<GuestDTO> guestsDTO = new ArrayList<>();
-        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
         model.addAttribute("guests", guestsDTO);
+        model.addAttribute("location", "guests");
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
+        model.addAttribute("sort", sortBy);
         return "guests";
     }
 
     @RequestMapping(value = "/guests", params = {"guest_id"}, method = RequestMethod.GET)
-    public String guests(Model model, @RequestParam(value = "guest_id") Long guestId) {
-        log.info("path : /guests ; print information guests");
+    public String guests(Model model, @RequestParam(value = "guest_id") Long guestId
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy) {
+
         List<GuestDTO> guestsDTO = new ArrayList<>();
         roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
         guestService.removeGuest(guestId);
-        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
         model.addAttribute("guests", guestsDTO);
+        model.addAttribute("location", "guests");
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
+        model.addAttribute("sort", sortBy);
         return "guests";
     }
 
     @RequestMapping(value = "/newguest", params = {"name", "phone", "email", "room_id", "time_in", "time_out", "guest_id"},
             method = RequestMethod.GET)
-    public String editGuest(Model model, @RequestParam(value = "name") String name,
+    public String editGuest(Model model, @RequestParam(value = "name") String name
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy,
                             @RequestParam(value = "phone") String phone, @RequestParam(value = "email") String email,
                             @RequestParam(value = "room_id") Long roomId,
                             @RequestParam("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
@@ -110,14 +125,21 @@ public class GuestController {
         roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
         roomService.updateFreeRoomStatus(roomId, false);
         List<GuestDTO> guestsDTO = new ArrayList<>();
-        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
         model.addAttribute("guests", guestsDTO);
+        model.addAttribute("location", "guests");
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
+        model.addAttribute("sort", sortBy);
         return "guests";
     }
 
     @RequestMapping(value = "/newguest", params = {"name", "phone", "email", "room_id", "time_in", "time_out"},
             method = RequestMethod.GET)
-    public String addGuest(Model model, @RequestParam(value = "name") String name,
+    public String addGuest(Model model, @RequestParam(value = "name") String name
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy,
                            @RequestParam(value = "phone") String phone, @RequestParam(value = "email") String email,
                            @RequestParam(value = "room_id") Long roomId,
                            @RequestParam("time_in") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeIn,
@@ -126,8 +148,12 @@ public class GuestController {
         guestService.addGuest(newGuest);
         roomService.updateFreeRoomStatus(roomId, false);
         List<GuestDTO> guestsDTO = new ArrayList<>();
-        guestService.getGuests().forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
         model.addAttribute("guests", guestsDTO);
+        model.addAttribute("location", "guests");
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
+        model.addAttribute("sort", sortBy);
         return "guests";
     }
 

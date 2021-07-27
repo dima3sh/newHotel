@@ -70,6 +70,26 @@
 <a href="/newguest">
     <button type="button" class="btn btn-primary">New</button>
 </a>
+
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${location})}"></div>
+<form th:action="${location}" method="GET">
+    <div class="mb-3">
+        <label class="form-label">Sort by</label>
+        <select name = "sort" class="form-select" aria-label="Default select example">
+            <option selected value="guestId">id</option>
+            <option value="name">name</option>
+            <option value="phoneNumber">phone number</option>
+            <option value="emailAddress">email address</option>
+            <option value="guest_room_id">number room</option>
+            <option value="departureTime">departure time</option>
+            <option value="arrivalTime">arrival time</option>
+            <option value="invoice">status</option>
+        </select>
+    </div>
+
+    <div th:replace="~{fragments/pagination :: pageSize}"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

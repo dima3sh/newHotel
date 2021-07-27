@@ -1,9 +1,14 @@
 package org.azati.cources.services;
 
+import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.entity.Room;
 import org.azati.cources.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -90,5 +95,11 @@ public class GuestService {
         newGuest.setArrivalTime(timeIn);
         newGuest.setInvoice(new Integer(0));
         return newGuest;
+    }
+
+    public List<Guest> getGuests(Integer numberPage, Integer countRecord, String sortBy) {
+        Pageable elements = PageRequest.of(numberPage, countRecord, Sort.by(sortBy));
+        Page<Guest> allGuests = guestRepository.findAll(elements);
+        return allGuests.getContent();
     }
 }

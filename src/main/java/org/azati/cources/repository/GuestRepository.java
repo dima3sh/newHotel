@@ -1,9 +1,14 @@
 package org.azati.cources.repository;
 
+import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Guest;
+import org.azati.cources.entity.Room;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-public interface GuestRepository extends CrudRepository<Guest, Long> {
+public interface GuestRepository extends PagingAndSortingRepository<Guest, Long> {
 
     @Modifying
     @Query(value = "INSERT INTO guest (guest_room_id, name_guest, phone_number," +
@@ -30,4 +35,8 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
     public Integer deleteGuestByPhoneNumber(String phone);
 
     public List<Guest> findGuestByInvoice(Integer invoice);
+
+    Page<Guest> findAll(Pageable pageable);
+
+   // public List<Guest> findAllByGuestRoomId(Room guestRoomId);
 }
