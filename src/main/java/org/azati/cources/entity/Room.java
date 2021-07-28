@@ -6,12 +6,13 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.List;
 
 
 @Entity
 @Table(name = "room")
-public class Room {
+public class Room implements Comparable<Room> {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -131,5 +132,10 @@ public class Room {
         result = 31 * result + Integer.hashCode(costPerHour);
         result = 31 * result + equipments.hashCode();
         return result;
+    }
+
+    @Override
+    public int compareTo(Room o) {
+        return roomId.compareTo(o.getRoomId());
     }
 }

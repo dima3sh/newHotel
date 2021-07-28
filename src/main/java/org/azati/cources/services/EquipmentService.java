@@ -74,5 +74,7 @@ public class EquipmentService {
         return allEquipments.getContent();
     }
 
-
+    public Long getCountRecords() {
+        return equipmentRepository.count();
+    }
 }

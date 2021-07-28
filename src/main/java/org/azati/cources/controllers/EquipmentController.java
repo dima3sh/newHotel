@@ -86,6 +86,7 @@ public class EquipmentController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "equipments";
     }
 
@@ -117,6 +118,7 @@ public class EquipmentController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "equipments";
     }
 
@@ -149,6 +151,7 @@ public class EquipmentController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "equipments";
     }
 
@@ -168,6 +171,7 @@ public class EquipmentController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "equipments";
     }
 
@@ -186,6 +190,7 @@ public class EquipmentController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "equipments";
     }
 
@@ -202,6 +207,7 @@ public class EquipmentController {
         model.addAttribute("equipments", equipmentsDTO);
         model.addAttribute("warehouseId", warehouseId);
         model.addAttribute("location", "equipments");
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);

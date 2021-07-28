@@ -28,16 +28,46 @@
 <table class="table table-striped table-hover">
     <thead>
     <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Phone number</th>
-        <th scope="col">Email address</th>
-        <th scope="col">Number Room</th>
-        <th scope="col">Departure Time</th>
-        <th scope="col">Arrival Time</th>
-        <th scope="col">Invoice</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Free</th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'guestId')}">
+                <div>Id</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'name')}">
+                <div>Name</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'phoneNumber')}">
+                <div>Phone number</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'emailAddress')}">
+                <div>Email Address</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'guest_room_id')}">
+                <div>Number Room</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'departureTime')}">
+                <div>Departure Time</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'arrivalTime')}">
+                <div>Arrival Time</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'invoice')}">
+                <div>Invoice</div>
+            </a>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -71,21 +101,8 @@
     <button type="button" class="btn btn-primary">New</button>
 </a>
 
-<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${location})}"></div>
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${countPages}, ${location})}"></div>
 <form th:action="${location}" method="GET">
-    <div class="mb-3">
-        <label class="form-label">Sort by</label>
-        <select name = "sort" class="form-select" aria-label="Default select example">
-            <option selected value="guestId">id</option>
-            <option value="name">name</option>
-            <option value="phoneNumber">phone number</option>
-            <option value="emailAddress">email address</option>
-            <option value="guest_room_id">number room</option>
-            <option value="departureTime">departure time</option>
-            <option value="arrivalTime">arrival time</option>
-            <option value="invoice">status</option>
-        </select>
-    </div>
 
     <div th:replace="~{fragments/pagination :: pageSize}"></div>
     <button type="submit" class="btn btn-primary">Save</button>

@@ -44,6 +44,7 @@ public class StorageController {
         model.addAttribute("sort", sortBy);
         model.addAttribute("equipments", equipmentDTOList);
         model.addAttribute("warehouseId", warehouseId);
+        model.addAttribute("countPages", (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)));
         return "storage";
     }
 
@@ -65,6 +66,7 @@ public class StorageController {
         model.addAttribute("sort", sortBy);
         model.addAttribute("equipments", equipmentDTOList);
         model.addAttribute("warehouseId", warehouseId);
+        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "storage";
     }
 

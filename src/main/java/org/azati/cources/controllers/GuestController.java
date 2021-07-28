@@ -87,6 +87,7 @@ public class GuestController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "guests";
     }
 
@@ -105,6 +106,7 @@ public class GuestController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "guests";
     }
 
@@ -131,6 +133,7 @@ public class GuestController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "guests";
     }
 
@@ -154,6 +157,7 @@ public class GuestController {
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));;
         return "guests";
     }
 

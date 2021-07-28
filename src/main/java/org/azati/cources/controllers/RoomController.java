@@ -89,6 +89,7 @@ public class RoomController {
         model.addAttribute("sort", sortBy);
         model.addAttribute("location", "rooms");
         model.addAttribute("rooms", roomsDTO);
+        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
         model.addAttribute("warehouseId", warehouseId);
         return "rooms";
     }
@@ -110,6 +111,7 @@ public class RoomController {
         model.addAttribute("location", "rooms");
         model.addAttribute("rooms", roomsDTO);
         model.addAttribute("warehouseId", warehouseId);
+        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
         return "rooms";
     }
 
@@ -164,6 +166,7 @@ public class RoomController {
         model.addAttribute("sort", sortBy);
         model.addAttribute("rooms", roomsDTO);
         model.addAttribute("warehouseId", warehouseId);
+        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
         return "rooms";
     }
 
@@ -182,6 +185,7 @@ public class RoomController {
         model.addAttribute("location", "rooms");
         model.addAttribute("rooms", roomsDTO);
         model.addAttribute("warehouseId", warehouseId);
+        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
         return "rooms";
     }
 

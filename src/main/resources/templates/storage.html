@@ -28,7 +28,6 @@
 <table class="table table-striped table-hover">
     <thead>
     <tr>
-
         <th scope="col">
             <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'equipmentId')}">
                 <div>id</div>
@@ -90,7 +89,7 @@
     </form>
     </tbody>
 </table>
-<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${location})}"></div>
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${countPages}, ${location})}"></div>
 <form th:action="${location}" method="GET">
     <div th:replace="~{fragments/pagination :: pageSize}"></div>
     <button type="submit" class="btn btn-primary">Save</button>

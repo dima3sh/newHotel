@@ -39,6 +39,7 @@ public class MainController {
         model.addAttribute("location", "index");
         model.addAttribute("size", size);
         model.addAttribute("sort", sortBy);
+        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "index";
     }
 }

@@ -130,4 +130,9 @@ public class RoomService {
         Page<Room> allRooms = roomRepository.findAll(elements);
         return allRooms.getContent();
     }
+
+    public Long getCountRecords() {
+        return roomRepository.count();
+    }
+
 }

@@ -126,7 +126,7 @@
         </li>
     </ul>
 </nav>
-<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${location})}"></div>
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${countPages}, ${location})}"></div>
 <form th:action="${location}" method="GET">
     <div class="mb-3">
         <label class="form-label">Sort by</label>

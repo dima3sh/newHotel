@@ -11,11 +11,11 @@
 <body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<div th:fragment="pagination (page, size, sort, location)">
+<div th:fragment="pagination (page, size, sort, countPages,location)">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center" style="margin: 30px auto">
             <li class="page-item">
-                <a class="page-link" th:href="${location}" aria-label="Previous">
+                <a class="page-link" th:href="@{${location}(page=${1}, size = ${size}, sort = ${sort})}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -33,10 +33,11 @@
             <li class="page-item"><a class="page-link"
                                      th:href="@{${location}(page=${result}, size = ${size}, sort = ${sort})}"
                                      th:value="${result}"
+                                     th:if="${page < countPages}"
                                      th:with="result = ${page + 1}"
                                      th:utext="${result}"></a></li>
             <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+                <a class="page-link" th:href="@{${location}(page=${countPages}, size = ${size}, sort = ${sort})}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

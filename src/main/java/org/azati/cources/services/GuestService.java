@@ -102,4 +102,9 @@ public class GuestService {
         Page<Guest> allGuests = guestRepository.findAll(elements);
         return allGuests.getContent();
     }
+
+    public Long getCountRecords() {
+        return guestRepository.count();
+    }
+
 }
