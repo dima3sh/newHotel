@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Storage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Hotel "MIAMI"
+    </a>
+</nav>
+<nav class="nav nav-pills nav-fill">
+    <a class="nav-item nav-link" href="/rooms">Rooms</a>
+    <a class="nav-item nav-link" href="/equipments">Equipments</a>
+    <a class="nav-item nav-link" href="/guests">Guests</a>
+    <a class="nav-item nav-link active" href="/storage">Storage</a>
+</nav>
+<hr/>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'equipmentId')}">
+                <div>id</div>
+            </a>
+        </th>
+
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'name')}">
+                <div>Name</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'weight')}">
+                <div>Weight</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'equipmentStateDictionary')}">
+                <div>State</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'costPerObject')}">
+                <div>Cost</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'producer')}">
+                <div>Producer</div>
+            </a>
+        </th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete Equipment</th>
+    </tr>
+    </thead>
+    <tbody>
+    <form action="/equipments" method="get">
+        <tr th:each="equipment : ${equipments}">
+            <form method="GET">
+                <td th:utext="${equipment.getEquipmentId()}"></td>
+                <td th:utext="${equipment.getName()}"></td>
+                <td th:utext="${equipment.getWeight()}"></td>
+                <td th:utext="${equipment.getStateEquipment().getMessageText()}"></td>
+                <td th:utext="${equipment.getCostPerObject()}"></td>
+                <td th:utext="${equipment.getProducer()}"></td>
+                <td>
+                    <a th:href="@{/edit/equipment(id=${equipment.getEquipmentId()})}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/storage(id=${equipment.getEquipmentId()})}">
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </a>
+                </td>
+
+            </form>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${countPages}, ${location})}"></div>
+<form th:action="${location}" method="GET">
+    <div th:replace="~{fragments/pagination :: pageSize}"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+</html>

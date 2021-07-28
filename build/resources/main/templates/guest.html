@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rooms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<div th:replace="fragments/header :: header"></div>
+<h3 th:utext="${guest.getName()}" style = "margin-left: 50px"></h3>
+<div class="container" style="margin-left:50px ; width:90%">
+    <div class="row" style="margin:30px">
+        <div class="col">
+            <h4>id : <span th:utext="${guest.getGuestId()}"></span></h4>
+        </div>
+        <div class="col">
+            <h4>room id: <span th:utext="${guest.getGuestRoomId().getRoomId()}"></span></h4>
+        </div>
+    </div>
+    <div class="row" style="margin:30px">
+        <div class="col">
+            <h4> phone : <span th:utext="${guest.getPhoneNumber()}"></span></h4>
+        </div>
+        <div class="col">
+            <h4>departure time : <span th:utext="${guest.getDepartureTime()}"></span></h4>
+        </div>
+    </div>
+    <div class="row" style="margin:30px">
+        <div class="col">
+            <h4>email : <span th:utext="${guest.getEmailAddress()}"></span></h4>
+        </div>
+        <div class="col">
+            <h4>arrive time : <span th:utext="${guest.getArrivalTime()}"></span></h4>
+        </div>
+    </div>
+</div>
+
+<div style="margin-left: 50px">
+    <div style="text-align: right; margin-right: 50px">
+        <h4>Invoice : <span th:utext="${guest.getInvoice()}"></span> $</h4>
+    </div>
+    <a th:href="@{/guests(guest_id=${guest.getGuestId()})}">
+        <button type="button" class="btn btn-primary">Free</button>
+    </a>
+    <a th:href="@{/edit/guest(id=${guest.getGuestId()})}">
+        <button type="button" class="btn btn-primary">Edit</button>
+    </a>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+</html>

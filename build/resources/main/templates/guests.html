@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Guests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Hotel "MIAMI"
+    </a>
+</nav>
+<nav class="nav nav-pills nav-fill">
+    <a class="nav-item nav-link" href="/rooms" >Rooms</a>
+    <a class="nav-item nav-link" href="/equipments" >Equipments</a>
+    <a class="nav-item nav-link active" href="/guests">Guests</a>
+    <a class="nav-item nav-link" href="/storage">Storage</a>
+</nav>
+<hr/>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'guestId')}">
+                <div>Id</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'name')}">
+                <div>Name</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'phoneNumber')}">
+                <div>Phone number</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'emailAddress')}">
+                <div>Email Address</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'guest_room_id')}">
+                <div>Number Room</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'departureTime')}">
+                <div>Departure Time</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'arrivalTime')}">
+                <div>Arrival Time</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'invoice')}">
+                <div>Invoice</div>
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <form action="/guests" method="get">
+        <tr th:selected="${guest.getGuestId()}" th:each="guest : ${guests}">
+            <form method="GET">
+                <td th:utext="${guest.getGuestId()}"></td>
+                <td th:utext="${guest.getName()}"></td>
+                <td th:utext="${guest.getPhoneNumber()}"></td>
+                <td th:utext="${guest.getEmailAddress()}"></td>
+                <td th:utext="${guest.getRoom_id()}"></td>
+                <td th:utext="${guest.getDepartureTime()}"></td>
+                <td th:utext="${guest.getArrivalTime()}"></td>
+                <td th:utext="${guest.getInvoice()}"></td>
+                <td>
+                    <a th:href="@{/edit/guest(id=${guest.getGuestId()})}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/guests(guest_id=${guest.getGuestId()})}">
+                        <button type="button" class="btn btn-primary">Free</button>
+                    </a>
+                </td>
+            </form>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<a href="/newguest">
+    <button type="button" class="btn btn-primary">New</button>
+</a>
+
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${countPages}, ${location})}"></div>
+<form th:action="${location}" method="GET">
+
+    <div th:replace="~{fragments/pagination :: pageSize}"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+</html>
