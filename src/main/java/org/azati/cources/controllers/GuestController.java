@@ -9,10 +9,12 @@ import org.azati.cources.repository.GuestRepository;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
 import org.azati.cources.utils.DTOUtil;
+import org.azati.cources.utils.ModelUtil;
 import org.azati.cources.utils.ReportUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,9 @@ public class GuestController {
     @Autowired
     RoomService roomService;
 
+    @Value("${warehouse.id}")
+    private Long warehouseId;
+
     @ResponseBody
     @RequestMapping("/hello/{name}")
     public String hello(@PathVariable String name) {
@@ -47,6 +52,7 @@ public class GuestController {
         roomService.getAllFreeRoom().forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
         model.addAttribute("rooms", roomsDTO);
         model.addAttribute("isEdit", false);
+        model.addAttribute("warehouseId", warehouseId);
         return "newguest";
     }
 
@@ -59,6 +65,7 @@ public class GuestController {
         model.addAttribute("rooms", roomsDTO);
         model.addAttribute("guest", guestDTO);
         model.addAttribute("isEdit", true);
+        model.addAttribute("warehouseId", warehouseId);
         return "newguest";
     }
 
@@ -74,39 +81,20 @@ public class GuestController {
         return guestService.getGuests(name);
     }
 
-    @RequestMapping(value = "/guests")
-    public String guests(Model model
-            , @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy) {
-        log.info("path : /guests ; print information guests");
-        List<GuestDTO> guestsDTO = new ArrayList<>();
-        guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
-        model.addAttribute("guests", guestsDTO);
-        model.addAttribute("location", "guests");
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
-        return "guests";
-    }
-
-    @RequestMapping(value = "/guests", params = {"guest_id"}, method = RequestMethod.GET)
-    public String guests(Model model, @RequestParam(value = "guest_id") Long guestId
+    @RequestMapping(value = "/guests",  method = RequestMethod.GET)
+    public String guests(Model model, @RequestParam(value = "guest_id", defaultValue = "") Long guestId
             , @RequestParam(value = "page", defaultValue = "1") Integer page
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy) {
 
         List<GuestDTO> guestsDTO = new ArrayList<>();
-        roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
-        guestService.removeGuest(guestId);
+        if(guestId != null) {
+            roomService.updateFreeRoomStatus(guestService.getGuest(guestId).getGuestRoomId().getRoomId(), true);
+            guestService.removeGuest(guestId);
+        }
         guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(guestService.getCountRecords() * 1.0 / size)), "guests");
         model.addAttribute("guests", guestsDTO);
-        model.addAttribute("location", "guests");
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "guests";
     }
 
@@ -128,12 +116,8 @@ public class GuestController {
         roomService.updateFreeRoomStatus(roomId, false);
         List<GuestDTO> guestsDTO = new ArrayList<>();
         guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(guestService.getCountRecords() * 1.0 / size)), "guests");
         model.addAttribute("guests", guestsDTO);
-        model.addAttribute("location", "guests");
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "guests";
     }
 
@@ -152,27 +136,9 @@ public class GuestController {
         roomService.updateFreeRoomStatus(roomId, false);
         List<GuestDTO> guestsDTO = new ArrayList<>();
         guestService.getGuests(page - 1, size, sortBy).forEach(guest -> guestsDTO.add(DTOUtil.createGuestDTO(guest)));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(guestService.getCountRecords() * 1.0 / size)), "guests");
         model.addAttribute("guests", guestsDTO);
-        model.addAttribute("location", "guests");
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));;
         return "guests";
-    }
-
-    @ResponseBody
-    @RequestMapping("/deleteguest/{phone}")
-    public Boolean getGuest(@PathVariable String phone) {
-        return guestService.removeGuest(phone) == 1;
-    }
-
-    @RequestMapping(value = "/guest", params = {"id"}, method = RequestMethod.GET)
-    public String getRooms(Model model, @RequestParam(value = "id") Long guestId) {
-        log.info("path : /guest ; print information about guest");
-
-        model.addAttribute("guest", guestService.getGuest(guestId));
-        return "guest";
     }
 
     @ResponseBody

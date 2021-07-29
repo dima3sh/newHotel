@@ -21,17 +21,17 @@ public class Equipment extends Thing {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "equipment_room_id", nullable = true)
-    private Room equipment_room_id;
+    private Room equipmentRoomId;
 
     @Column(name = "producer")
     private String producer;
 
-    public Room getEquipment_room_id() {
-        return equipment_room_id;
+    public Room getEquipmentRoomId() {
+        return equipmentRoomId;
     }
 
-    public void setEquipment_room_id(Room equipment_room_id) {
-        this.equipment_room_id = equipment_room_id;
+    public void setEquipmentRoomId(Room equipmentRoomId) {
+        this.equipmentRoomId = equipmentRoomId;
     }
 
     public String getProducer() {
@@ -54,7 +54,7 @@ public class Equipment extends Thing {
     }
 
     public Room getRoom() {
-        return equipment_room_id;
+        return equipmentRoomId;
     }
 
     public void setEquipment_id(Long equipment_id) {
@@ -66,7 +66,7 @@ public class Equipment extends Thing {
     }
 
     public void setRoom(Room room_id) {
-        this.equipment_room_id = room_id;
+        this.equipmentRoomId = room_id;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Equipment extends Thing {
         return "Equipment{" +
                 "equipment_id=" + equipmentId +
                 ", equipmentStateDictionary=" + equipmentStateDictionary +
-                ", equipment_room_id=" + equipment_room_id.getRoomId() +
+                ", equipment_room_id=" + equipmentRoomId.getRoomId() +
                 ", producer='" + producer + '\'' +
                 "} " + super.toString();
     }
@@ -85,14 +85,14 @@ public class Equipment extends Thing {
         if (!(o instanceof Equipment)) return false;
         Equipment equipment = (Equipment) o;
         return equipmentId.equals(equipment.equipmentId) && equipmentStateDictionary.equals(equipment.equipmentStateDictionary)
-                && equipment_room_id.equals(equipment.equipment_room_id) && super.equals(o);
+                && equipmentRoomId.equals(equipment.equipmentRoomId) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
         int result = Long.hashCode(equipmentId);
         result = 31 * result + equipmentStateDictionary.hashCode();
-        result = 31 * result + equipment_room_id.hashCode();
+        result = 31 * result + equipmentRoomId.hashCode();
         result = 31 * result + super.hashCode();
         return result;
     }

@@ -4,6 +4,7 @@ import org.azati.cources.dto.EquipmentDTO;
 import org.azati.cources.services.EquipmentService;
 import org.azati.cources.services.RoomService;
 import org.azati.cources.utils.DTOUtil;
+import org.azati.cources.utils.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,46 +28,20 @@ public class StorageController {
     @Value("${warehouse.id}")
     private Long warehouseId;
 
-    @RequestMapping(value = "/storage")
-    public String getStorage(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
-
-        List<EquipmentDTO> equipmentDTOList = new ArrayList<>();
-        equipmentService.getEquipments(page - 1, size, sortBy).forEach(equipment -> {
-            if (warehouseId == equipment.getRoom().getRoomId()) {
-                equipmentDTOList.add(DTOUtil.createEquipmentDTO(equipment));
-            }
-        });
-        model.addAttribute("location", "storage");
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("equipments", equipmentDTOList);
-        model.addAttribute("warehouseId", warehouseId);
-        model.addAttribute("countPages", (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)));
-        return "storage";
-    }
-
-    @RequestMapping(value = "/storage", params = {"id"}, method = RequestMethod.GET)
-    public String deleteElemFromStorage(Model model, @RequestParam("id") Long id
+    @RequestMapping(value = "/storage", method = RequestMethod.GET)
+    public String deleteElemFromStorage(Model model, @RequestParam(value = "id", defaultValue = "") Long id
             , @RequestParam(value = "page", defaultValue = "1") Integer page
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
         List<EquipmentDTO> equipmentDTOList = new ArrayList<>();
-        equipmentService.removeEquipment(id);
-        roomService.getRoom(warehouseId).getEquipments().forEach(equipment -> {
-            if (equipment.getEquipment_id() != id) {
-                equipmentDTOList.add(DTOUtil.createEquipmentDTO(equipment));
-            }
-        });
-        model.addAttribute("page", page);
-        model.addAttribute("location", "storage");
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
+        if (id != null) {
+            equipmentService.removeEquipment(id);
+        }
+
+        equipmentService.getEquipmentsByRoomID(warehouseId, page - 1, size, sortBy).forEach(equipment -> equipmentDTOList.add(DTOUtil.createEquipmentDTO(equipment)));
+
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "storage");
         model.addAttribute("equipments", equipmentDTOList);
-        model.addAttribute("warehouseId", warehouseId);
-        model.addAttribute("countPages", Math.ceil(equipmentService.getCountRecords() * 1.0 / size));
         return "storage";
     }
 

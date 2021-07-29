@@ -101,7 +101,7 @@
             </td>
             <td>
                 <a
-                   th:href="@{/rooms(room_id=${room.getRoomId()})}">
+                   th:href="@{${location}(room_id=${room.getRoomId()}, page=${page}, size=${size}, sort=${sort})}">
                     <button   th:disabled="${room.getEquipments().size() != 0 || room.getGuests().size() != 0}"type="button" class="btn btn-primary">Delete</button>
                 </a>
             </td>

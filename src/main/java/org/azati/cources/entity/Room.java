@@ -6,7 +6,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -34,7 +33,7 @@ public class Room implements Comparable<Room> {
     private DirectoryStatus directoryStatus;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "equipment_room_id")
+    @OneToMany(mappedBy = "equipmentRoomId")
     private List<Equipment> equipments;
 
     @LazyCollection(LazyCollectionOption.FALSE)

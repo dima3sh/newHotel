@@ -26,5 +26,4 @@ public interface RoomRepository extends PagingAndSortingRepository<Room, Long> {
     public List<Room> findAllByIsFreeRoom (Boolean flag);
 
     Page<Room> findAll(Pageable pageable);
-
 }

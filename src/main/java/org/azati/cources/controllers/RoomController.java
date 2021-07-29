@@ -11,6 +11,7 @@ import org.azati.cources.services.EquipmentService;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.services.RoomService;
 import org.azati.cources.utils.DTOUtil;
+import org.azati.cources.utils.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -84,13 +85,8 @@ public class RoomController {
             }
             roomsDTO.add(DTOUtil.creteRoomDTO(r));
         });
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("location", "rooms");
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
         model.addAttribute("rooms", roomsDTO);
-        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
-        model.addAttribute("warehouseId", warehouseId);
         return "rooms";
     }
 
@@ -105,13 +101,8 @@ public class RoomController {
         roomService.addRoom(room);
         List<RoomDTO> roomsDTO = new ArrayList<>();
         roomService.getRooms(page - 1, size, sortBy).forEach(r -> roomsDTO.add(DTOUtil.creteRoomDTO(r)));
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("location", "rooms");
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
         model.addAttribute("rooms", roomsDTO);
-        model.addAttribute("warehouseId", warehouseId);
-        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
         return "rooms";
     }
 
@@ -152,40 +143,19 @@ public class RoomController {
         return "addrooms";
     }
 
-    @RequestMapping(value = "/rooms")
-    public String getRooms(Model model
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
+    public String getRooms(Model model, @RequestParam(value = "room_id", defaultValue = "") Long room_id
             , @RequestParam(value = "page", defaultValue = "1") Integer page
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
 
         List<RoomDTO> roomsDTO = new ArrayList<>();
+        if(room_id != null) {
+            roomService.removeRoom(room_id);
+        }
         roomService.getRooms(page - 1, size, sortBy).forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("location", "rooms");
-        model.addAttribute("sort", sortBy);
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
         model.addAttribute("rooms", roomsDTO);
-        model.addAttribute("warehouseId", warehouseId);
-        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
-        return "rooms";
-    }
-
-    @RequestMapping(value = "/rooms", params = {"room_id"}, method = RequestMethod.GET)
-    public String getRooms(Model model, @RequestParam(value = "room_id") Long room_id
-            , @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
-
-        List<RoomDTO> roomsDTO = new ArrayList<>();
-        roomService.removeRoom(room_id);
-        roomService.getRooms(page - 1, size, sortBy).forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("location", "rooms");
-        model.addAttribute("rooms", roomsDTO);
-        model.addAttribute("warehouseId", warehouseId);
-        model.addAttribute("countPages", Math.ceil(roomService.getCountRecords() * 1.0 / size));
         return "rooms";
     }
 

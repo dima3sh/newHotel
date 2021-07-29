@@ -4,8 +4,6 @@ import org.azati.cources.dictionaries.EquipmentStateDictionary;
 import org.azati.cources.entity.Equipment;
 import org.azati.cources.enums.StateEquipment;
 import org.azati.cources.repository.EquipmentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,11 +17,11 @@ import java.util.List;
 @Service
 public class EquipmentService {
 
-    public static Logger log = LoggerFactory.getLogger(RoomService.class);
-
     @Autowired
     EquipmentRepository equipmentRepository;
 
+    @Autowired
+    RoomService roomService;
 
     public Equipment addEquipment(Equipment equipment) {
         equipmentRepository.addEquipment(equipment.getRoom().getRoomId(), equipment.getName(),
@@ -77,4 +75,10 @@ public class EquipmentService {
     public Long getCountRecords() {
         return equipmentRepository.count();
     }
+
+    public List<Equipment> getEquipmentsByRoomID(Long roomId, Integer numberPage, Integer countRecord, String sortBy) {
+        Pageable elements = PageRequest.of(numberPage, countRecord, Sort.by(sortBy));
+        return equipmentRepository.findAllByEquipmentRoomId(roomService.getRoom(roomId), elements).getContent();
+    }
+
 }

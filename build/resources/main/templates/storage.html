@@ -79,7 +79,7 @@
                     </a>
                 </td>
                 <td>
-                    <a th:href="@{/storage(id=${equipment.getEquipmentId()})}">
+                    <a th:href="@{${location}(id=${equipment.getEquipmentId()}, size = ${size}, page=${page}, sort=${sort})}">
                         <button type="button" class="btn btn-primary">Delete</button>
                     </a>
                 </td>

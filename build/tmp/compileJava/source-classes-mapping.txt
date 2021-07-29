@@ -20,6 +20,8 @@ org/azati/cources/configuration/DataSourceConfig.java
  org.azati.cources.configuration.DataSourceConfig
 org/azati/cources/controllers/RoomController.java
  org.azati.cources.controllers.RoomController
+org/azati/cources/utils/ModelUtil.java
+ org.azati.cources.utils.ModelUtil
 org/azati/cources/entity/Payroll.java
  org.azati.cources.entity.Payroll
 org/azati/cources/dto/GuestDTO.java

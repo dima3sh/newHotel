@@ -4,6 +4,7 @@ import org.azati.cources.dto.GuestDTO;
 import org.azati.cources.services.ChronoService;
 import org.azati.cources.services.GuestService;
 import org.azati.cources.utils.DTOUtil;
+import org.azati.cources.utils.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +34,9 @@ public class MainController {
         List<GuestDTO> secondList = new ArrayList<>();
         guestService.getGuestNeedFree(12, 1).forEach(guest -> secondList.add(DTOUtil.createGuestDTO(guest)));
         firstList.forEach(guestDTO -> secondList.removeIf(guest -> guest.getGuestId() == guestDTO.getGuestId()));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(guestService.getCountRecords() * 1.0 / size)), "index");
         model.addAttribute("firstList", firstList);
         model.addAttribute("secondList", secondList);
-        model.addAttribute("page", page);
-        model.addAttribute("location", "index");
-        model.addAttribute("size", size);
-        model.addAttribute("sort", sortBy);
-        model.addAttribute("countPages", Math.ceil(guestService.getCountRecords() * 1.0 / size));
         return "index";
     }
 }

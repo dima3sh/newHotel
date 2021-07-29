@@ -73,8 +73,8 @@
             <form method="GET">
                 <td th:utext="${equipment.getEquipmentId()}"></td>
                 <td th:utext="${equipment.getName()}"></td>
-                <td th:if="${equipment.getEquipmentRoomId() != warehouseId}" th:utext="${equipment.getEquipmentRoomId()}"></td>
-                <td th:unless="${equipment.getEquipmentRoomId() != warehouseId}" th:utext="warehouse"></td>
+                <td th:if="${equipment.getEquipmentRoomId() == warehouseId}" th:utext="warehouse"></td>
+                <td th:unless="${equipment.getEquipmentRoomId() == warehouseId}" th:utext="${equipment.getEquipmentRoomId()}"></td>
                 <td th:utext="${equipment.getWeight()}"></td>
                 <td th:utext="${equipment.getStateEquipment().getMessageText()}"></td>
                 <td th:utext="${equipment.getCostPerObject()}"></td>
