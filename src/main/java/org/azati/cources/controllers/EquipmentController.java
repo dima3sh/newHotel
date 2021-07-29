@@ -26,8 +26,6 @@ import java.util.List;
 @Controller
 public class EquipmentController {
 
-    public static Logger log = LoggerFactory.getLogger(RoomController.class);
-
     @Autowired
     EquipmentService equipmentService;
 
@@ -36,6 +34,19 @@ public class EquipmentController {
 
     @Value("${warehouse.id}")
     private Long warehouseId;
+
+    @RequestMapping(value = "/equipments", params = {"room_id"})
+    public String getEquipments(Model model, @RequestParam(value = "room_id") Long roomId
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
+
+        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
+        roomService.getEquipmentByRoomID(roomId).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+        model.addAttribute("equipments", equipmentsDTO);
+        return "equipments";
+    }
 
     @RequestMapping(value = "/add/equipment")
     public String addEquipment(Model model) {
@@ -128,41 +139,15 @@ public class EquipmentController {
         return "newequipment";
     }
 
-    @RequestMapping(value = "/equipments", params = {"room_id"})
-    public String getEquipments(Model model, @RequestParam(value = "room_id") Long roomId
-            , @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
-
-        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
-        roomService.getEquipmentByRoomID(roomId).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
-        model.addAttribute("equipments", equipmentsDTO);
-        return "equipments";
-    }
-
-
-    @RequestMapping(value = "/equipments", params = {"id"})
-    public String removeEquipment(Model model, @RequestParam(value = "id") Long equipmentId
-            , @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
-
-        roomService.moveEquipments(roomService.getRoom(warehouseId), Collections.singletonList(equipmentId));
-        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
-        equipmentService.getEquipments(page - 1, size, sortBy).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
-        model.addAttribute("equipments", equipmentsDTO);
-        return "equipments";
-    }
-
-
     @RequestMapping(value = "/equipments")
-    public String getEquipments(Model model
+    public String removeEquipment(Model model, @RequestParam(value = "id", defaultValue = "") Long equipmentId
             , @RequestParam(value = "page", defaultValue = "1") Integer page
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
 
+        if(equipmentId != null) {
+            roomService.moveEquipments(roomService.getRoom(warehouseId), Collections.singletonList(equipmentId));
+        }
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getEquipments(page - 1, size, sortBy).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
         ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");

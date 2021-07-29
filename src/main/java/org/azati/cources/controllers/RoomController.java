@@ -127,14 +127,6 @@ public class RoomController {
         return "addroom";
     }
 
-    @RequestMapping(value = "/getroom", params = {"id"}, method = RequestMethod.GET)
-    public String getRoom(Model model, @RequestParam(value = "id") Long room_id) {
-
-        RoomDTO roomDTO = DTOUtil.creteRoomDTO(roomService.getRoom(room_id));
-        model.addAttribute("room", roomDTO);
-        return "getroom";
-    }
-
     @ResponseBody
     @RequestMapping(value = "/addrooms")
     public String addRooms() {

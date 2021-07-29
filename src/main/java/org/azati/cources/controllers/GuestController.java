@@ -40,12 +40,6 @@ public class GuestController {
     @Value("${warehouse.id}")
     private Long warehouseId;
 
-    @ResponseBody
-    @RequestMapping("/hello/{name}")
-    public String hello(@PathVariable String name) {
-        return "hello " + name;
-    }
-
     @RequestMapping("/newguest")
     public String newGuest(Model model) {
         List<RoomDTO> roomsDTO = new ArrayList<>();
@@ -73,12 +67,6 @@ public class GuestController {
     @RequestMapping("/getguest/{guest_id}")
     public Guest getGuest(@PathVariable Long guest_id) {
         return guestService.getGuest(guest_id);
-    }
-
-    @ResponseBody
-    @RequestMapping("/getguests/{name}")
-    public List<Guest> getGuests(@PathVariable String name) {
-        return guestService.getGuests(name);
     }
 
     @RequestMapping(value = "/guests",  method = RequestMethod.GET)
