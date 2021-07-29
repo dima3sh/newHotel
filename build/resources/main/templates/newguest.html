@@ -71,7 +71,7 @@
             <select name="room_id" class="form-select" aria-label="Default select example">
                 <option selected th:if="${isEdit == true}" th:utext="${guest.getRoom_id()}"></option>
                 <option selected th:unless="${isEdit == true}">Open this select room</option>
-                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}">
+                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:if="${warehouseId != room.getRoomId()}">
                     <span th:utext="${room.getRoomId()}"></span>
                 </option>
             </select>

@@ -88,7 +88,7 @@
                     </a>
                 </td>
                 <td>
-                    <a th:href="@{/guests(guest_id=${guest.getGuestId()})}">
+                    <a th:href="@{${location}(guest_id=${guest.getGuestId()}, page=${page}, size=${size}, sort=${sort})}">
                         <button type="button" class="btn btn-primary">Free</button>
                     </a>
                 </td>
