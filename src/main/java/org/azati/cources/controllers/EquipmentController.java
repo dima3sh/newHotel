@@ -9,8 +9,6 @@ import org.azati.cources.services.EquipmentService;
 import org.azati.cources.services.RoomService;
 import org.azati.cources.utils.DTOUtil;
 import org.azati.cources.utils.ModelUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -34,19 +32,6 @@ public class EquipmentController {
 
     @Value("${warehouse.id}")
     private Long warehouseId;
-
-    @RequestMapping(value = "/equipments", params = {"room_id"})
-    public String getEquipments(Model model, @RequestParam(value = "room_id") Long roomId
-            , @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
-
-        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
-        roomService.getEquipmentByRoomID(roomId).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
-        model.addAttribute("equipments", equipmentsDTO);
-        return "equipments";
-    }
 
     @RequestMapping(value = "/add/equipment")
     public String addEquipment(Model model) {
@@ -77,7 +62,6 @@ public class EquipmentController {
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
 
-        model.addAttribute("isEdit", false);
         Equipment equipment = equipmentService.equipmentFactory(name, weight, producer,
                 StateEquipment.values()[stateEquipment - 1], cost);
         if (room_id != null) {
@@ -92,7 +76,10 @@ public class EquipmentController {
         equipmentService.updateEquipment(equipment);
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getEquipments(page - 1, size, sortBy).forEach(e -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(e)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+
+        model.addAttribute("isEdit", false);
+        ModelUtil.setStandardModelElements(model, page, size, sortBy
+                , (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
         model.addAttribute("equipments", equipmentsDTO);
         return "equipments";
     }
@@ -119,7 +106,7 @@ public class EquipmentController {
         equipmentService.addEquipment(equipment);
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getEquipments(page - 1, size, sortBy).forEach(e -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(e)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
         model.addAttribute("equipments", equipmentsDTO);
         return "equipments";
     }
@@ -139,18 +126,33 @@ public class EquipmentController {
         return "newequipment";
     }
 
-    @RequestMapping(value = "/equipments")
-    public String removeEquipment(Model model, @RequestParam(value = "id", defaultValue = "") Long equipmentId
+    @RequestMapping(value = "/equipments", params = {"room_id"})
+    public String getEquipments(Model model, @RequestParam(value = "room_id") Long roomId
             , @RequestParam(value = "page", defaultValue = "1") Integer page
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
 
-        if(equipmentId != null) {
+        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
+        equipmentService.getEquipmentsByRoomID(roomId, page - 1, size, sortBy).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+        model.addAttribute("equipments", equipmentsDTO);
+        return "equipments";
+    }
+
+    @RequestMapping(value = "/equipments")
+    public String removeEquipment(Model model, @RequestParam(value = "id", defaultValue = "") Long equipmentId
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy
+            , @RequestParam(value = "room_id", defaultValue = "") Long roomId) {
+
+        if (equipmentId != null) {
             roomService.moveEquipments(roomService.getRoom(warehouseId), Collections.singletonList(equipmentId));
         }
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
+
         equipmentService.getEquipments(page - 1, size, sortBy).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
         model.addAttribute("equipments", equipmentsDTO);
         return "equipments";
     }
@@ -165,7 +167,7 @@ public class EquipmentController {
         equipmentService.removeEquipment(equipmentId);
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         roomService.getEquipmentByRoomID(roomId).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
         model.addAttribute("equipments", equipmentsDTO);
         return "equipments";
     }

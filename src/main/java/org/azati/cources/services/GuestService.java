@@ -93,7 +93,7 @@ public class GuestService {
         newGuest.setGuestRoomId(room);
         newGuest.setDepartureTime(timeOut);
         newGuest.setArrivalTime(timeIn);
-        newGuest.setInvoice(new Integer(0));
+        newGuest.setInvoice(invoice);
         return newGuest;
     }
 

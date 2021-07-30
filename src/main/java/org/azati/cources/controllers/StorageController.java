@@ -38,7 +38,8 @@ public class StorageController {
             equipmentService.removeEquipment(id);
         }
 
-        equipmentService.getEquipmentsByRoomID(warehouseId, page - 1, size, sortBy).forEach(equipment -> equipmentDTOList.add(DTOUtil.createEquipmentDTO(equipment)));
+        equipmentService.getEquipmentsByRoomID(warehouseId, page - 1, size, sortBy)
+                .forEach(equipment -> equipmentDTOList.add(DTOUtil.createEquipmentDTO(equipment)));
 
         ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "storage");
         model.addAttribute("equipments", equipmentDTOList);
