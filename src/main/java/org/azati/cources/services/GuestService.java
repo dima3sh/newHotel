@@ -91,8 +91,8 @@ public class GuestService {
         Room room = new Room();
         room.setRoomId(roomId);
         newGuest.setGuestRoomId(room);
-        newGuest.setDepartureTime(timeOut);
-        newGuest.setArrivalTime(timeIn);
+        newGuest.setDepartureTime(timeIn);
+        newGuest.setArrivalTime(timeOut);
         newGuest.setInvoice(invoice);
         return newGuest;
     }

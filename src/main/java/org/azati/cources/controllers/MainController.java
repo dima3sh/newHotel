@@ -29,10 +29,8 @@ public class MainController {
             , @RequestParam(value = "page", defaultValue = "1") Integer page
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy) {
-        List<GuestDTO> firstList = new ArrayList<>();
-        guestService.getGuestNeedFree(1, 0).forEach(guest -> firstList.add(DTOUtil.createGuestDTO(guest)));
-        List<GuestDTO> secondList = new ArrayList<>();
-        guestService.getGuestNeedFree(12, 1).forEach(guest -> secondList.add(DTOUtil.createGuestDTO(guest)));
+        List<GuestDTO> firstList = DTOUtil.createGuestsDTO(guestService.getGuestNeedFree(1, 0));
+        List<GuestDTO> secondList = DTOUtil.createGuestsDTO(guestService.getGuestNeedFree(12, 1));
         firstList.forEach(guestDTO -> secondList.removeIf(guest -> guest.getGuestId() == guestDTO.getGuestId()));
         ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(guestService.getCountRecords() * 1.0 / size)), "index");
         model.addAttribute("firstList", firstList);

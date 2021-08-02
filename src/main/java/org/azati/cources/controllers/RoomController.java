@@ -53,55 +53,57 @@ public class RoomController {
 
     @RequestMapping(value = "/newroom", params = {"number_of_beds", "cost_per_hour", "status_room",
             "equipments", "guest", "room_id"}, method = RequestMethod.GET)
-    public String addRoom(Model model, @RequestParam("number_of_beds") Integer numberOfBeds,
-                          @RequestParam("cost_per_hour") Integer costPerHour, @RequestParam("status_room") Integer statusRoom,
-                          @RequestParam("equipments") List<Long> equipmentsId, @RequestParam("guest") Long guestId
-                        , @RequestParam("room_id") Long roomId
-                        , @RequestParam(value = "page", defaultValue = "1") Integer page
-                        , @RequestParam(value = "size", defaultValue = "10") Integer size
-                        , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
+    public String addRoom(Model model, @RequestParam("number_of_beds") Integer numberOfBeds
+            , @RequestParam("cost_per_hour") Integer costPerHour
+            , @RequestParam("status_room") Integer statusRoom
+            , @RequestParam("equipments") List<Long> equipmentsId
+            , @RequestParam("guest") Long guestId
+            , @RequestParam("room_id") Long roomId
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
 
         Room room = roomService.roomFactory(roomId, true, numberOfBeds, costPerHour, StatusRoom.values()[statusRoom - 1]);
 
         if (guestId != null) {
             roomService.moveGuest(room, guestId);
         }
-
         if (equipmentsId.size() != 0) {
             roomService.moveEquipments(room, equipmentsId);
         }
 
         List<Guest> guestList = guestService.getGuests().stream()
                 .filter(guest -> guest.getGuestRoomId()
-                .getRoomId() == roomId).collect(Collectors.toList());
-         room.setGuests(guestList);
+                        .getRoomId() == roomId).collect(Collectors.toList());
+        room.setGuests(guestList);
         roomService.updateRoom(room);
 
-        List<RoomDTO> roomsDTO = new ArrayList<>();
-        roomService.getRooms().forEach(r -> {
-            if (r.getRoomId() == roomId) {
-                r.setEquipments(room.getEquipments());
-                r.setGuests(room.getGuests());
+        List<RoomDTO> roomsDTO = DTOUtil.createRoomsDTO(roomService.getRooms(page - 1, size, sortBy));
+        roomService.getRooms().forEach(roomImp -> {
+            if (roomImp.getRoomId() == roomId) {
+                roomImp.setEquipments(room.getEquipments());
+                roomImp.setGuests(room.getGuests());
             }
-            roomsDTO.add(DTOUtil.creteRoomDTO(r));
         });
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
+
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
         model.addAttribute("rooms", roomsDTO);
         return "rooms";
     }
 
     @RequestMapping(value = "/newroom", params = {"number_of_beds", "cost_per_hour"}, method = RequestMethod.GET)
-    public String addRoom(Model model, @RequestParam("number_of_beds") Integer numberOfBeds,
-                          @RequestParam("cost_per_hour") Integer costPerHour
-                        , @RequestParam(value = "page", defaultValue = "1") Integer page
-                        , @RequestParam(value = "size", defaultValue = "10") Integer size
-                        ,  @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
+    public String addRoom(Model model, @RequestParam("number_of_beds") Integer numberOfBeds
+            , @RequestParam("cost_per_hour") Integer costPerHour
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
 
         Room room = roomService.roomFactory(null, true, numberOfBeds, costPerHour, StatusRoom.clean);
         roomService.addRoom(room);
-        List<RoomDTO> roomsDTO = new ArrayList<>();
-        roomService.getRooms(page - 1, size, sortBy).forEach(r -> roomsDTO.add(DTOUtil.creteRoomDTO(r)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
+
+        List<RoomDTO> roomsDTO = DTOUtil.createRoomsDTO(roomService.getRooms(page - 1, size, sortBy));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
+
         model.addAttribute("rooms", roomsDTO);
         return "rooms";
     }
@@ -118,6 +120,7 @@ public class RoomController {
         });
         List<GuestDTO> guestDTOList = new ArrayList<>();
         guestService.getGuests().forEach(guest -> guestDTOList.add(DTOUtil.createGuestDTO(guest)));
+
         model.addAttribute("roomStatuses", StatusRoom.values());
         model.addAttribute("room", roomDTO);
         model.addAttribute("isEdit", true);
@@ -127,6 +130,21 @@ public class RoomController {
         return "addroom";
     }
 
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
+    public String getRooms(Model model, @RequestParam(value = "room_id", defaultValue = "") Long room_id
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
+
+        List<RoomDTO> roomsDTO = DTOUtil.createRoomsDTO(roomService.getRooms(page - 1, size, sortBy));
+        if (room_id != null) {
+            roomService.removeRoom(room_id);
+        }
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
+        model.addAttribute("rooms", roomsDTO);
+        return "rooms";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/addrooms")
     public String addRooms() {
@@ -134,21 +152,4 @@ public class RoomController {
         sender.sendMessage("queue.in", "getAllRooms");
         return "addrooms";
     }
-
-    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
-    public String getRooms(Model model, @RequestParam(value = "room_id", defaultValue = "") Long room_id
-            , @RequestParam(value = "page", defaultValue = "1") Integer page
-            , @RequestParam(value = "size", defaultValue = "10") Integer size
-            , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
-
-        List<RoomDTO> roomsDTO = new ArrayList<>();
-        if(room_id != null) {
-            roomService.removeRoom(room_id);
-        }
-        roomService.getRooms(page - 1, size, sortBy).forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(roomService.getCountRecords() * 1.0 / size)), "rooms");
-        model.addAttribute("rooms", roomsDTO);
-        return "rooms";
-    }
-
 }

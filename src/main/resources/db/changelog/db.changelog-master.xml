@@ -40,5 +40,19 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="create-table-users" author="root">
+        <createTable tableName="users">
+            <column name="user_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 
 </databaseChangeLog>

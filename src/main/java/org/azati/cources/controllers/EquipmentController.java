@@ -37,8 +37,7 @@ public class EquipmentController {
     public String addEquipment(Model model) {
 
         model.addAttribute("isEdit", false);
-        List<RoomDTO> roomsDTO = new ArrayList<>();
-        roomService.getAllFreeRoom().forEach(room -> roomsDTO.add(DTOUtil.creteRoomDTO(room)));
+        List<RoomDTO> roomsDTO = DTOUtil.createRoomsDTO(roomService.getAllFreeRoom());
         model.addAttribute("rooms", roomsDTO);
         try {
             model.addAttribute("warehouse", roomService.getRoom(warehouseId));
@@ -74,7 +73,7 @@ public class EquipmentController {
         equipment.setEquipment_id(equipmentId);
         equipment.setCostPerObject(cost);
         equipmentService.updateEquipment(equipment);
-        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
+        List<EquipmentDTO> equipmentsDTO = DTOUtil.createEquipmentsDTO(equipmentService.getEquipments(page - 1, size, sortBy));
         equipmentService.getEquipments(page - 1, size, sortBy).forEach(e -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(e)));
 
         model.addAttribute("isEdit", false);
