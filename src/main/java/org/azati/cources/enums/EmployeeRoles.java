@@ -1,13 +1,13 @@
 package org.azati.cources.enums;
 
 public enum EmployeeRoles {
-    ADMINISTRATOR (0),
-    CHIEF(1),
-    COOK(2),
-    HOUSEHOLD(3),
-    ACCOUNTANT(4),
-    ASSISTANT(5),
-    WORKER(6);
+    ADMINISTRATOR (1),
+    CHIEF(2),
+    COOK(3),
+    HOUSEHOLD(4),
+    ACCOUNTANT(5),
+    ASSISTANT(6),
+    WORKER(7);
 
     private Integer index;
 

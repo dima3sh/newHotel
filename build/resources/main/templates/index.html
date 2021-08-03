@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>JoaoDuraes' Twitter Bootstrap example</title>
+    <title>HOTEL MIAMI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -17,6 +18,9 @@
         <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
         Hotel "MIAMI"
     </a>
+    <a th:if="${param.login}" class="btn btn-primary" href="/login" role="button">Sign In</a>
+    <a th:unless="${param.login}" class="btn btn-primary" href="/perform_logout" role="button">Sign out</a>
+
 </nav>
 <nav class="nav nav-pills nav-fill">
     <a class="nav-item nav-link" href="/rooms">Rooms</a>

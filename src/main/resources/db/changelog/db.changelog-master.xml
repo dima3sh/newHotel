@@ -54,5 +54,27 @@
         </createTable>
     </changeSet>
 
+    <changeSet author="root" id="addColumn-table-users-role_id">
+        <addColumn catalogName="hotel"
+                   schemaName= "public"
+                   tableName="users" >
+            <column name="role_id"
+                    type="int"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="create-table-roles" author="root">
+        <createTable tableName="roles">
+            <column name="role_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="role_varchar" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employee_role" type="employee_roles">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

@@ -7,6 +7,9 @@ import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.entity.Room;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DTOUtil {
 
     public static RoomDTO creteRoomDTO(Room room) {
@@ -44,5 +47,29 @@ public class DTOUtil {
         guestDTo.setDepartureTime(guest.getDepartureTime());
         guestDTo.setRoomId(guest.getGuestRoomId().getRoomId());
         return guestDTo;
+    }
+
+    public static List<RoomDTO> createRoomsDTO(List<Room> rooms) {
+        List<RoomDTO> roomsDTO = new ArrayList<>();
+        rooms.forEach(room -> {
+            roomsDTO.add(creteRoomDTO(room));
+        });
+        return roomsDTO;
+    }
+
+    public static List<GuestDTO> createGuestsDTO(List<Guest> rooms) {
+        List<GuestDTO> guestsDTO = new ArrayList<>();
+        rooms.forEach(guest -> {
+            guestsDTO.add(createGuestDTO(guest));
+        });
+        return guestsDTO;
+    }
+
+    public static List<EquipmentDTO> createEquipmentsDTO(List<Equipment> rooms) {
+        List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
+        rooms.forEach(equipment -> {
+            equipmentsDTO.add(createEquipmentDTO(equipment));
+        });
+        return equipmentsDTO;
     }
 }
