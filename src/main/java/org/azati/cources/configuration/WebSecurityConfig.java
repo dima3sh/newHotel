@@ -1,5 +1,6 @@
 package org.azati.cources.configuration;
 
+import org.azati.cources.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +18,8 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private DataSource dataSource;
@@ -29,14 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        // Setting Service to find User in the database.
-//        // And Setting PassswordEncoder
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//
-//    }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
+        // Setting Service to find User in the database.
+        // And Setting PassswordEncoder
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,10 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ADMINISTRATOR')");
+        http.authorizeRequests().antMatchers( "/*").access("hasAnyAuthority('administrator')");
 
-        // For ADMIN only.
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMINISTRATOR')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,

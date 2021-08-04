@@ -99,4 +99,48 @@
                        tableName="users"/>
     </changeSet>
 
+    <changeSet id="create-table-persistent_logins" author="root">
+        <createTable tableName="persistent_logins">
+            <column name="series" type="varchar(64)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_used" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="root" id="addColumn-table-users-enabled">
+        <addColumn catalogName="hotel"
+                   schemaName= "public"
+                   tableName="users" >
+            <column name="enabled"
+                    type="int"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet  author="root"  id="renameColumn-user-login-username">
+        <renameColumn  catalogName="users"
+                       columnDataType="varchar(64)"
+                       newColumnName="username"
+                       oldColumnName="login"
+                       schemaName="public"
+                       tableName="users"/>
+    </changeSet>
+
+    <changeSet  author="root"  id="renameColumn-persistent_logins-login-username">
+        <renameColumn  catalogName="persistent_logins"
+                       columnDataType="varchar(64)"
+                       newColumnName="username"
+                       oldColumnName="login"
+                       schemaName="public"
+                       tableName="persistent_logins"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -1,27 +1,59 @@
 package org.azati.cources.controllers;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 public class AuthorizationController {
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String index(Model model) {
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
+    public String welcomePage(Model model) {
+        model.addAttribute("title", "Welcome");
+        model.addAttribute("message", "This is welcome page!");
+        return "index";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage(Model model) {
 
         return "login";
     }
 
-    @RequestMapping(value = {"/login"}, params = {"username", "password"}, method = RequestMethod.POST)
-    public String login(Model model, @RequestParam("username") String username, @RequestParam("password") String password) {
-
-        return "index";
+    @RequestMapping(value = "/logoutSuccessful")
+    public String logoutSuccessfulPage(Model model) {
+        model.addAttribute("title", "Logout");
+        return "logoutSuccessfulPage";
     }
 
-    @RequestMapping(value = {"/perform_logout"})
-    public String logout(Model model) {
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public String userInfo(Model model, Principal principal) {
 
-        return "index";
+        // After user login successfully.
+        String userName = principal.getName();
+        System.out.println("User Name: " + userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = "userinfo";
+        model.addAttribute("userInfo", userInfo);
+        return "userInfoPage";
+    }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+
+        if (principal != null) {
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+            String userInfo = "userinfo";
+            model.addAttribute("userInfo", userInfo);
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+
+        }
+
+        return "403Page";
     }
 }

@@ -23,6 +23,7 @@ public class UserRole {
     private String roleStr;
 
     @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
     private UserRoles userRole;
 
     @LazyCollection(LazyCollectionOption.FALSE)

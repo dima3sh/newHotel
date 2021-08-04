@@ -1,8 +1,8 @@
 package org.azati.cources.enums;
 
 public enum UserRoles {
-    ADMINISTRATOR (1),
-    CHIEF(2),
+    administrator (1),
+    chief(2),
     COOK(3),
     HOUSEHOLD(4),
     ACCOUNTANT(5),

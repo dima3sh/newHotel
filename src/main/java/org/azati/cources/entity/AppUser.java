@@ -15,7 +15,7 @@ public class AppUser {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "login")
+    @Column(name = "username")
     private String login;
 
     @Column(name = "password")
