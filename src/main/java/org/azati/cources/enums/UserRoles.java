@@ -1,6 +1,6 @@
 package org.azati.cources.enums;
 
-public enum EmployeeRoles {
+public enum UserRoles {
     ADMINISTRATOR (1),
     CHIEF(2),
     COOK(3),
@@ -11,7 +11,7 @@ public enum EmployeeRoles {
 
     private Integer index;
 
-    EmployeeRoles(Integer index) {
+    UserRoles(Integer index) {
         this.index = index;
     }
 

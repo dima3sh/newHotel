@@ -5,6 +5,7 @@ Thumbs.db
 build
 .gradle
 *.obj
+*.lock
 *.exe
 *.pdb
 *.user

@@ -1,18 +1,18 @@
 package org.azati.cources.entity;
 
-import org.azati.cources.enums.EmployeeRoles;
+import org.azati.cources.enums.UserRoles;
 
 public class Employee extends Person {
     private Integer employee_id;
-    private EmployeeRoles employeeRoles;
+    private UserRoles userRoles;
 
     public Employee() {
     }
 
-    public Employee(String name, String phoneNumber, String emailAddress, Integer employee_id, EmployeeRoles employeeRoles) {
+    public Employee(String name, String phoneNumber, String emailAddress, Integer employee_id, UserRoles userRoles) {
         super(name, phoneNumber, emailAddress);
         this.employee_id = employee_id;
-        this.employeeRoles = employeeRoles;
+        this.userRoles = userRoles;
     }
 
     public Integer getEmployee_id() {
@@ -23,19 +23,19 @@ public class Employee extends Person {
         this.employee_id = employee_id;
     }
 
-    public EmployeeRoles getEmployeeRoles() {
-        return employeeRoles;
+    public UserRoles getEmployeeRoles() {
+        return userRoles;
     }
 
-    public void setEmployeeRoles(EmployeeRoles employeeRoles) {
-        this.employeeRoles = employeeRoles;
+    public void setEmployeeRoles(UserRoles userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
                 "employee_id=" + employee_id +
-                ", employeeRoles=" + employeeRoles +
+                ", employeeRoles=" + userRoles +
                 "} " + super.toString();
     }
 
@@ -44,13 +44,13 @@ public class Employee extends Person {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
         Employee employee = (Employee) o;
-        return employee_id.equals(employee.employee_id) && employeeRoles.equals(employee.employeeRoles) && super.equals(o);
+        return employee_id.equals(employee.employee_id) && userRoles.equals(employee.userRoles) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
         int result = Integer.hashCode(employee_id);
-        result = 31 * result + employeeRoles.hashCode();
+        result = 31 * result + userRoles.hashCode();
         result = 31 * result + super.hashCode();
         return result;
     }

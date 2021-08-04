@@ -77,5 +77,26 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="add-foreign-key-roles-users" author="root">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="users"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_role_id"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 referencedColumnNames="role_id"
+                                 referencedTableName="roles"
+                                 referencedTableSchemaName="public"
+        />
+    </changeSet>
+
+    <changeSet  author="root"  id="renameColumn-user-role_id-user_role_id">
+        <renameColumn  catalogName="users"
+                       columnDataType="int"
+                       newColumnName="user_role_id"
+                       oldColumnName="role_id"
+                       schemaName="public"
+                       tableName="users"/>
+    </changeSet>
 
 </databaseChangeLog>
