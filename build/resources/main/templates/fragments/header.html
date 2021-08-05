@@ -11,30 +11,34 @@
 <body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<div th:fragment="header">
+<div th:fragment="header(location)">
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="/">
             <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
             Hotel "MIAMI"
         </a>
+        <a th:if="${#request.userPrincipal == null}" class="btn btn-primary" href="/login" role="button">Log In</a>
+        <a th:unless="${#request.userPrincipal == null}" class="btn btn-primary" href="/logout" role="button">log out</a>
     </nav>
-    <nav class="nav nav-pills nav-fill">
-        <a class="nav-item nav-link active" href="/rooms" >Rooms</a>
-        <a class="nav-item nav-link" href="/equipments" >Equipments</a>
-        <a class="nav-item nav-link" href="/guests">Guests</a>
-        <a class="nav-item nav-link disabled" href="#">Something</a>
+    <nav th:if="${#request.userPrincipal != null}" class="nav nav-pills nav-fill">
+        <a class="nav-item nav-link" th:classappend="${location == 'rooms'} ? active" href="/rooms">Rooms</a>
+        <a class="nav-item nav-link" th:classappend="${location == 'equipments'} ? active"
+           href="/equipments">Equipments</a>
+        <a class="nav-item nav-link" th:classappend="${location == 'guests'} ? active" href="/guests">Guests</a>
+        <a class="nav-item nav-link" th:classappend="${location == 'storage'} ? active" href="/storage">Something</a>
     </nav>
     <hr/>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
 </html>

@@ -120,7 +120,7 @@ public class Room implements Comparable<Room> {
         Room room = (Room) o;
         return roomId.equals(room.roomId) && isFreeRoom.equals(room.isFreeRoom)
                 && numberOfBeds.equals(room.numberOfBeds) && costPerHour.equals(room.costPerHour)
-                && equipments.equals(room.equipments);
+                && equipments.equals(room.equipments) && guests.equals(room.guests);
     }
 
     @Override
