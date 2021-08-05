@@ -1,5 +1,6 @@
 package org.azati.cources.dictionaries;
 
+import org.azati.cources.converters.UserRoleConverter;
 import org.azati.cources.entity.AppUser;
 import org.azati.cources.enums.UserRoles;
 import org.hibernate.annotations.GenericGenerator;
@@ -20,10 +21,7 @@ public class UserRole {
     private Integer roleId;
 
     @Column(name = "role_varchar")
-    private String roleStr;
-
-    @Column(name = "user_role")
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = UserRoleConverter.class)
     private UserRoles userRole;
 
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -36,14 +34,6 @@ public class UserRole {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
-    }
-
-    public String getRoleStr() {
-        return roleStr;
-    }
-
-    public void setRoleStr(String roleStr) {
-        this.roleStr = roleStr;
     }
 
     public UserRoles getUserRole() {

@@ -5,16 +5,12 @@ import org.azati.cources.services.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.Trigger;
-import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 
-import java.util.Date;
 import java.util.concurrent.ScheduledFuture;
 
 
@@ -26,7 +22,8 @@ public class ScheduledConfiguration implements SchedulingConfigurer {
     GuestService guestService;
 
     TaskScheduler taskScheduler;
-    private ScheduledFuture<?> job1;
+
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 
@@ -41,6 +38,7 @@ public class ScheduledConfiguration implements SchedulingConfigurer {
     }
 
     private void job1(TaskScheduler scheduler) {
+        ScheduledFuture<?> job1;
         job1 = scheduler.schedule(() -> guestService.updateInvoice(),
                 triggerContext -> {
                     String cronExp = "0 0 * * * ?";// Can be pulled from a db .

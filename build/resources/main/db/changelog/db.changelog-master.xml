@@ -143,4 +143,6 @@
                        tableName="persistent_logins"/>
     </changeSet>
 
+
+
 </databaseChangeLog>

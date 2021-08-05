@@ -74,13 +74,13 @@ public class RoomController {
 
         List<Guest> guestList = guestService.getGuests().stream()
                 .filter(guest -> guest.getGuestRoomId()
-                        .getRoomId() == roomId).collect(Collectors.toList());
+                        .getRoomId().equals(roomId)).collect(Collectors.toList());
         room.setGuests(guestList);
         roomService.updateRoom(room);
 
         List<RoomDTO> roomsDTO = DTOUtil.createRoomsDTO(roomService.getRooms(page - 1, size, sortBy));
         roomService.getRooms().forEach(roomImp -> {
-            if (roomImp.getRoomId() == roomId) {
+            if (roomImp.getRoomId().equals(roomId)) {
                 roomImp.setEquipments(room.getEquipments());
                 roomImp.setGuests(room.getGuests());
             }
@@ -98,7 +98,7 @@ public class RoomController {
             , @RequestParam(value = "size", defaultValue = "10") Integer size
             , @RequestParam(value = "sort", defaultValue = "roomId") String sortBy) {
 
-        Room room = roomService.roomFactory(null, true, numberOfBeds, costPerHour, StatusRoom.clean);
+        Room room = roomService.roomFactory(null, true, numberOfBeds, costPerHour, StatusRoom.CLEAN);
         roomService.addRoom(room);
 
         List<RoomDTO> roomsDTO = DTOUtil.createRoomsDTO(roomService.getRooms(page - 1, size, sortBy));
@@ -114,7 +114,7 @@ public class RoomController {
         RoomDTO roomDTO = DTOUtil.creteRoomDTO(roomService.getRoom(roomId));
         List<EquipmentDTO> equipmentDTOList = new ArrayList<>();
         equipmentService.getAllEquipments().forEach(equipment -> {
-            if (equipment.getRoom().getRoomId() == warehouseId || equipment.getRoom().getRoomId().equals(roomId)) {
+            if (equipment.getRoom().getRoomId().equals(warehouseId) || equipment.getRoom().getRoomId().equals(roomId)) {
                 equipmentDTOList.add(DTOUtil.createEquipmentDTO(equipment));
             }
         });

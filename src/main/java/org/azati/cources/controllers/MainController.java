@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,8 +30,8 @@ public class MainController {
             , @RequestParam(value = "sort", defaultValue = "guestId") String sortBy) {
         List<GuestDTO> firstList = DTOUtil.createGuestsDTO(guestService.getGuestNeedFree(1, 0));
         List<GuestDTO> secondList = DTOUtil.createGuestsDTO(guestService.getGuestNeedFree(12, 1));
-        firstList.forEach(guestDTO -> secondList.removeIf(guest -> guest.getGuestId() == guestDTO.getGuestId()));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int)(Math.ceil(guestService.getCountRecords() * 1.0 / size)), "index");
+        firstList.forEach(guestDTO -> secondList.removeIf(guest -> guest.getGuestId().equals(guestDTO.getGuestId())));
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(guestService.getCountRecords() * 1.0 / size)), "index");
         model.addAttribute("firstList", firstList);
         model.addAttribute("secondList", secondList);
         return "index";

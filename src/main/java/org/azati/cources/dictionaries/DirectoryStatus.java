@@ -20,9 +20,6 @@ public class DirectoryStatus {
     private Integer linkId;
 
     @Column(name = "varchar_status")
-    private String varcharRoomStatus;
-
-    @Column(name = "enum_status")
     @Enumerated(EnumType.STRING)
     private StatusRoom statusRoom;
 
@@ -58,7 +55,6 @@ public class DirectoryStatus {
     public String toString() {
         return "DirectoryStatus{" +
                 "linkId=" + linkId +
-                ", varcharRoomStatus='" + varcharRoomStatus + '\'' +
                 ", statusRoom=" + statusRoom +
                 ", rooms=" + rooms +
                 '}';

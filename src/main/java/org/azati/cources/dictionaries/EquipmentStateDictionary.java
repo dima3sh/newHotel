@@ -20,9 +20,6 @@ public class EquipmentStateDictionary {
     private Integer linkId;
 
     @Column(name = "varchar_equipment_state")
-    private String varcharEquipmentState;
-
-    @Column(name = "equipment_state")
     @Enumerated(EnumType.STRING)
     private StateEquipment stateEquipment;
 

@@ -17,8 +17,7 @@
             <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
             Hotel "MIAMI"
         </a>
-        <a th:if="${#request.userPrincipal == null}" class="btn btn-primary" href="/login" role="button">Log In</a>
-        <a th:unless="${#request.userPrincipal == null}" class="btn btn-primary" href="/logout" role="button">log out</a>
+        <a th:if="${#request.userPrincipal != null}" class="btn btn-primary" href="/logout" role="button">log out</a>
     </nav>
     <nav th:if="${#request.userPrincipal != null}" class="nav nav-pills nav-fill">
         <a class="nav-item nav-link" th:classappend="${location == 'rooms'} ? active" href="/rooms">Rooms</a>

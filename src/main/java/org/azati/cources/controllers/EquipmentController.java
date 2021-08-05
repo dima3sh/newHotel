@@ -94,7 +94,7 @@ public class EquipmentController {
             , @RequestParam(value = "sort", defaultValue = "equipmentId") String sortBy) {
 
         model.addAttribute("isEdit", false);
-        Equipment equipment = equipmentService.equipmentFactory(name, weight, producer, StateEquipment.novel, cost);
+        Equipment equipment = equipmentService.equipmentFactory(name, weight, producer, StateEquipment.NOVEL, cost);
         if (room_id != null) {
             equipment.setRoom(roomService.getRoom(room_id));
         } else {

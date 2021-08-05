@@ -1,11 +1,11 @@
 package org.azati.cources.enums;
 
 public enum StateEquipment {
-    novel(1, "новый"),
-    smalldefect(2, "небольшой дефект"),
-    broken(3, "сломан"),
-    hugedefect(4, "большой дефект"),
-    needsreplace(5, "требуется замена");
+    NOVEL(1, "новый"),
+    SMALLDEFECT(2, "небольшой дефект"),
+    BROKEN(3, "сломан"),
+    HUGEDEFECT(4, "большой дефект"),
+    NEEDSREPLACE(5, "требуется замена");
 
     private Integer index;
     private String messageText;

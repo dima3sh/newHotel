@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class AspectForAllMethods {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Pointcut("within(org.azati.cources..*)")
     public void callAtMethods() {
@@ -30,7 +30,7 @@ public class AspectForAllMethods {
                     }
                 })
                 .collect(Collectors.joining(","));
-        logger.info("before " + jp.toString() + ", args=[" + args + "]");
+        logger.info("before " + jp + ", args=[" + args + "]");
     }
 
     @After("callAtMethods()")

@@ -1,9 +1,9 @@
 package org.azati.cources.enums;
 
 public enum StatusRoom {
-    clean(1 , "чисто"),
-    needscleaning(2, "нужно убраться"),
-    dirty(3, "грязно");
+    CLEAN(1 , "чисто"),
+    NEEDSCLEANING(2, "нужно убраться"),
+    DIRTY(3, "грязно");
 
     private final Integer index;
     private final String message;
