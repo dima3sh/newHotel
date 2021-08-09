@@ -20,8 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser user = userRepository.findByLogin(username);
-        UserDetails userDetails = (UserDetails) new User(user.getLogin(), user.getPassword()
+        AppUser user = userRepository.findByUsername(username);
+        UserDetails userDetails = (UserDetails) new User(user.getUsername(), user.getPassword()
                 , Arrays.asList(new SimpleGrantedAuthority(user.getUserRole().getUserRole().toString())));
         return userDetails;
     }

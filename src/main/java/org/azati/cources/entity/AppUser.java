@@ -16,7 +16,7 @@ public class AppUser {
     private Long userId;
 
     @Column(name = "username")
-    private String login;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -24,6 +24,17 @@ public class AppUser {
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole userRole;
+
+    @Column(name = "enabled")
+    private Boolean enabled;
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public Long getUserId() {
         return userId;
@@ -33,12 +44,12 @@ public class AppUser {
         this.userId = userId;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     public String getPassword() {

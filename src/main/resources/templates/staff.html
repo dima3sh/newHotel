@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Rooms</title>
+    <title>Guests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -13,7 +13,40 @@
 <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <div th:replace="~{fragments/header :: header(${location})}"></div>
-<h3 th:if="${message != null}" th:utext="${message}" style="color: red;"></h3>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'userId')}">
+                <div>Id</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'username')}">
+                <div>Username</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'userRole')}">
+                <div>User Role</div>
+            </a>
+        </th>
+        <th scope="col">Edit</th>
+        <th scope="col">Free</th>
+    </tr>
+    </thead>
+
+</table>
+<a href="/newguest">
+    <button type="button" class="btn btn-primary">New</button>
+</a>
+
+<div th:replace="~{fragments/pagination :: pagination (${page}, ${size}, ${sort}, ${countPages}, ${location})}"></div>
+<form th:action="${location}" method="GET">
+
+    <div th:replace="~{fragments/pagination :: pageSize}"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -24,4 +57,5 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+</html>
 </html>

@@ -21,7 +21,7 @@ public interface EquipmentRepository extends PagingAndSortingRepository<Equipmen
             " (:equipmentRoomId, :nameEquipment, :weight, :costPerObject," +
             " :equipmentStateId, :producer)", nativeQuery = true)
     @Transactional
-    public void addEquipment(@Param("equipmentRoomId") Long equipmentRoomId,
+    void addEquipment(@Param("equipmentRoomId") Long equipmentRoomId,
                              @Param("nameEquipment") String nameEquipment, @Param("weight") Double weight,
                              @Param("costPerObject") Integer costPerObject
             , @Param("equipmentStateId") Integer equipmentStateId, @Param("producer") String producer);

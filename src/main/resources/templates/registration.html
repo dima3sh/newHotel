@@ -32,13 +32,15 @@
 
     <h5>Enter username and password</h5>
 </div>
-<form name='f' th:action="@{/j_spring_security_check}" method='POST'>
+<form name='f' th:action="@{/registration}" method='POST'>
     <div style="width: 400px; margin:0 auto; text-align: center">
+        <div th:if="${usernameError != null}" style="color:#ea5a5a"><span th:text="${usernameError}"></span></div>
         <div class="input-group input-group-sm mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm">Username</span>
-            <input name='username' type="text" class="form-control" aria-label="Sizing example input"
+            <input name='login' type="text" class="form-control" aria-label="Sizing example input"
                    aria-describedby="inputGroup-sizing-sm">
         </div>
+        <div th:if="${passwordError != null}" style="color:#ea5a5a"><span th:text="${passwordError}"></span></div>
         <div class="input-group input-group-sm mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm2">Password</span>
             <input name='password' type="password" class="form-control" aria-label="Sizing example input"

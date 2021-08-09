@@ -7,7 +7,8 @@ public enum UserRoles {
     HOUSEHOLD(4),
     ACCOUNTANT(5),
     ASSISTANT(6),
-    WORKER(7);
+    WORKER(7),
+    USER(8);
 
     private Integer index;
 

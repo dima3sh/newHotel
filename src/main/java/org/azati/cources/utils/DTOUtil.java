@@ -3,6 +3,8 @@ package org.azati.cources.utils;
 import org.azati.cources.dto.EquipmentDTO;
 import org.azati.cources.dto.GuestDTO;
 import org.azati.cources.dto.RoomDTO;
+import org.azati.cources.dto.UserDTO;
+import org.azati.cources.entity.AppUser;
 import org.azati.cources.entity.Equipment;
 import org.azati.cources.entity.Guest;
 import org.azati.cources.entity.Room;
@@ -47,6 +49,22 @@ public class DTOUtil {
         guestDTo.setDepartureTime(guest.getDepartureTime());
         guestDTo.setRoomId(guest.getGuestRoomId().getRoomId());
         return guestDTo;
+    }
+
+    public static UserDTO createUserDTO(AppUser user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setUserRoles(user.getUserRole().getUserRole());
+        userDTO.setUsername(user.getUsername());
+        return userDTO;
+    }
+
+    public static List<UserDTO> createUsersDTO(List<AppUser> users) {
+        List<UserDTO> usersDTO = new ArrayList<>();
+        users.forEach(user -> {
+            usersDTO.add(createUserDTO(user));
+        });
+        return usersDTO;
     }
 
     public static List<RoomDTO> createRoomsDTO(List<Room> rooms) {
