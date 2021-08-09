@@ -21,6 +21,11 @@ public class AuthorizationController {
         return "logoutSuccessfulPage";
     }
 
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String registration() {
+        return "registration";
+    }
+
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
