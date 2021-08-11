@@ -1,11 +1,9 @@
 package org.azati.cources.dto;
 
-import org.azati.cources.enums.UserRoles;
-
 public class UserDTO {
     private Long UserId;
     private String Username;
-    private UserRoles userRoles;
+    private String userRole;
 
     public Long getUserId() {
         return UserId;
@@ -23,11 +21,11 @@ public class UserDTO {
         Username = username;
     }
 
-    public UserRoles getUserRoles() {
-        return userRoles;
+    public String getUserRole() {
+        return userRole;
     }
 
-    public void setUserRoles(UserRoles userRoles) {
-        this.userRoles = userRoles;
+    public void setUserRoles(String userRoles) {
+        this.userRole = userRoles;
     }
 }

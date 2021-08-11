@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // The pages does not require login
         http.authorizeRequests().antMatchers("/registration", "/login", "/logout").permitAll();
 
-        http.authorizeRequests().antMatchers("/storage", "/rooms", "/guests", "equipments").access("hasAnyAuthority('ADMINISTRATOR', 'CHIEF')");
+        http.authorizeRequests().antMatchers("/", "/index","/storage", "/rooms", "/guests", "equipments").access("hasAnyAuthority('ADMINISTRATOR', 'CHIEF')");
         http.authorizeRequests().antMatchers("/staff").access("hasAnyAuthority('CHIEF')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");

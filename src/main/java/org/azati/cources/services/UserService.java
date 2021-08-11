@@ -29,12 +29,12 @@ public class UserService {
         if (userFromDB != null) {
             return false;
         }
-
         UserRole userRole = new UserRole();
         userRole.setUserRole(UserRoles.USER);
         userRole.setRoleId(UserRoles.USER.getIndex());
         user.setUserRole(userRole);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setEnabled(1);
         userRepository.save(user);
         return true;
     }

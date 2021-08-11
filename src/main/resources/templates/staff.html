@@ -35,7 +35,27 @@
         <th scope="col">Free</th>
     </tr>
     </thead>
-
+    <tbody>
+    <form action="/staff" method="get">
+        <tr th:selected="${user.getUserId()}" th:each="user : ${users}">
+            <form method="GET">
+                <td th:utext="${user.getUserId()}"></td>
+                <td th:utext="${user.getUsername()}"></td>
+                <td th:utext="${user.getUserRole()}"></td>
+                <td>
+                    <a th:href="@{/edit/user(id=${user.getUserRole()})}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{${location}(user_id=${user.getUserId()}, page=${page}, size=${size}, sort=${sort})}">
+                        <button type="button" class="btn btn-primary">Free</button>
+                    </a>
+                </td>
+            </form>
+        </tr>
+    </form>
+    </tbody>
 </table>
 <a href="/newguest">
     <button type="button" class="btn btn-primary">New</button>

@@ -1,8 +1,10 @@
 package org.azati.cources.controllers;
 
+import org.azati.cources.dto.UserDTO;
 import org.azati.cources.entity.AppUser;
 import org.azati.cources.enums.UserRoles;
 import org.azati.cources.services.UserService;
+import org.azati.cources.utils.DTOUtil;
 import org.azati.cources.utils.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,8 @@ public class StaffController {
         List<AppUser> users = userService.getAllUsers()
                 .stream()
                 .filter(user -> user.getUserRole().getUserRole() != UserRoles.CHIEF).collect(Collectors.toList());
-        model.addAttribute("users", users);
+        List<UserDTO> usersDTO = DTOUtil.createUsersDTO(users);
+        model.addAttribute("users", usersDTO);
         ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(userService.getCountRecords() * 1.0 / size)), "staff");
         return "staff";
     }
