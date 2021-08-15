@@ -19,8 +19,12 @@ public class UserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public List<AppUser> getAllUsers () {
-        return (ArrayList)userRepository.findAll();
+    public List<AppUser> getAllUsers() {
+        return (List<AppUser>) userRepository.findAll();
+    }
+
+    public List<AppUser> getUserWithoutRole(UserRoles userRole) {
+        return (List<AppUser>) userRepository.findAllByUserRole_UserRole(userRole);
     }
 
     public boolean saveUser(AppUser user) {
@@ -30,8 +34,8 @@ public class UserService {
             return false;
         }
         UserRole userRole = new UserRole();
-        userRole.setUserRole(UserRoles.USER);
-        userRole.setRoleId(UserRoles.USER.getIndex());
+        userRole.setUserRole(UserRoles.NONE);
+        userRole.setRoleId(UserRoles.NONE.getIndex());
         user.setUserRole(userRole);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(1);

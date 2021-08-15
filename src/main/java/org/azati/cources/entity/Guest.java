@@ -3,11 +3,12 @@ package org.azati.cources.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "guest", schema = "public")
-public class Guest extends Person {
+public class Guest{
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -28,38 +29,15 @@ public class Guest extends Person {
     @Column(name = "invoice")
     private Integer invoice;
 
+    @NotNull(message = "First Name cannot be null")
+    @Column(name = "Name_Guest")
+    private String name;
 
-    public Room getGuestRoomId() {
-        return guest_room_id;
-    }
+    @Column(name = "Phone_Number")
+    private String phoneNumber;
 
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
-    }
-
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public Integer getInvoice() {
-        return invoice;
-    }
-
-    public void setGuestRoomId(Room roomId) {
-        this.guest_room_id = roomId;
-    }
-
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public void setArrivalTime(LocalDateTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    public void setInvoice(Integer invoice) {
-        this.invoice = invoice;
-    }
+    @Column(name = "Email_Address")
+    private String emailAddress;
 
     public Long getGuestId() {
         return guestId;
@@ -69,33 +47,59 @@ public class Guest extends Person {
         this.guestId = guestId;
     }
 
-    @Override
-    public String toString() {
-        return "Guest{" +
-                "room_id=" + guest_room_id.getRoomId() +
-                ", departureTime='" + departureTime + '\'' +
-                ", arrivalTime='" + arrivalTime + '\'' +
-                ", invoice=" + invoice +
-                "} " + super.toString();
+    public Room getGuestRoomId() {
+        return guest_room_id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Guest)) return false;
-        Guest guest = (Guest) o;
-        return guest_room_id.equals(guest.guest_room_id) && departureTime.equals(guest.departureTime)
-                && arrivalTime.equals(guest.arrivalTime) && invoice.equals(guest.invoice) && super.equals(o);
+    public void setGuestRoomId(Room guest_room_id) {
+        this.guest_room_id = guest_room_id;
     }
 
-    @Override
-    public int hashCode() {
-        int result = guest_room_id.hashCode();
-        result = 31 * result + arrivalTime.hashCode();
-        result = 31 * result + departureTime.hashCode();
-        result = 31 * result + Integer.hashCode(invoice);
-        result = 31 * result + super.hashCode();
-        return result;
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
     }
 
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Integer getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Integer invoice) {
+        this.invoice = invoice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 }

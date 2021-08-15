@@ -1,11 +1,16 @@
 package org.azati.cources.controllers;
 
+import org.azati.cources.dictionaries.UserRole;
 import org.azati.cources.dto.GuestDTO;
+import org.azati.cources.dto.UserDTO;
+import org.azati.cources.enums.UserRoles;
 import org.azati.cources.services.ChronoService;
 import org.azati.cources.services.GuestService;
+import org.azati.cources.services.UserService;
 import org.azati.cources.utils.DTOUtil;
 import org.azati.cources.utils.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,9 @@ public class MainController {
     GuestService guestService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     ChronoService chronoService;
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
@@ -32,6 +40,8 @@ public class MainController {
         List<GuestDTO> secondList = DTOUtil.createGuestsDTO(guestService.getGuestNeedFree(12, 1));
         firstList.forEach(guestDTO -> secondList.removeIf(guest -> guest.getGuestId().equals(guestDTO.getGuestId())));
         ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(guestService.getCountRecords() * 1.0 / size)), "index");
+        List<UserDTO> usersDTO = DTOUtil.createUsersDTO(userService.getUserWithoutRole(UserRoles.NONE));
+        model.addAttribute("users", usersDTO);
         model.addAttribute("firstList", firstList);
         model.addAttribute("secondList", secondList);
         return "index";
