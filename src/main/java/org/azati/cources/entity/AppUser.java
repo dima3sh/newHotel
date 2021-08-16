@@ -4,6 +4,7 @@ import org.azati.cources.dictionaries.UserRole;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +28,16 @@ public class AppUser {
 
     @Column(name = "enabled")
     private Integer enabled;
+
+    @NotNull(message = "First Name cannot be null")
+    @Column(name = "name")
+    public String name;
+
+    @Column(name = "phone_number")
+    public String phoneNumber;
+
+    @Column(name = "email_address")
+    public String emailAddress;
 
     public Integer getEnabled() {
         return enabled;
@@ -66,5 +77,29 @@ public class AppUser {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

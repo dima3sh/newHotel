@@ -14,7 +14,53 @@
 <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <div th:replace="~{fragments/header :: header(${location})}"></div>
-<div th:if="${firstList.size() != 0 || secondList.size() != 0}">
+<div sec:authorize="hasRole('CHIEF')">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">
+                <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'userId')}">
+                    <div>Id</div>
+                </a>
+            </th>
+            <th scope="col">
+                <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'username')}">
+                    <div>Username</div>
+                </a>
+            </th>
+            <th scope="col">
+                <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'userRole')}">
+                    <div>User Role</div>
+                </a>
+            </th>
+            <th scope="col">Edit</th>
+            <th scope="col">Free</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form action="/staff" method="get">
+            <tr th:selected="${user.getUserId()}" th:each="user : ${users}">
+                <form method="GET">
+                    <td th:utext="${user.getUserId()}"></td>
+                    <td th:utext="${user.getUsername()}"></td>
+                    <td th:utext="${user.getUserRole()}"></td>
+                    <td>
+                        <a th:href="@{/edit/user(id=${user.getUserRole()})}">
+                            <button type="button" class="btn btn-primary">Edit</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{${location}(user_id=${user.getUserId()}, page=${page}, size=${size}, sort=${sort})}">
+                            <button type="button" class="btn btn-primary">Free</button>
+                        </a>
+                    </td>
+                </form>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+</div>
+<div sec:authorize="hasRole('ADMINISTRATOR')" th:if="${firstList.size() != 0 || secondList.size() != 0}">
     <table th:if="${firstList.size() != 0}" class="table table-striped table-hover table-danger">
         <thead>
         <tr>

@@ -142,7 +142,26 @@
                        schemaName="public"
                        tableName="persistent_logins"/>
     </changeSet>
-
+    <changeSet author="root" id="addColumns-table-users-several_columns">
+        <addColumn catalogName="hotel"
+                   schemaName= "public"
+                   tableName="users" >
+            <column name="name"
+                    type="varchar"/>
+        </addColumn>
+        <addColumn catalogName="hotel"
+                   schemaName= "public"
+                   tableName="users" >
+            <column name="phone_number"
+                    type="varchar"/>
+        </addColumn>
+        <addColumn catalogName="hotel"
+                   schemaName= "public"
+                   tableName="users" >
+            <column name="email_address"
+                    type="varchar"/>
+        </addColumn>
+    </changeSet>
 
 
 </databaseChangeLog>

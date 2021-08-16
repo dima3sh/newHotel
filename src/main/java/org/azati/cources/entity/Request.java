@@ -4,13 +4,13 @@ public class Request {
     private Integer request_id;
     private String text;
     private Boolean isReady;
-    private Employee stuff;
+    private AppUser stuff;
     private Thing thing;
 
     public Request() {
     }
 
-    public Request(Integer request_id, String text, Boolean isReady, Employee stuff, Thing thing) {
+    public Request(Integer request_id, String text, Boolean isReady, AppUser stuff, Thing thing) {
         this.request_id = request_id;
         this.text = text;
         this.isReady = isReady;
@@ -26,7 +26,7 @@ public class Request {
         isReady = ready;
     }
 
-    public void setStuff(Employee stuff) {
+    public void setStuff(AppUser stuff) {
         this.stuff = stuff;
     }
 
@@ -46,7 +46,7 @@ public class Request {
         return isReady;
     }
 
-    public Employee getStuff() {
+    public AppUser getStuff() {
         return stuff;
     }
 
