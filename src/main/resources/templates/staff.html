@@ -31,6 +31,21 @@
                 <div>User Role</div>
             </a>
         </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'name')}">
+                <div>User Role</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'phoneNumber')}">
+                <div>User Role</div>
+            </a>
+        </th>
+        <th scope="col">
+            <a name="sort" th:href="@{${location}(page=1, size = ${size}, sort = 'emailAddress')}">
+                <div>User Role</div>
+            </a>
+        </th>
         <th scope="col">Edit</th>
         <th scope="col">Free</th>
     </tr>
@@ -42,6 +57,9 @@
                 <td th:utext="${user.getUserId()}"></td>
                 <td th:utext="${user.getUsername()}"></td>
                 <td th:utext="${user.getUserRole()}"></td>
+                <td th:utext="${user.getName()}"></td>
+                <td th:utext="${user.getPhoneNumber()}"></td>
+                <td th:utext="${user.getEmailAddress()}"></td>
                 <td>
                     <a th:href="@{/edit/user(id=${user.getUserRole()})}">
                         <button type="button" class="btn btn-primary">Edit</button>

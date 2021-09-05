@@ -54,8 +54,11 @@ public class DTOUtil {
     public static UserDTO createUserDTO(AppUser user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
-        userDTO.setUserRoles(user.getUserRole().getUserRole().toString());
+        userDTO.setUserRole(user.getUserRole().getUserRole().toString());
         userDTO.setUsername(user.getUsername());
+        userDTO.setName(user.getName());
+        userDTO.setPhoneNumber(user.getPhoneNumber());
+        userDTO.setEmailAddress(user.getEmailAddress());
         return userDTO;
     }
 

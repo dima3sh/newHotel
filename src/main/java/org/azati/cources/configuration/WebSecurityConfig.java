@@ -36,12 +36,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Setting Service to find User in the database.
         // And Setting PassswordEncoder
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("{noop}pass").roles("USER")
-                .and()
-                .withUser("").password("{noop}pass").roles("CHIEF");
-
     }
 
     @Override
@@ -53,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/registration", "/login", "/logout").permitAll();
 
         http.authorizeRequests().antMatchers("/", "/index","/storage", "/rooms", "/guests", "equipments").access("hasAnyAuthority('ADMINISTRATOR', 'CHIEF')");
-        http.authorizeRequests().antMatchers("/staff").access("hasRole('CHIEF')");
+        http.authorizeRequests().antMatchers("/staff").access("hasAuthority('CHIEF')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 

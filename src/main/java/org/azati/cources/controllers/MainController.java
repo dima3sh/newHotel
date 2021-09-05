@@ -28,9 +28,6 @@ public class MainController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    ChronoService chronoService;
-
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String index(Model model
             , @RequestParam(value = "page", defaultValue = "1") Integer page
