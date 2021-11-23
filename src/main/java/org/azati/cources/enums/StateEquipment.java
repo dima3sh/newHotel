@@ -1,9 +1,10 @@
 package org.azati.cources.enums;
 
 public enum StateEquipment {
+
     NOVEL(1, "новый"),
     SMALLDEFECT(2, "небольшой дефект"),
-    BROKEN(3, "сломан"),
+    BROKEN(3, "поврежден"),
     HUGEDEFECT(4, "большой дефект"),
     NEEDSREPLACE(5, "требуется замена");
 

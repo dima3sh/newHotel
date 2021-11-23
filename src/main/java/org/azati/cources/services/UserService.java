@@ -19,12 +19,21 @@ public class UserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public AppUser getUser(Long userId) {
+        return userRepository.findById(userId).get();
+    }
+
     public List<AppUser> getAllUsers() {
         return (List<AppUser>) userRepository.findAll();
     }
 
     public List<AppUser> getUserWithoutRole(UserRoles userRole) {
         return (List<AppUser>) userRepository.findAllByUserRole_UserRole(userRole);
+    }
+
+    public AppUser updateUser(AppUser user) {
+        userRepository.save(user);
+        return user;
     }
 
     public boolean saveUser(AppUser user) {

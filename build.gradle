@@ -13,9 +13,7 @@ buildscript {
 plugins {
     id 'java'
     id "org.springframework.boot" version "2.0.1.RELEASE"
-    id 'war'
 }
-apply plugin: 'war'
 apply plugin: 'io.spring.dependency-management'
 
 group 'org.azati.cources'
@@ -54,7 +52,7 @@ dependencies {
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.14.1'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.5.2', ext: 'pom'
     implementation group: 'org.eclipse.jdt.core.compiler', name: 'ecj', version: '4.6.1'
-    implementation group: 'org.webjars', name: 'bootstrap', version: '5.0.1'
+    implementation group: 'org.webjars', name: 'bootstrap', version: '5.1.0'
     compileOnly group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: '2.3.12.RELEASE', ext: 'pom'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.12.RELEASE'
     implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.4.0'
@@ -76,4 +74,5 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.4.RELEASE'
+    testImplementation 'com.h2database:h2:1.4.200'
 }

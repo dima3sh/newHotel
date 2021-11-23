@@ -14,7 +14,6 @@
 <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <div th:replace="~{fragments/header :: header(${location})}"></div>
-<span sec:authentication="principal.authorities">User</span>
 <div sec:authorize="hasAuthority('CHIEF')">
     <table class="table table-striped table-hover">
         <thead>
@@ -46,7 +45,7 @@
                     <td th:utext="${user.getUsername()}"></td>
                     <td th:utext="${user.getUserRole()}"></td>
                     <td>
-                        <a th:href="@{/edit/user(id=${user.getUserRole()})}">
+                        <a th:href="@{/edit/user(userId=${user.getUserId()})}">
                             <button type="button" class="btn btn-primary">Edit</button>
                         </a>
                     </td>

@@ -1,10 +1,14 @@
 package org.azati.cources.dto;
 
+import org.azati.cources.enums.UserRoles;
+
+import javax.management.relation.RoleStatus;
+
 public class UserDTO {
 
     private Long userId;
     private String username;
-    private String userRole;
+    private UserRoles userRole;
     private String name;
     private String phoneNumber;
     private String emailAddress;
@@ -25,11 +29,11 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getUserRole() {
+    public UserRoles getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(UserRoles userRole) {
         this.userRole = userRole;
     }
 
