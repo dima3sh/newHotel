@@ -133,7 +133,7 @@ public class EquipmentController {
 
         List<EquipmentDTO> equipmentsDTO = new ArrayList<>();
         equipmentService.getEquipmentsByRoomID(roomId, page - 1, size, sortBy).forEach(equipment -> equipmentsDTO.add(DTOUtil.createEquipmentDTO(equipment)));
-        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentService.getCountRecords() * 1.0 / size)), "equipments");
+        ModelUtil.setStandardModelElements(model, page, size, sortBy, (int) (Math.ceil(equipmentsDTO.size() * 1.0 / size)), "equipments");
         model.addAttribute("equipments", equipmentsDTO);
         return "equipments";
     }

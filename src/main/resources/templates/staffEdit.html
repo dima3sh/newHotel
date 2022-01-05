@@ -29,21 +29,21 @@
             <span class="input-group-text" id="basic-addon4">Username</span>
             <input name="username" type="text" class="form-control" placeholder="Username"
                    aria-label="email"
-                   aria-describedby="basic-addon1" th:value="${user.getUsername()}" th:field="*{username}>
+                   aria-describedby="basic-addon1" th:value="${user.getUsername()}" required th:field="*{username}">
         </div>
 
         <div class="input-group mb-3" style="margin-bottom: 10px">
             <span class="input-group-text" id="basic-addon1">@</span>
             <input name="emailAddress" type="email" class="form-control" placeholder="Email"
                    aria-label="email"
-                   aria-describedby="basic-addon1" th:value="${user.getEmailAddress()}">
+                   aria-describedby="basic-addon1" th:value="${user.getEmailAddress()}"  th:field="*{emailAddress}">
         </div>
 
         <div class="input-group mb-3" style="margin-bottom: 10px">
             <span class="input-group-text" id="basic-addon2">Phone</span>
             <input name="phoneNumber" type="text" class="form-control" placeholder="Phone"
                    aria-label="Username"
-                   aria-describedby="basic-addon1" th:value="${user.getPhoneNumber()}">
+                   aria-describedby="basic-addon1" th:value="${user.getPhoneNumber()}" th:field="*{phoneNumber}">
         </div>
 
         <div class="input-group mb-3" style="margin-bottom: 10px">
@@ -58,7 +58,7 @@
             <select name="userRole" class="form-select" aria-label="Default select example">
 
                 <option selected th:utext="${userRoles[user.getUserRole().getIndex() - 1]}" ></option>
-                <option th:each="role : ${userRoles}" th:value="${role.getIndex()}" >
+                <option th:each="role : ${userRoles}" th:value="${role}" >
                     <span th:utext="${role.toString()}"></span>
                 </option>
             </select>

@@ -1,6 +1,7 @@
 package org.azati.cources.services;
 
 import org.azati.cources.dictionaries.UserRole;
+import org.azati.cources.dto.UserDTO;
 import org.azati.cources.entity.AppUser;
 import org.azati.cources.enums.UserRoles;
 import org.azati.cources.repository.UserRepository;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,6 +34,19 @@ public class UserService {
     public AppUser updateUser(AppUser user) {
         userRepository.save(user);
         return user;
+    }
+
+    public AppUser updateUser(UserDTO user) {
+        AppUser appUser = getUser(user.getUserId());
+        if (appUser != null) {
+            appUser.setEmailAddress(user.getEmailAddress());
+            appUser.setPhoneNumber((user.getPhoneNumber()));
+            appUser.setUsername(user.getUsername());
+            appUser.setName(user.getName());
+            appUser.getUserRole().setUserRole(user.getUserRole());
+            userRepository.save(appUser);
+        }
+        return appUser;
     }
 
     public boolean saveUser(AppUser user) {

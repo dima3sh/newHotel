@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.net.http.HttpClient;
 
 
 @Controller
@@ -29,13 +32,14 @@ public class UserController {
         model.addAttribute("user", userDTO);
         model.addAttribute("location", "staff");
         model.addAttribute("userRoles", UserRoles.values());
+        model.addAttribute("userInfo", userDTO);
         return "staffEdit";
     }
 
     @PostMapping(value = {"/edit/user"})
-    public String saveUserDetails(Model model, @RequestBody UserDTO userDto) {
-
-        return "staffEdit";
+    public RedirectView saveUserDetails(Model model, @ModelAttribute UserDTO userDto) {
+        userService.updateUser(userDto);
+        return new RedirectView("/staff");
     }
 
 }
