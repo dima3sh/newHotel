@@ -86,7 +86,6 @@ public class RestController {
 //                    m_xText.insertString(xTextRange, strLine + "\n", false);
 //                }
 
-
         XStorable xStorable = (XStorable) UnoRuntime
                 .queryInterface(XStorable.class, xComp);
 
@@ -143,7 +142,6 @@ public class RestController {
 
 
         //docx4j
-        //Криво конвертирует ошибки а также уязвимости в библиотеках
 //        try {
 //            long start = System.currentTimeMillis();
 //
